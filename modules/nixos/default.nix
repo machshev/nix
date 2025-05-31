@@ -17,7 +17,6 @@
     ./security.nix
     ./btrfs.nix
     ./sdr.nix
-    ./home-manager.nix
   ];
   options = {
     machshev = {

@@ -1,4 +1,10 @@
-{lib, ...}: {
+{
+  inputs,
+  user-helpers,
+  pkgs,
+  lib,
+  ...
+}: {
   imports = [
     ./fs.nix
     ./ha.nix
@@ -8,12 +14,19 @@
   machshev = {
     hostName = "qatan";
     machineID = "92fe87dfa38d10d30eda16a267693da2";
-    user = {
-      enable = true;
-    };
     applyUdevRules = true;
     autoupdate.enable = true;
     closedFirmwareUpdates = true;
+  };
+
+  users.users.david = user-helpers.mkUserCfg {
+    inherit pkgs;
+    name = "david";
+  };
+
+  home-manager = user-helpers.mkHomeManager {
+    inherit inputs;
+    users = ["david"];
   };
 
   # Server is accessed via ssh key only, so there are no passwords set

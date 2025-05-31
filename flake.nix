@@ -43,6 +43,20 @@
     };
 
     nixvim.url = "github:nix-community/nixvim";
+
+    lowrisc-it = {
+      url = "git+ssh://git@github.com/lowRISC/lowrisc-it";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.disko.follows = "disko";
+      inputs.flake-programs-sqlite.follows = "flake-programs-sqlite";
+      inputs.sops-nix.follows = "sops-nix";
+    };
+
+    lowrisc-nix = {
+      url = "github:lowRISC/lowrisc-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.flake-utils.follows = "flake-utils";
+    };
   };
 
   outputs = {
@@ -87,6 +101,8 @@
         machshev-pkgs
       ;
     };
+
+    checks = machines.checks;
 
     # nix fmt
     formatter.x86_64-linux = nixpkgs.legacyPackages.x86_64-linux.alejandra;

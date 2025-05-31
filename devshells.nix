@@ -64,7 +64,7 @@ in  {
     ];
   };
 
-  tf = pkgs.mkshell {
+  tf = pkgs.mkShell {
     name = "terraform dev shell";
     packages = with pkgs; [
       opentofu
@@ -77,7 +77,7 @@ in  {
     ];
   };
 
-  ans = pkgs.mkshell {
+  ans = pkgs.mkShell {
     name = "Ansible dev shell";
     packages = with pkgs; [
       ansible-language-server

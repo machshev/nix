@@ -13,6 +13,8 @@ with lib; {
 
   config = {
     programs.direnv.enable = true;
+    programs.fish.enable = true;
+
 
     fonts.fontDir.enable = true;
     fonts.packages = with pkgs;

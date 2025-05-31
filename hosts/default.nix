@@ -31,11 +31,13 @@
   lib = nixpkgs.lib;
   pkgs-unstable = nixpkgs-unstable.legacyPackages.${system};
 
-  machines = ["gadol" "tzedef" "qatan" "tapuach"];
+  user-helpers = import ../modules/users {inherit lib;};
+
+  machines = ["gadol" "tzedef" "qatan" "tapuach" "avodah"];
 in rec {
   nixosConfigurations = lib.genAttrs machines (name:
     lib.nixosSystem {
-      specialArgs = {inherit inputs pkgs-unstable machshev-pkgs;};
+      specialArgs = {inherit inputs pkgs-unstable machshev-pkgs user-helpers;};
       modules = [
         disko.nixosModules.disko
         sops-nix.nixosModules.sops
@@ -68,6 +70,11 @@ in rec {
         tapuach = {
           sshUser = "david";
         };
+        avodah = {
+          sshUser = "jamesm";
+        };
       };
   };
+
+  checks = builtins.mapAttrs (system: deployLib: deployLib.deployChecks deploy) deploy-rs.lib;
 }
