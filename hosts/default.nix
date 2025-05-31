@@ -1,0 +1,73 @@
+{
+  inputs,
+  nixpkgs,
+  nixpkgs-unstable,
+  machshev-pkgs,
+  flake-utils,
+  ...
+}: let
+  inherit (inputs) home-manager disko nixos-facter-modules sops-nix;
+  # This could just be inputs.deploy-rs, but doing so will require rebuild instead of using binary cache.
+  # See instruction from the upstream repo: https://github.com/serokell/deploy-rs
+  deploy-rs.lib = flake-utils.lib.eachDefaultSystemMap (
+    system:
+      (import nixpkgs {
+        inherit system;
+        overlays = [
+          inputs.deploy-rs.overlay
+          (final: prev: {
+            deploy-rs = {
+              inherit (nixpkgs.legacyPackages.${prev.system}) deploy-rs;
+              lib = prev.deploy-rs.lib;
+            };
+          })
+        ];
+      })
+      .deploy-rs
+      .lib
+  );
+
+  system = "x86_64-linux";
+  lib = nixpkgs.lib;
+  pkgs-unstable = nixpkgs-unstable.legacyPackages.${system};
+
+  machines = ["gadol" "tzedef" "qatan" "tapuach"];
+in rec {
+  nixosConfigurations = lib.genAttrs machines (name:
+    lib.nixosSystem {
+      specialArgs = {inherit inputs pkgs-unstable machshev-pkgs;};
+      modules = [
+        disko.nixosModules.disko
+        sops-nix.nixosModules.sops
+        ../modules/nixos
+        ./${name}
+        {config.facter.reportPath = ./${name}/facter.json;}
+        nixos-facter-modules.nixosModules.facter
+        home-manager.nixosModules.default
+      ];
+    });
+
+  deploy = {
+    nodes =
+      builtins.mapAttrs (name: _: {
+        hostname = name;
+        profiles.system = {
+          user = "root";
+          path = deploy-rs.lib.${nixosConfigurations.${name}.pkgs.system}.activate.nixos nixosConfigurations.${name};
+        };
+      }) {
+        qatan = {
+          sshUser = "david";
+        };
+        gadol = {
+          sshUser = "david";
+        };
+        tzedef = {
+          sshUser = "david";
+        };
+        tapuach = {
+          sshUser = "david";
+        };
+      };
+  };
+}

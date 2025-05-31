@@ -1,0 +1,5 @@
+# rules for OpenHantek6022 (DSO program) as well as Hankek6022API (python tools)
+
+# Sainsmart DDS120, without FW, with FW
+SUBSYSTEM=="usb", ACTION=="add", ENV{DEVTYPE}=="usb_device", ATTRS{idVendor}=="8102", ATTRS{idProduct}=="8102", TAG+="uaccess", TAG+="udev-acl"
+SUBSYSTEM=="usb", ACTION=="add", ENV{DEVTYPE}=="usb_device", ATTRS{idVendor}=="1d50", ATTRS{idProduct}=="608e", TAG+="uaccess", TAG+="udev-acl"
