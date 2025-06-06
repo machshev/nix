@@ -32,6 +32,7 @@
     nixpkgs.config.allowUnfree = true;
 
     programs.git.enable = lib.mkDefault true;
+    programs.nix-ld.enable = true;
 
     # with channels disabled we need a replacement for command-not-found as fish
     # uses it.
