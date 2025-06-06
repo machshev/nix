@@ -36,14 +36,16 @@
       enable = true;
       user = "jamesm";
     };
-    configSync.enable = true;
-    network = true;
-    tools.enable = true;
-    nixRegistry.enable = true;
-    usePublicCache = true;
     applyUdevRules = true;
+    configSync.enable = true;
     faillock.enable = true;
+    itPolicy.workstation = true;
+    kubeAuthPlugin.enable = true;
     nebula.enable = true;
+    network = true;
+    nixRegistry.enable = true;
+    tools.enable = true;
+    usePublicCache = true;
   };
 
   users.users.jamesm = user-helpers.mkUserCfg {
