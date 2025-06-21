@@ -1,7 +1,4 @@
-{
-  machshev-pkgs,
-  ...
-}: {
+{machshev-pkgs, ...}: {
   imports = [
     ./nix.nix
     ./common.nix

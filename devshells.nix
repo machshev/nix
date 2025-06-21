@@ -2,11 +2,12 @@
   nixpkgs,
   flake-utils,
   ...
-}: flake-utils.lib.eachDefaultSystemMap (system: let
+}:
+flake-utils.lib.eachDefaultSystemMap (system: let
   pkgs = import nixpkgs {
     inherit system;
   };
-in  {
+in {
   re-hacking = pkgs.mkShell {
     name = "Reverse Engineering";
     packages = with pkgs; [

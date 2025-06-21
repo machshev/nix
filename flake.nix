@@ -64,6 +64,7 @@
     nixpkgs,
     nixpkgs-unstable,
     flake-utils,
+    deploy-rs,
     ...
   } @ inputs: let
     machshev-pkgs = import ./pkgs {
@@ -73,7 +74,7 @@
         nixpkgs-unstable
         flake-utils
         ;
-      };
+    };
 
     machines = import ./hosts {
       inherit
@@ -82,6 +83,7 @@
         nixpkgs-unstable
         flake-utils
         machshev-pkgs
+        deploy-rs
         ;
     };
   in {
@@ -99,7 +101,7 @@
         nixpkgs-unstable
         flake-utils
         machshev-pkgs
-      ;
+        ;
     };
 
     checks = machines.checks;

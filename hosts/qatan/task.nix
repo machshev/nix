@@ -1,6 +1,4 @@
-{
-  ...
-}: {
+{...}: {
   networking.firewall.allowedTCPPorts = [
     10222 # taskchampion
   ];
