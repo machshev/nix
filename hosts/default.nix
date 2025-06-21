@@ -57,6 +57,7 @@ in rec {
           user = "root";
           path = deploy-rs.lib.${nixosConfigurations.${name}.pkgs.system}.activate.nixos nixosConfigurations.${name};
         };
+        interactiveSudo = true;
       }) {
         qatan = {
           sshUser = "david";

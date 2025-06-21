@@ -27,16 +27,20 @@
 
   users.users.josephm = user-helpers.mkUserCfg {
     inherit pkgs;
-    name = "david";
+    name = "josephm";
   };
 
   home-manager = user-helpers.mkHomeManager {
     inherit inputs;
-    users = ["david"];
+    users = ["david" "josephm"];
   };
 
   # Workstation set default root password - MUST be changed on first login
   users.users.root.initialHashedPassword = "$6$z8fXf0P0ap18L20y$NCe1iQXlG.Rv.br/sAnj7cpIQk5pvpikddLfxQKebJU0xJhsGj9/Pyu.MQ2vW/9St7unvHQo5AoqsjUX8bqZl1";
+
+  environment.systemPackages = with pkgs; [
+    lunar-client
+  ];
 
   system.stateVersion = "25.05";
 }

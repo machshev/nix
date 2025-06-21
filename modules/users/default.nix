@@ -34,6 +34,8 @@
     extraSpecialArgs = {inherit inputs;};
     useUserPackages = true;
     useGlobalPkgs = true;
-    users = lib.genAttrs users (name: import ../home-manager);
+    users = lib.genAttrs users (name:
+      import
+      ../home-manager/profiles/${name}.nix);
   };
 }
