@@ -14,7 +14,7 @@
       (import nixpkgs {
         inherit system;
         overlays = [
-          inputs.deploy-rs.overlay
+          inputs.deploy-rs.overlays.default
           (final: prev: {
             deploy-rs = {
               inherit (nixpkgs.legacyPackages.${prev.system}) deploy-rs;
