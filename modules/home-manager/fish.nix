@@ -210,7 +210,7 @@
         shift
         if command -v ipdb >/dev/null; then set PYTHONBREAKPOINT "ipdb.set_trace"; end
         if command -v ipdb3 >/dev/null; then set PYTHONBREAKPOINT "ipdb.set_trace"; end
-        ipython --pdb "$(which "$argv[1]")" -- "$@"
+        ipython --pdb "$(which "$argv[1]")" -- $argv
       '';
 
       fish_greeting = {
