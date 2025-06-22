@@ -184,41 +184,33 @@
 
     functions = {
       gcf = ''
-        function gcf
-          if [[ -z "$1" ]]; then
-              echo "Commit hash to fixup is missing"
-              return 1
-          fi
+        if [[ -z "$1" ]]; then
+            echo "Commit hash to fixup is missing"
+            return 1
+        fi
 
-          git commit --fixup="$1"
-          git rebase -i --autosquash "$1"~1
-        end
+        git commit --fixup="$1"
+        git rebase -i --autosquash "$1"~1
       '';
 
       rsed = ''
-        function rsed
-          for file in (find . -type f -name "$argv[1]" -print)
-            sed -e "$argv[2]" $file | diff -u $file - | nix run nixpkgs#colordiff -- --nobanner
-          end
+        for file in (find . -type f -name "$argv[1]" -print)
+          sed -e "$argv[2]" $file | diff -u $file - | nix run nixpkgs#colordiff -- --nobanner
         end
       '';
 
       rsed-do = ''
-        function rsed-do
-          for file in (find . -type f -name "$argv[1]" -print)
-            sed -i "$argv[2]" $file
-          end
+        for file in (find . -type f -name "$argv[1]" -print)
+          sed -i "$argv[2]" $file
         end
       '';
 
       debug-python = ''
-        function debug-python
-          local cmd="$argv[1]"
-          shift
-          if command -v ipdb >/dev/null; then export PYTHONBREAKPOINT="ipdb.set_trace"; fi
-          if command -v ipdb3 >/dev/null; then export PYTHONBREAKPOINT="ipdb.set_trace"; fi
-          ipython --pdb "$(which "$argv[1]")" -- "$@"
-        end
+        local cmd="$argv[1]"
+        shift
+        if command -v ipdb >/dev/null; then set PYTHONBREAKPOINT "ipdb.set_trace"; end
+        if command -v ipdb3 >/dev/null; then set PYTHONBREAKPOINT "ipdb.set_trace"; end
+        ipython --pdb "$(which "$argv[1]")" -- "$@"
       '';
 
       fish_greeting = {
