@@ -9,6 +9,7 @@
     ./fs.nix
     ./ha.nix
     ./task.nix
+    ./minecraft.nix
   ];
 
   machshev = {
@@ -47,28 +48,6 @@
 
   # Disable waitonline - workaround until working config found
   systemd.network.wait-online.enable = lib.mkForce false;
-
-  networking.firewall.allowedUDPPorts = [
-    19132 # Minecraft
-  ];
-
-  virtualisation.oci-containers.containers = {
-    minecraft = {
-      environment = {
-        ALLOW_CHEATS = "true";
-        EULA = "TRUE";
-        DIFFICULTY = "1";
-        SERVER_NAME = "Qatan";
-        TZ = "Europe/London";
-        VERSION = "LATEST";
-        ALLOW_LIST_USERS = "JEMcCorrie:2535435978056163,RockCloud678071:2535435978056163,DevoutAsp7316:2535413609540785";
-        OPS = "JEMcCorrie:2535435978056163,RockCloud678071:2535435978056163,DevoutAsp7316:2535413609540785";
-      };
-      image = "itzg/minecraft-bedrock-server";
-      ports = ["0.0.0.0:19132:19132/udp"];
-      volumes = ["/srv/minecraft/:/data"];
-    };
-  };
 
   services.rke2 = {
     enable = true;
