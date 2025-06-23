@@ -63,6 +63,12 @@
         "${modifier}+n" = "exec firefox";
         "${modifier}+x" = "exec 'wofi --modi drun,run --show drun'";
 
+        # Move workspace
+        "${modifier}+Ctrl+Shift+Right" = "move workspace to output right";
+        "${modifier}+Ctrl+Shift+Left" = "move workspace to output left";
+        "${modifier}+Ctrl+Shift+Down" = "move workspace to output down";
+        "${modifier}+Ctrl+Shift+Up" = "move workspace to output up";
+
         # Media buttons
         "XF86AudioLowerVolume" = "exec wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%- -l 1.2";
         "XF86AudioRaiseVolume" = "exec wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+ -l 1.2";
