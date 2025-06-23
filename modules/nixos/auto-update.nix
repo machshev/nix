@@ -22,6 +22,9 @@ with lib; {
       enable = true;
       flake = config.machshev.autoupdate.flakePath;
       flags = [
+        "--update-input"
+        "nixpkgs"
+        "--no-write-lock-file"
         "-L" # print build logs
       ];
       dates = "02:00";
