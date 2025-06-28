@@ -45,7 +45,7 @@
     config = rec {
       modifier = "Mod4";
 
-      terminal = "cosmic-term";#"alacritty";
+      terminal = "alacritty";
       menu = "dmenu_path | dmenu | xargs swaymsg exec --";
 
       window = {
@@ -61,6 +61,7 @@
 
       keybindings = lib.mkOptionDefault {
         "${modifier}+n" = "exec firefox";
+        "${modifier}+t" = "exec cosmic-term";
         "${modifier}+x" = "exec 'wofi --modi drun,run --show drun'";
 
         # Move workspace
