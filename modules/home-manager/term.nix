@@ -4,6 +4,8 @@
     screen
     tmux
 
+    cosmic-term
+
     # system
     gparted
 
