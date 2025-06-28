@@ -45,7 +45,7 @@
     config = rec {
       modifier = "Mod4";
 
-      terminal = "alacritty";
+      terminal = "cosmic-term";#"alacritty";
       menu = "dmenu_path | dmenu | xargs swaymsg exec --";
 
       window = {
