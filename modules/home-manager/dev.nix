@@ -1,7 +1,5 @@
 {pkgs, ...}: {
   home.packages = with pkgs; [
-    devenv
-
     # Common
     gnumake
     git
