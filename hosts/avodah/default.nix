@@ -32,19 +32,16 @@
 
   lowrisc = {
     identity = "james.mccorrie@lowrisc.org";
-    auth.gcloudCli = {
-      enable = true;
-      user = "jamesm";
-    };
-    applyUdevRules = true;
+    auth.gcloudCli.enable = true;
     configSync.enable = true;
+    nebula.enable = true;
+    tools.enable = true;
+    applyUdevRules = true;
     faillock.enable = true;
     itPolicy.workstation = true;
     kubeAuthPlugin.enable = true;
-    nebula.enable = true;
     network = true;
     nixRegistry.enable = true;
-    tools.enable = true;
     usePublicCache = true;
   };
 
