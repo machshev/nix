@@ -16,14 +16,21 @@
     jq
     ripgrep
     yq-go
+    fclones
+    xan
+    xcp
+    xh
 
     # misc
     bemenu
     bingrep
     broot
+    dog
+    dust
     dutree
     feh
     grex
+    just
     ranger
     skim
 

@@ -35,7 +35,10 @@
     auth.gcloudCli.enable = true;
     configSync.enable = true;
     nebula.enable = true;
-    tools.enable = true;
+    tools = {
+      enable = true;
+      admin.enable = true;
+    };
     applyUdevRules = true;
     faillock.enable = true;
     itPolicy.workstation = true;

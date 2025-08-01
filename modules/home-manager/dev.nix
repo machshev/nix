@@ -1,13 +1,14 @@
 {pkgs, ...}: {
   home.packages = with pkgs; [
     # Common
-    gnumake
+    direnv
+    gh
     git
     git-interactive-rebase-tool
-    typos-lsp
-    gh
-    direnv
+    gnumake
+    teehee
     tokei
+    typos-lsp
 
     # Asm
     asm-lsp
@@ -27,6 +28,10 @@
 
     # Nix
     nil
+
+    # Rust
+    evcxr # rust repl
+
 
     # Node
     nodejs

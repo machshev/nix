@@ -47,9 +47,6 @@
     lowrisc-it = {
       url = "git+ssh://git@github.com/lowRISC/lowrisc-it";
       inputs.nixpkgs.follows = "nixpkgs";
-      inputs.disko.follows = "disko";
-      inputs.flake-programs-sqlite.follows = "flake-programs-sqlite";
-      inputs.sops-nix.follows = "sops-nix";
     };
 
     lowrisc-nix = {
