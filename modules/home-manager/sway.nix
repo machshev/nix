@@ -125,6 +125,10 @@
           xkb_layout = "gb";
         };
 
+        "1118:2040:Microsoft_Wired_Keyboard_600" = {
+          xkb_layout = "gb";
+        };
+
         "16700:8467:Dell_KB216_Wired_Keyboard" = {
           # removed il temporary solution as multiple layouts don't seem to be working
           # xkb_layout = "us,il";
@@ -145,6 +149,11 @@
 
         "LG Electronics LG HDR 4K 0x00018916" = {
           scale = "1.7";
+        };
+
+        "Dell Inc. DELL P3421W 4KF6TR3" = {
+          scale = "1.1";
+          pos = "-1300 -200";
         };
       };
 
