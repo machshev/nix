@@ -130,9 +130,7 @@
         };
 
         "16700:8467:Dell_KB216_Wired_Keyboard" = {
-          # removed il temporary solution as multiple layouts don't seem to be working
-          # xkb_layout = "us,il";
-          xkb_layout = "us";
+          xkb_layout = "us,il";
           xkb_options = "grp:rctrl_toggle";
         };
       };
