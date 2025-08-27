@@ -12,7 +12,6 @@
   services.zigbee2mqtt = {
     enable = true;
     package = pkgs-unstable.zigbee2mqtt;
-    # package = pkgs-unstable.zigbee2mqtt_2; # Fails with core dump
     settings = {
       homeassistant = true;
       permit_join = true;
@@ -110,10 +109,13 @@
           friendly_name = "Lyda Bedroom TRV";
         };
         "0xf84477fffe935142" = {
-          friendly_name = "0xf84477fffe935142";
+          friendly_name = "Upstairs Bathroom Prox";
         };
         "0xa4c13835b74a7629" = {
-          friendly_name = "0xa4c13835b74a7629";
+          friendly_name = "Pantry Light Switch";
+        };
+        "0xa4c138a174191ad0" = {
+          friendly_name = "Porch Light Switch";
         };
       };
     };
@@ -131,14 +133,6 @@
       # https://www.home-assistant.io/integrations/default_config/
       default_config = {};
 
-      zha.zigpy_config.ota.z2m_remote_index = "https://raw.githubusercontent.com/Koenkk/zigbee-OTA/master/index.json";
-
-      zha = {
-        database_path = "/var/lib/hass/zigbee.db";
-        enable_quirks = true;
-        custom_quirks_path = "/var/lib/hass/zhaquirks";
-      };
-
       "automation manual" = [];
       "automation ui" = "!include automations.yaml";
 
@@ -151,6 +145,7 @@
 
     extraComponents = [
       "alexa"
+      "mqtt"
       "default_config"
       "esphome"
       "met"
@@ -158,7 +153,6 @@
       "reolink"
       "tuya"
       "velux"
-      "zha"
     ];
 
     extraPackages = ps:
