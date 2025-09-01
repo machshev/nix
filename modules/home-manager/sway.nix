@@ -80,6 +80,8 @@
         "XF86AudioPlay" = "exec playerctl play-pause";
         "XF86AudioNext" = "exec playerctl next";
         "XF86AudioPrev" = "exec playerctl previous";
+        "${modifier}+f5" = "exec brightnessctl s 10%-";
+        "${modifier}+f6" = "exec brightnessctl s 10%+";
 
         # Notifications
         "${modifier}+Ctrl+Space" = "exec makoctl dismiss";
