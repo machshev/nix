@@ -14,20 +14,46 @@ with lib; {
   };
 
   config = mkIf config.machshev.display {
-    xdg.portal = lib.mkForce {
+    xdg.icons.enable = true;
+    xdg.mime.enable = true;
+
+    xdg.mime.defaultApplications = {
+      "text/html" = "firefox";
+      "x-scheme-handler/http" = "firefox";
+      "x-scheme-handler/https" = "firefox";
+      "x-scheme-handler/about" = "firefox";
+      "x-scheme-handler/unknown" = "firefox";
+    };
+
+    xdg.portal = {
       enable = true;
       wlr.enable = true;
+      config = {
+        sway = {
+          default = ["gtk"];
+          "org.freedesktop.impl.portal.Secret" = ["gnome-keyring"];
+          "org.freedesktop.portal.ScreenCast" = [ "wlr" ];
+          "org.freedesktop.portal.Screenshot" = [ "wlr" ];
+          "org.freedesktop.portal.OpenURI"   = [ "gtk" ];
+        };
+      };
+      xdgOpenUsePortal = true;
       extraPortals = [
         pkgs.xdg-desktop-portal-wlr
         pkgs.xdg-desktop-portal-gtk
       ];
     };
 
-    # X11
+    # Gnome (required for gtk portal)
     services.xserver.enable = true;
-
     services.xserver.displayManager.gdm.enable = true;
     services.xserver.displayManager.gdm.wayland = true;
+    services.xserver.desktopManager.gnome.enable = true;
+
+    services.gnome.core-apps.enable = false;
+    services.gnome.core-developer-tools.enable = false;
+    services.gnome.games.enable = false;
+    environment.gnome.excludePackages = with pkgs; [ gnome-tour gnome-user-docs ];
 
     # Sway
     programs.sway = {
@@ -38,6 +64,8 @@ with lib; {
     services.dbus.enable = true;
 
     environment.systemPackages = with pkgs; [
+      xdg-desktop-portal-gtk
+      xdg-desktop-portal-wlr
       wlroots
       xwayland
       wlr-randr
@@ -49,6 +77,12 @@ with lib; {
       qt6.qmake
       qt6.qtwayland
     ];
+
+    qt = {
+      enable = true;
+      platformTheme = "gnome";
+      style = "adwaita-dark";
+    };
 
     environment.sessionVariables = {
       CLUTTER_BACKEND = "wayland";

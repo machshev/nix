@@ -24,8 +24,6 @@
     wl-clipboard
     wofi
     xclip
-    xdg-desktop-portal-gtk
-    xdg-desktop-portal-wlr
     xdg-user-dirs
     xdg-utils
     ydotool
