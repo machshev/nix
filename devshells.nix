@@ -1,5 +1,6 @@
 {
   nixpkgs,
+  nixpkgs-unstable,
   flake-utils,
   ...
 }:
@@ -7,7 +8,22 @@ flake-utils.lib.eachDefaultSystemMap (system: let
   pkgs = import nixpkgs {
     inherit system;
   };
+  pkgs-unstable = import nixpkgs-unstable {
+    inherit system;
+  };
 in {
+  admin = pkgs.mkShell {
+    name = "Reverse Engineering";
+    packages = (with pkgs; [
+      ssh-to-age
+      rage
+      yubikey-manager
+      age-plugin-yubikey
+    ]) ++ (with pkgs-unstable; [
+      sops
+    ]);
+  };
+
   re-hacking = pkgs.mkShell {
     name = "Reverse Engineering";
     packages = with pkgs; [

@@ -12,6 +12,23 @@
     ./minecraft.nix
   ];
 
+  sops = {
+    defaultSopsFile = ./secrets.yaml;
+    secrets."z2m.yaml" = {
+      format = "yaml";
+      sopsFile = ./z2m-secrets.yaml;
+      key = "";
+      owner = "zigbee2mqtt";
+      restartUnits = [ "zigbee2mqtt.service" ];
+    };
+    secrets."mosquitto/root" = {};
+    secrets."mosquitto/z2m" = {};
+    secrets."mosquitto/hass" = {
+      restartUnits = [ "home-assistant.service" ];
+    };
+    secrets."mosquitto/chimum" = {};
+  };
+
   machshev = {
     hostName = "qatan";
     machineID = "92fe87dfa38d10d30eda16a267693da2";

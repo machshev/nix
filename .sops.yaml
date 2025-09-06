@@ -1,0 +1,14 @@
+admin-keys:
+  - &david-yk1 age1yubikey1q2u6dzn0nnpvl3arcggqs4x5j6mgxfr7yxdp6j0ssmyu2wnwf6q8sqkwste
+  - &david-yk2 age1yubikey1q0c5ydg6cq8xypzxpaj07vhfnn8fah4kre5gky68z4w6lvpwuw7twg264ed
+server-keys:
+  - &qatan age12ryfv9a5lrz8lr2zazpwr9awlv0vqyhc6m94zn4rd0rzfhsg94aswav3r6
+
+creation_rules:
+  - path_regex: hosts/qatan/*
+    key_groups:
+      - age:
+        - *david-yk1
+        - *david-yk2
+        - *qatan
+

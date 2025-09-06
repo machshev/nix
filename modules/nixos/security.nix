@@ -47,5 +47,7 @@ with lib; {
       # Use age (ED25519) instead of gpg (RSA)
       gnupg.sshKeyPaths = [];
     };
+
+    services.pcscd.enable = true;
   };
 }
