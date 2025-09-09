@@ -8,7 +8,11 @@
     gnumake
     teehee
     tokei
+
+    # Common lsp
     typos-lsp
+    yamllint
+    yaml-language-server
 
     # Asm
     asm-lsp
@@ -31,7 +35,6 @@
 
     # Rust
     evcxr # rust repl
-
 
     # Node
     nodejs
