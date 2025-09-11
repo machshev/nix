@@ -76,12 +76,15 @@ with lib; {
       qt5.qtwayland
       qt6.qmake
       qt6.qtwayland
+      adwaita-qt
+      adwaita-fonts
+      adwaita-icon-theme
     ];
 
     qt = {
       enable = true;
-      platformTheme = "gnome";
-      style = "adwaita-dark";
+      # platformTheme = "gnome";
+      #style = "adwaita-dark";
     };
 
     environment.sessionVariables = {

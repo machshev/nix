@@ -86,18 +86,19 @@
     cloc = "tokei";
     ps = "procs";
 
-    # git abbreviations
+    # git abbreviations - https://github.com/wfxr/forgit
     gA = "git add -A";
+    gu = "git add -u";
     gP = "git push -f";
     gb = "git branch";
     gbd = "git branch --delete";
     gcm = "git commit -m";
-    gco = "git checkout";
-    gcob = "git checkout -b";
+    gcb = "git checkout";
+    gct = "git checkout";
+    gcf = "git checkout";
     gp = "git push --follow-tags";
     gpom = "git push origin main";
     gst = "git stash";
-    gstp = "git stash pop";
     ga = "git add";
     gbc = "git rev-parse --abbrev-ref HEAD";
     gbs = "git show-branch";
@@ -118,20 +119,17 @@
     gk = "gitk --all";
     gl = "glog -10";
     glog = "git log --pretty=format:\"%C(yellow)%h %C(cyan)%<(24)%ad %Cgreen%an%C(auto)%d%Creset: %s\" --date=local";
-    gm = "git merge --ff-only --no-verify";
-    gmt = "git mergetool";
     gpu = "git pull --rebase";
-    gr = "git rebase";
-    gra = "git rebase --abort";
-    grc = "git rebase --continue";
-    gri = "git rebase -i";
+    grba = "git rebase --abort";
+    grbc = "git rebase --continue";
+    grb = "git rebase -i";
     gs = "git status -b --show-stash -M --ahead-behind";
-    gsta = "git stash apply";
-    gstcl = "git stash clear";
-    gstd = "git stash drop";
-    gstl = "git stash list --pretty=format:\"%C(red)%<(10)%gd %C(yellow)%h %C(cyan)%<(13)%cr %Cgreen%an%C(auto)%d%Creset: %s\"";
-    gsts = "git stash show";
-    gu = "git add -u";
+    gsa = "git stash apply";
+    gscl = "git stash clear";
+    gsd = "git stash drop";
+    gsl = "git stash list --pretty=format:\"%C(red)%<(10)%gd %C(yellow)%h %C(cyan)%<(13)%cr %Cgreen%an%C(auto)%d%Creset: %s\"";
+    gsp = "git stash pop";
+    gss = "git stash show";
 
     # k8s
     kc = "kubectl";
