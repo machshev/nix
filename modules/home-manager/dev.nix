@@ -13,25 +13,22 @@
     typos-lsp
     yamllint
     yaml-language-server
-
-    # Asm
+    terraform-ls # opentofu-ls not yet included
     asm-lsp
+    zls # zig
+    nil # nix
+    nodePackages.bash-language-server
 
     # WASM
     wabt
 
     # Zig
     zig
-    zls
 
     # C
     gcc
-    #clang
     maim
     conky
-
-    # Nix
-    nil
 
     # Rust
     evcxr # rust repl
@@ -42,7 +39,6 @@
     # Shell
     shellcheck
     shfmt
-    nodePackages.bash-language-server
 
     # Docker
     docker-compose
