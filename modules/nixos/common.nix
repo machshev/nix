@@ -43,7 +43,13 @@ with lib; {
       podman-tui # status of containers in the terminal
       podman-compose # start group of containers for dev
       zoom-us
+      # Keyboard
+      qmk
+      via
     ];
+
+    hardware.keyboard.qmk.enable = true;
+    services.udev.packages = [ pkgs.via ];
 
     virtualisation.libvirtd.enable = true;
 
