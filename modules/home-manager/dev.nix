@@ -1,67 +1,73 @@
-{pkgs, pkgs-unstable, ...}: {
-  home.packages = (with pkgs; [
-    # Common
-    direnv
-    gh
-    git
-    git-interactive-rebase-tool
-    gnumake
-    teehee
-    tokei
+{
+  pkgs,
+  pkgs-unstable,
+  ...
+}: {
+  home.packages =
+    (with pkgs; [
+      # Common
+      direnv
+      gh
+      git
+      git-interactive-rebase-tool
+      gnumake
+      teehee
+      tokei
 
-    # Common lsp
-    typos-lsp
-    yamllint
-    yaml-language-server
-    terraform-ls # opentofu-ls not yet included
-    asm-lsp
-    zls # zig
-    nil # nix
-    nodePackages.bash-language-server
+      # Common lsp
+      typos-lsp
+      yamllint
+      yaml-language-server
+      terraform-ls # opentofu-ls not yet included
+      asm-lsp
+      zls # zig
+      nil # nix
+      nodePackages.bash-language-server
 
-    # WASM
-    wabt
+      # WASM
+      wabt
 
-    # Zig
-    zig
+      # Zig
+      zig
 
-    # C
-    gcc
-    maim
-    conky
+      # C
+      gcc
+      maim
+      conky
 
-    # Rust
-    evcxr # rust repl
+      # Rust
+      evcxr # rust repl
 
-    # Python
-    ruff
-    pyright
+      # Python
+      ruff
+      pyright
 
-    # Node
-    nodejs
+      # Node
+      nodejs
 
-    # Shell
-    shellcheck
-    shfmt
+      # Shell
+      shellcheck
+      shfmt
 
-    # Docker
-    docker-compose
+      # Docker
+      docker-compose
 
-    # libvirt
-    virt-manager
+      # libvirt
+      virt-manager
 
-    # eda
-    usbutils
+      # eda
+      usbutils
 
-    # Programmers
-    #segger-ozone
-    openssl.dev
+      # Programmers
+      #segger-ozone
+      openssl.dev
 
-    # Misc [old]
-    v4l-utils
-    vlc
-  ]) ++ (with pkgs-unstable; [
-    # Python
-    python313Packages.pyrefly
-  ]);
+      # Misc [old]
+      v4l-utils
+      vlc
+    ])
+    ++ (with pkgs-unstable; [
+      # Python
+      pyrefly
+    ]);
 }

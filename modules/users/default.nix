@@ -30,8 +30,11 @@
   mkHomeManager = {
     inputs,
     users,
-  }: {
-    extraSpecialArgs = {inherit inputs;};
+  }: let
+    system = "x86_64-linux";
+    pkgs-unstable = inputs.nixpkgs-unstable.legacyPackages.${system};
+  in {
+    extraSpecialArgs = {inherit inputs pkgs-unstable;};
     useUserPackages = true;
     useGlobalPkgs = true;
     users = lib.genAttrs users (name:

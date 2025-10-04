@@ -32,7 +32,6 @@
 
   users.users.root.initialHashedPassword = "$6$z8fXf0P0ap18L20y$NCe1iQXlG.Rv.br/sAnj7cpIQk5pvpikddLfxQKebJU0xJhsGj9/Pyu.MQ2vW/9St7unvHQo5AoqsjUX8bqZl1";
 
-
   environment.systemPackages = with pkgs; [
     zoom-us
   ];

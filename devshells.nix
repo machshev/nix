@@ -14,14 +14,16 @@ flake-utils.lib.eachDefaultSystemMap (system: let
 in {
   admin = pkgs.mkShell {
     name = "Reverse Engineering";
-    packages = (with pkgs; [
-      ssh-to-age
-      rage
-      yubikey-manager
-      age-plugin-yubikey
-    ]) ++ (with pkgs-unstable; [
-      sops
-    ]);
+    packages =
+      (with pkgs; [
+        ssh-to-age
+        rage
+        yubikey-manager
+        age-plugin-yubikey
+      ])
+      ++ (with pkgs-unstable; [
+        sops
+      ]);
   };
 
   re-hacking = pkgs.mkShell {
@@ -64,15 +66,17 @@ in {
 
   python = pkgs.mkShell {
     name = "Python dev shell";
-    packages = (with pkgs; [
-      uv
-      ruff
-      pyright
-      python313
-      python313Packages.ipython
-    ]) ++ (with pkgs-unstable; [
-      python313Packages.pyrefly
-    ]);
+    packages =
+      (with pkgs; [
+        uv
+        ruff
+        pyright
+        python313
+        python313Packages.ipython
+      ])
+      ++ (with pkgs-unstable; [
+        pyrefly
+      ]);
   };
 
   lua = pkgs.mkShell {

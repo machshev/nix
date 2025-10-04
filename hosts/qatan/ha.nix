@@ -38,108 +38,164 @@
         port = 1880;
       };
       devices = {
-        "0x70b3d52b6010191f" = {
-          friendly_name = "Pantry Plug";
-        };
-        "0x70b3d52b60101bc6" = {
-          friendly_name = "Ma Bedroom Plug";
-        };
-        "0x70b3d52b60101bf3" = {
-          friendly_name = "Joseph Desk Plug";
-        };
-        "0x70b3d52b601304c7" = {
-          friendly_name = "Main Bedroom Lamp Plug";
-        };
-        "0x70b3d52b6013050c" = {
-          friendly_name = "Lydia Plug";
-        };
-        "0x70b3d52b6013061a" = {
-          friendly_name = "Garage Plug";
-        };
-        "0x70b3d52b60130759" = {
-          friendly_name = "Pa Bedroom Plug";
-        };
-        "0x70b3d52b6013092c" = {
-          friendly_name = "Landing Plug";
-        };
-        "0x70b3d52b6013665a" = {
-          friendly_name = "Dining Room Plug";
-        };
-        "0x70b3d52b6013e606" = {
-          friendly_name = "Porch Plug";
-        };
-        "0x70b3d52b6013ea19" = {
-          friendly_name = "Joseph Clock Plug";
-        };
-        "0x70b3d52b6013ea36" = {
-          friendly_name = "Main Bedroom Spair Plug";
-        };
-        "0xa4c138002ea566eb" = {
-          friendly_name = "Lydia Bedroom TH";
-          retain = true;
-        };
-        "0xa4c13800e03e57d5" = {
-          friendly_name = "Utility TH";
-          retain = true;
-        };
-        "0xa4c13838ba7d8851" = {
-          friendly_name = "Main Bedroom TRV";
-        };
-        "0xa4c1383f19e3f83e" = {
-          friendly_name = "Landing TH";
-          retain = true;
-        };
-        "0xa4c13842b8f117aa" = {
-          friendly_name = "Main Bedroom TH";
-          retain = true;
-        };
-        "0xa4c1385a32ff17ca" = {
-          friendly_name = "Pa Bedroom TH";
-          retain = true;
-        };
-        "0xa4c13871ad72c96a" = {
-          friendly_name = "Office TH";
+        # Loft
+        "0xa4c138f029d46b66" = {
+          friendly_name = "Loft TH";
           retain = true;
         };
         "0xa4c13898499173f6" = {
           friendly_name = "boiler";
         };
-        "0xa4c13899d44484c1" = {
-          friendly_name = "Joseph Bedroom TH";
+
+        # Main Bedroom
+        "0xa4c13842b8f117aa" = {
+          friendly_name = "Main Bedroom TH";
           retain = true;
         };
-        "0xa4c138a74c3c4693" = {
-          friendly_name = "Upstairs Bathroom TH";
-          retain = true;
+        "0xa4c13838ba7d8851" = {
+          friendly_name = "Main Bedroom TRV";
         };
+
+        "0x70b3d52b601304c7" = {
+          friendly_name = "Main Bedroom Lamp Plug";
+        };
+        "0x70b3d52b6013ea36" = {
+          friendly_name = "Main Bedroom Spair Plug";
+        };
+
+        # Ma room
         "0xa4c138c88c8f6bee" = {
           friendly_name = "Ma Bedroom TH";
           retain = true;
         };
+        "0xa4c138f25967576a" = {
+          friendly_name = "Ma Bedroom TRV";
+        };
+
+        "0x70b3d52b60101bc6" = {
+          friendly_name = "Ma Bedroom Plug";
+        };
+
+        # Pa room
+        "0xa4c1385a32ff17ca" = {
+          friendly_name = "Pa Bedroom TH";
+          retain = true;
+        };
+        "0xa4c138248270865d" = {
+          friendly_name = "Pa Bedroom TRV";
+        };
+
+        "0x70b3d52b60130759" = {
+          friendly_name = "Pa Bedroom Plug";
+        };
+
+        # Joseph room
+        "0xa4c13899d44484c1" = {
+          friendly_name = "Joseph Bedroom TH";
+          retain = true;
+        };
+        "0xa4c138e5dd77d1ed" = {
+          friendly_name = "Joseph Bedroom TRV";
+        };
+
+        "0x70b3d52b6013ea19" = {
+          friendly_name = "Joseph Clock Plug";
+        };
+        "0x70b3d52b60101bf3" = {
+          friendly_name = "Joseph Desk Plug";
+        };
+
+        # Lydia room
+        "0xa4c138002ea566eb" = {
+          friendly_name = "Lydia Bedroom TH";
+          retain = true;
+        };
+        #"" = {
+        #  friendly_name = "Lyda Bedroom TRV";
+        #};
+
+        "0x70b3d52b6013050c" = {
+          friendly_name = "Lydia Plug";
+        };
+
+        # Pantry
+        "0xa4c13835b74a7629" = {
+          friendly_name = "Pantry Light Switch";
+        };
+        "0x70b3d52b6010191f" = {
+          friendly_name = "Pantry Plug";
+        };
+
+        # Garage
+        "0x70b3d52b6013061a" = {
+          friendly_name = "Garage Plug";
+        };
+
+        # Landing
+        "0xa4c1383f19e3f83e" = {
+          friendly_name = "Landing TH";
+          retain = true;
+        };
+        "0x70b3d52b6013092c" = {
+          friendly_name = "Landing Plug";
+        };
+
+        # Utility
+        "0xa4c13800e03e57d5" = {
+          friendly_name = "Utility TH";
+          retain = true;
+        };
+
+        # Office
+        "0xa4c13871ad72c96a" = {
+          friendly_name = "Office TH";
+          retain = true;
+        };
+
+        # Kitchen
         "0xa4c138e6138436e9" = {
           friendly_name = "Kitchen TH";
           retain = true;
         };
+        "0xa4c1383508adae9b" = {
+          friendly_name = "Kitchen TRV";
+        };
+
+
         "0xa4c138eeb2a3457b" = {
           friendly_name = "Dining Room TH";
           retain = true;
         };
-        "0xa4c138f029d46b66" = {
-          friendly_name = "Loft TH";
-          retain = true;
+        "0xa4c138cfac6f68ae" = {
+          friendly_name = "Dining Room TRV";
         };
-        "0xa4c138f25967576a" = {
-          friendly_name = "Lyda Bedroom TRV";
+
+        "0x70b3d52b6013665a" = {
+          friendly_name = "Dining Room Plug";
+        };
+
+        # Upstairs Bathroom
+        "0xa4c138a74c3c4693" = {
+          friendly_name = "Upstairs Bathroom TH";
+          retain = true;
         };
         "0xf84477fffe935142" = {
           friendly_name = "Upstairs Bathroom Prox";
         };
-        "0xa4c13835b74a7629" = {
-          friendly_name = "Pantry Light Switch";
+
+        # Downstairs Bathroom
+        "0x6cfd22fffe1be062" = {
+          friendly_name = "Downstairs Bathroom Prox";
+        };
+
+        # Porch
+        "0x70b3d52b6013e606" = {
+          friendly_name = "Porch Plug";
         };
         "0xa4c138a174191ad0" = {
           friendly_name = "Porch Light Switch";
         };
+
       };
     };
   };

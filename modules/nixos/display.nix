@@ -32,9 +32,9 @@ with lib; {
         sway = {
           default = ["gtk"];
           "org.freedesktop.impl.portal.Secret" = ["gnome-keyring"];
-          "org.freedesktop.portal.ScreenCast" = [ "wlr" ];
-          "org.freedesktop.portal.Screenshot" = [ "wlr" ];
-          "org.freedesktop.portal.OpenURI"   = [ "gtk" ];
+          "org.freedesktop.portal.ScreenCast" = ["wlr"];
+          "org.freedesktop.portal.Screenshot" = ["wlr"];
+          "org.freedesktop.portal.OpenURI" = ["gtk"];
         };
       };
       xdgOpenUsePortal = true;
@@ -53,7 +53,7 @@ with lib; {
     services.gnome.core-apps.enable = false;
     services.gnome.core-developer-tools.enable = false;
     services.gnome.games.enable = false;
-    environment.gnome.excludePackages = with pkgs; [ gnome-tour gnome-user-docs ];
+    environment.gnome.excludePackages = with pkgs; [gnome-tour gnome-user-docs];
 
     # Sway
     programs.sway = {

@@ -49,7 +49,7 @@ with lib; {
     ];
 
     hardware.keyboard.qmk.enable = true;
-    services.udev.packages = [ pkgs.via ];
+    services.udev.packages = [pkgs.via];
 
     virtualisation.libvirtd.enable = true;
 

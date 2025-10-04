@@ -19,12 +19,12 @@
       sopsFile = ./z2m-secrets.yaml;
       key = "";
       owner = "zigbee2mqtt";
-      restartUnits = [ "zigbee2mqtt.service" ];
+      restartUnits = ["zigbee2mqtt.service"];
     };
     secrets."mosquitto/root" = {};
     secrets."mosquitto/z2m" = {};
     secrets."mosquitto/hass" = {
-      restartUnits = [ "home-assistant.service" ];
+      restartUnits = ["home-assistant.service"];
     };
     secrets."mosquitto/chimum" = {};
   };

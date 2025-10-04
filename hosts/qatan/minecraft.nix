@@ -1,7 +1,4 @@
-{
-  pkgs-unstable,
-  ...
-}: {
+{pkgs-unstable, ...}: {
   # manually installed ViaVersion and geysermc to get things going
   # TODO: look at https://github.com/Infinidoge/nix-minecraft/issues/68
 
@@ -21,7 +18,7 @@
     #};
     serverProperties = {
       difficulty = 3;
-      max-players = 5;
+      max-players = 6;
       motd = "NixOS Minecraft server!";
       white-list = false;
       allow-cheats = true;
