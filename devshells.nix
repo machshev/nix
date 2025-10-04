@@ -64,13 +64,15 @@ in {
 
   python = pkgs.mkShell {
     name = "Python dev shell";
-    packages = with pkgs; [
+    packages = (with pkgs; [
       uv
       ruff
       pyright
       python313
       python313Packages.ipython
-    ];
+    ]) ++ (with pkgs-unstable; [
+      python313Packages.pyrefly
+    ]);
   };
 
   lua = pkgs.mkShell {

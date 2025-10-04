@@ -1,5 +1,5 @@
-{pkgs, ...}: {
-  home.packages = with pkgs; [
+{pkgs, pkgs-unstable, ...}: {
+  home.packages = (with pkgs; [
     # Common
     direnv
     gh
@@ -33,6 +33,10 @@
     # Rust
     evcxr # rust repl
 
+    # Python
+    ruff
+    pyright
+
     # Node
     nodejs
 
@@ -56,5 +60,8 @@
     # Misc [old]
     v4l-utils
     vlc
-  ];
+  ]) ++ (with pkgs-unstable; [
+    # Python
+    python313Packages.pyrefly
+  ]);
 }
