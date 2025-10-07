@@ -42,7 +42,7 @@
       inputs.utils.follows = "flake-utils";
     };
 
-    nixvim.url = "github:nix-community/nixvim";
+    nvf.url = "github:notashelf/nvf";
 
     lowrisc-it = {
       url = "git+ssh://git@github.com/lowRISC/lowrisc-it";
@@ -62,6 +62,7 @@
     nixpkgs-unstable,
     flake-utils,
     deploy-rs,
+    nvf,
     ...
   } @ inputs: let
     machshev-pkgs = import ./pkgs {
@@ -70,6 +71,7 @@
         nixpkgs
         nixpkgs-unstable
         flake-utils
+        nvf
         ;
     };
 

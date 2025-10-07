@@ -2,6 +2,7 @@
 {
   nixpkgs,
   flake-utils,
+  nvf,
   ...
 }:
 flake-utils.lib.eachDefaultSystemMap (system: let
@@ -10,4 +11,12 @@ flake-utils.lib.eachDefaultSystemMap (system: let
   };
 in {
   dev-udev-rules = pkgs.callPackage ./dev-udev-rules {};
+  neovim =
+    (nvf.lib.neovimConfiguration {
+      pkgs = nixpkgs.legacyPackages.x86_64-linux;
+      modules = [
+        ./nvf
+      ];
+    })
+    .neovim;
 })

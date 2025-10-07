@@ -161,7 +161,6 @@
           friendly_name = "Kitchen TRV";
         };
 
-
         "0xa4c138eeb2a3457b" = {
           friendly_name = "Dining Room TH";
           retain = true;
@@ -195,7 +194,6 @@
         "0xa4c138a174191ad0" = {
           friendly_name = "Porch Light Switch";
         };
-
       };
     };
   };
