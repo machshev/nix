@@ -37,20 +37,20 @@
         };
         "ruff" = {
           root_markers = [".git" "pyproject.toml" "setup.py"];
-          filetypes = ["py"];
+          filetypes = ["python"];
         };
         "pyright" = {
           root_markers = [".git" "pyproject.toml" "setup.py"];
-          filetypes = ["py"];
+          filetypes = ["python"];
         };
-        "pyrefly" = {
-          root_markers = [".git" "pyproject.toml" "setup.py"];
-          filetypes = ["py"];
-        };
-        # "ty" = {
-        #    root_markers = [".git" "pyproject.toml" "setup.py"];
-        #    filetypes = ["py"];
+        #"pyrefly" = {
+        #  root_markers = [".git" "pyproject.toml" "setup.py"];
+        #  filetypes = ["python"];
         #};
+        "ty" = {
+            root_markers = [".git" "pyproject.toml" "setup.py"];
+            filetypes = ["python"];
+        };
       };
 
       mappings = {
@@ -99,7 +99,10 @@
       html.enable = true;
       sql.enable = true;
 
-      python.enable = true;
+      python = {
+        enable = true;
+        lsp.enable = false;
+      };
       rust = {
         enable = true;
         crates.enable = true;

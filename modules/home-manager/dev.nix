@@ -23,6 +23,11 @@
       zls # zig
       nil # nix
       nodePackages.bash-language-server
+      ansible-language-server
+      buf
+
+      # lua
+      lua-language-server
 
       # WASM
       wabt
@@ -37,6 +42,9 @@
 
       # Rust
       evcxr # rust repl
+
+      # Go
+      gopls
 
       # Python
       ruff
