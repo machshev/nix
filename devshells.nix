@@ -70,6 +70,7 @@ in {
       (with pkgs; [
         uv
         ruff
+        ty
         pyright
         python313
         python313Packages.ipython

@@ -7,8 +7,8 @@
   config.vim = {
     theme = {
       enable = true;
-      name = "catppuccin";
-      style = "mocha";
+      name = "tokyonight";
+      style = "night";
       transparent = false;
     };
 
@@ -17,11 +17,49 @@
     lsp = {
       enable = true;
 
+      inlayHints.enable = true;
       formatOnSave = true;
-      lspkind.enable = false;
+      lspkind.enable = true;
       lightbulb.enable = true;
       lspsaga.enable = false;
       trouble.enable = true;
+
+      servers = {
+        "*" = {
+          root_markers = [".git"];
+          capabilities = {
+            textDocument = {
+              semanticTokens = {
+                multilineTokenSupport = true;
+              };
+            };
+          };
+        };
+        "ruff" = {
+          root_markers = [".git" "pyproject.toml" "setup.py"];
+          filetypes = ["py"];
+        };
+        "pyright" = {
+          root_markers = [".git" "pyproject.toml" "setup.py"];
+          filetypes = ["py"];
+        };
+        "pyrefly" = {
+          root_markers = [".git" "pyproject.toml" "setup.py"];
+          filetypes = ["py"];
+        };
+        # "ty" = {
+        #    root_markers = [".git" "pyproject.toml" "setup.py"];
+        #    filetypes = ["py"];
+        #};
+      };
+
+      mappings = {
+        previousDiagnostic = "[d";
+        nextDiagnostic = "]d";
+
+        goToDeclaration = "gD";
+        goToDefinition = "gd";
+      };
     };
 
     debugger = {
@@ -33,20 +71,20 @@
 
     keymaps = [
       {
-        key="J";
+        key = "J";
         mode = ["n"];
         action = "mzJ`z";
         desc = "Join with next line";
       }
       {
-        key="<leader>pc";
+        key = "<leader>pc";
         mode = ["n"];
         action = "<cmd>Ex<CR>";
         desc = "Path Explorer";
       }
     ];
 
-   languages = {
+    languages = {
       enableFormat = true;
       enableTreesitter = true;
       enableExtraDiagnostics = true;
@@ -76,7 +114,7 @@
     statusline = {
       lualine = {
         enable = true;
-        theme = "catppuccin";
+        theme = "tokyonight";
       };
     };
 
@@ -173,7 +211,7 @@
       borders.enable = true;
       noice.enable = true;
       colorizer.enable = true;
-      modes-nvim.enable = false; # the theme looks terrible with catppuccin
+      modes-nvim.enable = true;
       illuminate.enable = true;
       breadcrumbs = {
         enable = false;
@@ -217,6 +255,5 @@
     presence = {
       neocord.enable = false;
     };
-
   };
 }

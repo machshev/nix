@@ -40,6 +40,7 @@
 
       # Python
       ruff
+      ty
       pyright
 
       # Node
