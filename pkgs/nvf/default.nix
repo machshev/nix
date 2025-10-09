@@ -1,9 +1,4 @@
-{
-  config,
-  pkgs,
-  lib,
-  ...
-}: {
+{pkgs, ...}: {
   config.vim = {
     theme = {
       enable = true;
@@ -13,6 +8,24 @@
     };
 
     spellcheck.enable = true;
+
+    options = {
+      expandtab = true;
+      smarttab = true;
+      breakindent = true;
+
+      ignorecase = true;
+      smartcase = true;
+
+      shiftwidth = 4;
+      tabstop = 4;
+      softtabstop = 4;
+
+      scrolloff = 10;
+
+      smartindent = false; # Use treesitter
+      autoindent = false; # Use treesitter
+    };
 
     lsp = {
       enable = true;
@@ -35,6 +48,7 @@
             };
           };
         };
+        "typos_lsp" = {};
         "ruff" = {
           root_markers = [".git" "pyproject.toml" "setup.py"];
           filetypes = ["python"];
@@ -48,17 +62,14 @@
         #  filetypes = ["python"];
         #};
         "ty" = {
-            root_markers = [".git" "pyproject.toml" "setup.py"];
-            filetypes = ["python"];
+          root_markers = [".git" "pyproject.toml" "setup.py"];
+          filetypes = ["python"];
         };
       };
 
       mappings = {
         previousDiagnostic = "[d";
         nextDiagnostic = "]d";
-
-        goToDeclaration = "gD";
-        goToDefinition = "gd";
       };
     };
 
@@ -82,26 +93,54 @@
         action = "<cmd>Ex<CR>";
         desc = "Path Explorer";
       }
+      {
+        key = "<leader>fF";
+        mode = ["n"];
+        action = "<cmd>Telescope find_files hidden=true no_ignore=true<CR>";
+        desc = "";
+      }
     ];
+
+    telescope = {
+      enable = true;
+      mappings = {
+        liveGrep = "<leader><leader>";
+      };
+      setupOpts = {
+        layout_config = {
+          horizontal = {
+            prompt_position = "bottom";
+          };
+        };
+      };
+    };
 
     languages = {
       enableFormat = true;
       enableTreesitter = true;
       enableExtraDiagnostics = true;
 
-      nix.enable = true;
+      nix = {
+        enable = true;
+        lsp.server = "nixd";
+      };
+
       markdown.enable = true;
       bash.enable = true;
+      yaml.enable = true;
 
+      assembly.enable = true;
       clang.enable = true;
 
       # css.enable = true; # Seems to be broken
       html.enable = true;
+      php.enable = true;
       sql.enable = true;
 
       python = {
         enable = true;
-        lsp.enable = false;
+        lsp.enable = false; # use `lsp.servers` instead
+        format.type = "ruff";
       };
       rust = {
         enable = true;
@@ -112,20 +151,44 @@
 
       dart.enable = true;
       zig.enable = true;
+      terraform.enable = true;
     };
 
-    statusline = {
-      lualine = {
-        enable = true;
-        theme = "tokyonight";
-      };
-    };
+    # Disable the built-in lualine module to avoid conflicts with custom plugin
+    # below
+    statusline.lualine.enable = false;
 
     autopairs.nvim-autopairs.enable = true;
 
     autocomplete = {
       nvim-cmp.enable = false;
-      blink-cmp.enable = true;
+      blink-cmp = {
+        enable = true;
+      };
+    };
+
+    formatter.conform-nvim = {
+      enable = true;
+      setupOpts = {
+        formatters_by_ft = {
+          go = ["goimports" "gofmt"];
+          lua = ["stylua"];
+          sh = ["shfmt"];
+          rust = ["rustfmt"];
+          css = ["biome"];
+          html = ["biome"];
+          json = ["biome"];
+          nix = ["nix_fmt"];
+          yaml = ["prettier"];
+          markdown = ["prettier"];
+          graphql = ["prettier"];
+          python = ["ruff_format"];
+          javascript = ["biome" "eslint_d"];
+          typescript = ["biome" "eslint_d"];
+          javascriptreact = ["biome" "eslint_d"];
+          typescriptreact = ["biome" "eslint_d"];
+        };
+      };
     };
 
     filetree = {
@@ -135,17 +198,31 @@
     };
 
     tabline = {
-      nvimBufferline.enable = true;
+      #nvimBufferline.enable = true;
     };
 
-    treesitter.context.enable = true;
+    treesitter = {
+      context.enable = true;
+      highlight.enable = true;
+      indent.enable = true;
+      grammars = with pkgs.vimPlugins.nvim-treesitter.builtGrammars; [
+        jq
+        dockerfile
+        markdown
+        markdown_inline
+        mermaid
+        regex
+        toml
+        udev
+        verilog
+        typescript
+      ];
+    };
 
     binds = {
       whichKey.enable = true;
       cheatsheet.enable = true;
     };
-
-    telescope.enable = true;
 
     git = {
       enable = true;
@@ -157,11 +234,6 @@
     minimap = {
       minimap-vim.enable = false;
       codewindow.enable = true; # lighter, faster, and uses lua for configuration
-    };
-
-    dashboard = {
-      dashboard-nvim.enable = false;
-      alpha.enable = true;
     };
 
     notify = {
@@ -214,7 +286,7 @@
       borders.enable = true;
       noice.enable = true;
       colorizer.enable = true;
-      modes-nvim.enable = true;
+      modes-nvim.enable = false; # default colors don't work with theme
       illuminate.enable = true;
       breadcrumbs = {
         enable = false;
@@ -225,6 +297,7 @@
         setupOpts.custom_colorcolumn = {
           # this is a freeform module, it's `buftype = int;` for configuring column position
           nix = "110";
+          python = ["88" "100"];
           ruby = "120";
           java = "130";
           go = ["90" "130"];
@@ -258,5 +331,30 @@
     presence = {
       neocord.enable = false;
     };
+
+    # Add lualine as a custom plugin
+    extraPlugins = {
+      lualine = {
+        package = "lualine-nvim";
+        setup = ''
+          local custom_opts = {
+            options = {
+              icons_enabled = true,
+              section_separators = ''',
+              component_separators = ''',
+            }
+          }
+
+          local custom_theme = require 'lualine.themes.tokyonight'
+          custom_theme.inactive.c.bg = '#101010'
+          custom_theme.normal.c.bg = '#101010'
+
+          custom_opts["options"]["theme"] = custom_theme
+          require('lualine').setup(custom_opts)
+        '';
+      };
+    };
+
+    extraPackages = [pkgs.pyright pkgs.ruff pkgs.ty];
   };
 }
