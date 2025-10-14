@@ -1,4 +1,7 @@
-{lib}: {
+{
+  lib,
+  machshev-pkgs,
+}: {
   mkUserCfg = {
     pkgs,
     name,
@@ -33,8 +36,9 @@
   }: let
     system = "x86_64-linux";
     pkgs-unstable = inputs.nixpkgs-unstable.legacyPackages.${system};
+    pkgs-machshev = machshev-pkgs.${system};
   in {
-    extraSpecialArgs = {inherit inputs pkgs-unstable;};
+    extraSpecialArgs = {inherit inputs pkgs-unstable pkgs-machshev;};
     useUserPackages = true;
     useGlobalPkgs = true;
     users = lib.genAttrs users (name:

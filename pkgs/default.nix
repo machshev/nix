@@ -13,7 +13,7 @@ in {
   dev-udev-rules = pkgs.callPackage ./dev-udev-rules {};
   neovim =
     (nvf.lib.neovimConfiguration {
-      pkgs = nixpkgs.legacyPackages.x86_64-linux;
+      inherit pkgs;
       modules = [
         ./nvf
       ];

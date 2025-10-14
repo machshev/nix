@@ -31,7 +31,7 @@
   lib = nixpkgs.lib;
   pkgs-unstable = nixpkgs-unstable.legacyPackages.${system};
 
-  user-helpers = import ../modules/users {inherit lib;};
+  user-helpers = import ../modules/users {inherit lib machshev-pkgs;};
 
   machines = ["gadol" "tzedef" "qatan" "tapuach" "avodah"];
 in rec {

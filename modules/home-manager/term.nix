@@ -1,50 +1,56 @@
-{pkgs, ...}: {
-  home.packages = with pkgs; [
-    nnn
-    screen
-    tmux
+{
+  pkgs,
+  pkgs-machshev,
+  ...
+}: {
+  home.packages =
+    (with pkgs; [
+      nnn
+      screen
+      tmux
 
-    cosmic-term
+      cosmic-term
 
-    # system
-    gparted
+      # system
+      gparted
 
-    # installing and syncing
-    stow
-    rclone
+      # installing and syncing
+      stow
+      rclone
 
-    # ssh and remote
-    mosh
-    wget
-    curl
-    wayvnc
+      # ssh and remote
+      mosh
+      wget
+      curl
+      wayvnc
 
-    # editors and viewing
-    neovim
+      # git
+      gitui
 
-    # git
-    gitui
+      # docs
+      tealdeer
 
-    # docs
-    tealdeer
+      # archives
+      unzip
+      xz
+      p7zip
+      zip
 
-    # archives
-    unzip
-    xz
-    p7zip
-    zip
-
-    # networking
-    mtr
-    bandwhich
-    iperf3
-    dnsutils
-    ldns
-    aria2
-    socat
-    nmap
-    ipcalc
-  ];
+      # networking
+      mtr
+      bandwhich
+      iperf3
+      dnsutils
+      ldns
+      aria2
+      socat
+      nmap
+      ipcalc
+    ])
+    ++ (with pkgs-machshev; [
+      # editors and viewing
+      neovim # custom version of Neovim (nvf)
+    ]);
 
   programs.alacritty = {
     enable = true;

@@ -107,11 +107,22 @@
         liveGrep = "<leader><leader>";
       };
       setupOpts = {
+        vimgrep_arguments = [
+          "${pkgs.ripgrep}/bin/rg"
+          "--color=never"
+          "--no-heading"
+          "--with-filename"
+          "--line-number"
+          "--column"
+          "--smart-case"
+          "-u"
+        ];
         layout_config = {
           horizontal = {
             prompt_position = "bottom";
           };
         };
+        extensions = ["fzf"];
       };
     };
 

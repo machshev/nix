@@ -131,6 +131,9 @@
     gsp = "git stash pop";
     gss = "git stash show";
 
+    # Diff
+    wd = "git diff -U0 --word-diff --no-index --";
+
     # k8s
     kc = "kubectl";
 
@@ -179,7 +182,7 @@
       kc = "kubectl";
 
       # python
-      pvea = ". ./.venv/bin/activate";
+      pvea = ". ./.venv/bin/activate.fish";
     };
 
     #interactiveShellInit = ''

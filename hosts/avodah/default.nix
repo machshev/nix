@@ -3,7 +3,6 @@
   pkgs,
   pkgs-unstable,
   user-helpers,
-  lib,
   ...
 }: {
   imports = [
