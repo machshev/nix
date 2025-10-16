@@ -29,7 +29,7 @@
       serial = {
         port = "tcp://10.140.0.20:6638";
         baudrate = 115200;
-        adapter = "ember";
+        adapter = "zstack";
         disable_led = false;
       };
       advanced.transmit_power = 20;
@@ -89,6 +89,9 @@
           friendly_name = "Pa Bedroom Plug";
         };
 
+        "0x6cfd22fffe197c11" = {
+          friendly_name = "Wetroom Prox";
+        };
         # Joseph room
         "0xa4c13899d44484c1" = {
           friendly_name = "Joseph Bedroom TH";
@@ -121,9 +124,6 @@
         # Pantry
         "0xa4c13835b74a7629" = {
           friendly_name = "Pantry Light Switch";
-        };
-        "0x70b3d52b6010191f" = {
-          friendly_name = "Pantry Plug";
         };
 
         # Garage
@@ -159,6 +159,9 @@
         };
         "0xa4c1383508adae9b" = {
           friendly_name = "Kitchen TRV";
+        };
+        "0x70b3d52b6010191f" = {
+          friendly_name = "Pantry Plug";
         };
 
         "0xa4c138eeb2a3457b" = {
