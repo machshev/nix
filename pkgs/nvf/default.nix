@@ -115,6 +115,7 @@
           "--line-number"
           "--column"
           "--smart-case"
+          "--no-ignore"
           "-u"
         ];
         layout_config = {
