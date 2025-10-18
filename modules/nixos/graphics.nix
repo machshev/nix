@@ -45,8 +45,8 @@ with lib; {
       # boot.kernelPackages = lib.mkForce pkgs.linuxPackages_6_9;
 
       # environment.systemPackages = [ nvidia-offload ];
-      services.xserver.videoDrivers = lib.mkDefault ["intel" "nvidia"];
-      hardware.graphics.extraPackages = with pkgs; [vaapiVdpau];
+      services.xserver.videoDrivers = lib.mkDefault ["nvidia"];
+      # hardware.graphics.extraPackages = with pkgs; [vaapiVdpau];
 
       nixpkgs.config.nvidia.acceptLicense = true;
 
@@ -62,6 +62,8 @@ with lib; {
 
         package = config.boot.kernelPackages.nvidiaPackages.legacy_470;
       };
+
+      # boot.blacklistedKernelModules = ["nouveau"];
 
       programs.sway.extraOptions = ["--unsupported-gpu"];
     })

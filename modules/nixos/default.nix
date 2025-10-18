@@ -4,6 +4,7 @@
     ./common.nix
     ./boot.nix
     ./graphics.nix
+    ./games.nix
     ./net.nix
     ./dev-udev-rules.nix
     ./printing.nix

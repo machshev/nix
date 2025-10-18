@@ -15,6 +15,11 @@
     applyUdevRules = true;
     autoupdate.enable = true;
     closedFirmwareUpdates = true;
+    # graphics.nvidia = true;
+    games = {
+      enable = true;
+      steam.enable = true;
+    };
   };
 
   users.users.david = user-helpers.mkUserCfg {
@@ -37,7 +42,6 @@
 
   environment.systemPackages = with pkgs; [
     docker-compose
-    lunar-client
   ];
 
   system.stateVersion = "24.11";
