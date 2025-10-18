@@ -32,7 +32,15 @@
         adapter = "zstack";
         disable_led = false;
       };
-      advanced.transmit_power = 20;
+      advanced = {
+        channel = 11;
+        transmit_power = 20;
+        last_seen = "ISO_8601";
+        elapsed = true;
+        pan_id = 3239;
+        ex_pan_id = [124 240 45 32 30 80 254 145];
+        network_key = [6 2 9 5 8 12 2 8 12 2 8 6 2 1 5 13];
+      };
       frontend = {
         enabled = true;
         port = 1880;
@@ -160,6 +168,9 @@
         "0xa4c1383508adae9b" = {
           friendly_name = "Kitchen TRV";
         };
+        "0x70b3d52b6013e606" = {
+          friendly_name = "Kitchen Plug";
+        };
         "0x70b3d52b6010191f" = {
           friendly_name = "Pantry Plug";
         };
@@ -191,9 +202,6 @@
         };
 
         # Porch
-        "0x70b3d52b6013e606" = {
-          friendly_name = "Porch Plug";
-        };
         "0xa4c138a174191ad0" = {
           friendly_name = "Porch Light Switch";
         };
