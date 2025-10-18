@@ -32,7 +32,14 @@
         adapter = "zstack";
         disable_led = false;
       };
-      advanced.transmit_power = 20;
+      advanced = {
+        channel = 26;
+        pan_id = 62355;
+        extended_pan_id = [3 237 123 77 223 225 63 81]; # 0x03ed7b4ddfe13f51
+        transmit_power = 20;
+        last_seen = "ISO_8601";
+        elapsed = true;
+      };
       frontend = {
         enabled = true;
         port = 1880;
@@ -72,8 +79,9 @@
           friendly_name = "Ma Bedroom TRV";
         };
 
+        # Hall
         "0x70b3d52b60101bc6" = {
-          friendly_name = "Ma Bedroom Plug";
+          friendly_name = "Hall Plug";
         };
 
         # Pa room
@@ -113,9 +121,9 @@
           friendly_name = "Lydia Bedroom TH";
           retain = true;
         };
-        #"" = {
-        #  friendly_name = "Lyda Bedroom TRV";
-        #};
+        "0xa4c138fff4965e30" = {
+          friendly_name = "Lyda Bedroom TRV";
+        };
 
         "0x70b3d52b6013050c" = {
           friendly_name = "Lydia Plug";
@@ -160,6 +168,9 @@
         "0xa4c1383508adae9b" = {
           friendly_name = "Kitchen TRV";
         };
+        "0x70b3d52b6013e606" = {
+          friendly_name = "Kitchen Plug";
+        };
         "0x70b3d52b6010191f" = {
           friendly_name = "Pantry Plug";
         };
@@ -174,6 +185,11 @@
 
         "0x70b3d52b6013665a" = {
           friendly_name = "Dining Room Plug";
+        };
+
+        # Side Lights
+        "0xa4c1382e4db54a1f" = {
+          friendly_name = "Side Lights";
         };
 
         # Upstairs Bathroom
@@ -191,9 +207,6 @@
         };
 
         # Porch
-        "0x70b3d52b6013e606" = {
-          friendly_name = "Porch Plug";
-        };
         "0xa4c138a174191ad0" = {
           friendly_name = "Porch Light Switch";
         };
