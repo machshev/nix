@@ -13,7 +13,7 @@ flake-utils.lib.eachDefaultSystemMap (system: let
   };
 in {
   admin = pkgs.mkShell {
-    name = "Reverse Engineering";
+    name = "Administration";
     packages =
       (with pkgs; [
         ssh-to-age
@@ -114,6 +114,7 @@ in {
     packages = with pkgs; [
       wireshark
       nmap
+      lrzsz
     ];
   };
 })

@@ -23,6 +23,7 @@
     };
     closedFirmwareUpdates = true;
     networkWait = false;
+    wireshark = true;
     graphics = {
       enable = true;
       intel = true;

@@ -18,6 +18,7 @@
     autoupdate.enable = true;
     closedFirmwareUpdates = true;
     graphics.enable = true;
+    wireshark = true;
   };
 
   users.users.david = user-helpers.mkUserCfg {

@@ -20,6 +20,7 @@
       enable = true;
       steam.enable = true;
     };
+    wireshark = true;
   };
 
   users.users.david = user-helpers.mkUserCfg {
