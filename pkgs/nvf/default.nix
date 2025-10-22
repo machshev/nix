@@ -10,21 +10,47 @@
     spellcheck.enable = true;
 
     options = {
+      wrap = false;
+
       expandtab = true;
       smarttab = true;
+      shiftround = true;
+      shiftwidth = 4;
+      tabstop = 4;
+      softtabstop = 4;
+
+      cursorline = true;
+      inccommand = "split";
+
+      scrolloff = 10;
+      signcolumn = "yes";
+
+      updatetime = 250;
+
+      colorcolumn = "80";
+
+      hlsearch = true;
+      incsearch = true;
+
+      number = true;
+      relativenumber = true;
+
+      textwidth = 80;
+      smartindent = false; # Use treesitter
+      autoindent = false; # Use treesitter
       breakindent = true;
 
       ignorecase = true;
       smartcase = true;
 
-      shiftwidth = 4;
-      tabstop = 4;
-      softtabstop = 4;
+      splitright = true;
+      splitbelow = true;
 
-      scrolloff = 10;
+      clipboard = "unnamedplus";
 
-      smartindent = false; # Use treesitter
-      autoindent = false; # Use treesitter
+      swapfile = false;
+      backup = false;
+      undofile = true;
     };
 
     lsp = {
@@ -49,6 +75,10 @@
           };
         };
         "typos_lsp" = {};
+        "rust-analyser" = {
+          root_markers = [".git" "cargo.toml"];
+          filetypes = ["rust"];
+        };
         "ruff" = {
           root_markers = [".git" "pyproject.toml" "setup.py"];
           filetypes = ["python"];
@@ -137,7 +167,10 @@
         lsp.server = "nixd";
       };
 
-      markdown.enable = true;
+      markdown = {
+        enable = true;
+        format.enable = false;
+      };
       bash.enable = true;
       yaml.enable = true;
 
@@ -192,7 +225,6 @@
           json = ["biome"];
           nix = ["nix_fmt"];
           yaml = ["prettier"];
-          markdown = ["prettier"];
           graphql = ["prettier"];
           python = ["ruff_format"];
           javascript = ["biome" "eslint_d"];
