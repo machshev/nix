@@ -29,12 +29,6 @@ with lib; {
       environment.etc."machine-id".text = config.machshev.machineID;
       networking.hostId = builtins.substring 0 8 config.machshev.machineID;
 
-      networking.networkmanager.enable = true;
-      environment.systemPackages = with pkgs; [
-        networkmanager
-        networkmanagerapplet
-      ];
-
       systemd.network.wait-online.enable = config.machshev.networkWait;
       systemd.network.wait-online.anyInterface = true;
 
@@ -58,6 +52,14 @@ with lib; {
         "net.ipv4.tcp_congestion_control" = "bbr";
       };
     }
+
+    (mkIf config.machshev.server {
+      networking.networkmanager.enable = true;
+      environment.systemPackages = with pkgs; [
+        networkmanager
+        networkmanagerapplet
+      ];
+    })
 
     (mkIf config.machshev.wireshark {
       programs.wireshark = {

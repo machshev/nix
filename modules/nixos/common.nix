@@ -1,4 +1,5 @@
 {
+  config,
   lib,
   pkgs,
   ...
@@ -11,70 +12,73 @@ with lib; {
     };
   };
 
-  config = {
-    programs.direnv.enable = true;
-    programs.fish.enable = true;
+  config = mkMerge [
+    (mkIf (!config.machshev.server) {
+      services.devmon.enable = true;
+      services.gvfs.enable = true;
+      services.udisks2.enable = true;
 
-    fonts.fontDir.enable = true;
-    fonts.packages = with pkgs;
-      [
-        font-awesome
-        google-fonts
-        meslo-lgs-nf
-        corefonts
-        vistafonts
-      ]
-      ++ builtins.filter lib.attrsets.isDerivation (builtins.attrValues
-        pkgs.nerd-fonts);
+      virtualisation.podman = {
+        enable = true;
+        dockerCompat = true;
+        defaultNetwork.settings.dns_enabled = true;
+      };
 
-    services.devmon.enable = true;
-    services.gvfs.enable = true;
-    services.udisks2.enable = true;
+      # Useful other development tools
+      environment.systemPackages = with pkgs; [
+        dive # look into docker image layers
+        podman-tui # status of containers in the terminal
+        podman-compose # start group of containers for dev
+        zoom-us
+        # Keyboard
+        qmk
+        via
+      ];
 
-    virtualisation.podman = {
-      enable = true;
-      dockerCompat = true;
-      defaultNetwork.settings.dns_enabled = true;
-    };
+      hardware.keyboard.qmk.enable = true;
+      services.udev.packages = [pkgs.via];
 
-    # Useful other development tools
-    environment.systemPackages = with pkgs; [
-      dive # look into docker image layers
-      podman-tui # status of containers in the terminal
-      podman-compose # start group of containers for dev
-      zoom-us
-      # Keyboard
-      qmk
-      via
-    ];
+      virtualisation.libvirtd.enable = true;
 
-    hardware.keyboard.qmk.enable = true;
-    services.udev.packages = [pkgs.via];
+      # touchpad support
+      services.libinput.enable = true;
 
-    virtualisation.libvirtd.enable = true;
+      services.xserver.xkb.layout = "us,gb,il";
+      services.xserver.xkb.variant = "";
 
-    # touchpad support
-    services.libinput.enable = true;
+      fonts.fontDir.enable = true;
+      fonts.packages = with pkgs;
+        [
+          font-awesome
+          google-fonts
+          meslo-lgs-nf
+        ]
+        ++ builtins.filter lib.attrsets.isDerivation (builtins.attrValues
+          pkgs.nerd-fonts);
 
-    services.xserver.xkb.layout = "us,gb,il";
-    services.xserver.xkb.variant = "";
+      nixpkgs.config.allowUnfree = true;
+    })
+    {
+      # Set your time zone.
+      time.timeZone = "Europe/London";
 
-    # Set your time zone.
-    time.timeZone = "Europe/London";
+      # Select internationalisation properties.
+      i18n.defaultLocale = "en_GB.UTF-8";
 
-    # Select internationalisation properties.
-    i18n.defaultLocale = "en_GB.UTF-8";
+      i18n.extraLocaleSettings = {
+        LC_ADDRESS = "en_GB.UTF-8";
+        LC_IDENTIFICATION = "en_GB.UTF-8";
+        LC_MEASUREMENT = "en_GB.UTF-8";
+        LC_MONETARY = "en_GB.UTF-8";
+        LC_NAME = "en_GB.UTF-8";
+        LC_NUMERIC = "en_GB.UTF-8";
+        LC_PAPER = "en_GB.UTF-8";
+        LC_TELEPHONE = "en_GB.UTF-8";
+        LC_TIME = "en_GB.UTF-8";
+      };
 
-    i18n.extraLocaleSettings = {
-      LC_ADDRESS = "en_GB.UTF-8";
-      LC_IDENTIFICATION = "en_GB.UTF-8";
-      LC_MEASUREMENT = "en_GB.UTF-8";
-      LC_MONETARY = "en_GB.UTF-8";
-      LC_NAME = "en_GB.UTF-8";
-      LC_NUMERIC = "en_GB.UTF-8";
-      LC_PAPER = "en_GB.UTF-8";
-      LC_TELEPHONE = "en_GB.UTF-8";
-      LC_TIME = "en_GB.UTF-8";
-    };
-  };
+      programs.direnv.enable = true;
+      programs.fish.enable = true;
+    }
+  ];
 }

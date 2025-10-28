@@ -19,6 +19,7 @@
     closedFirmwareUpdates = true;
     graphics.enable = true;
     wireshark = true;
+    sdr = true;
   };
 
   users.users.david = user-helpers.mkUserCfg {

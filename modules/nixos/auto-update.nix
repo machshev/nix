@@ -13,7 +13,7 @@ with lib; {
     machshev.autoupdate.flakePath = mkOption {
       type = types.str;
       description = "Path to the flake to use";
-      default = "github:machshev/mynix";
+      default = "github:machshev/nix";
     };
   };
 

@@ -33,7 +33,7 @@
 
   user-helpers = import ../modules/users {inherit lib machshev-pkgs;};
 
-  machines = ["gadol" "tzedef" "qatan" "tapuach" "avodah"];
+  machines = ["gadol" "tzedef" "qatan" "tapuach" "avodah" "anan"];
 in rec {
   nixosConfigurations = lib.genAttrs machines (name:
     lib.nixosSystem {
@@ -59,6 +59,9 @@ in rec {
         };
         interactiveSudo = true;
       }) {
+        anan = {
+          sshUser = "david";
+        };
         qatan = {
           sshUser = "david";
         };

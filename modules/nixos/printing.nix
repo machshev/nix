@@ -7,7 +7,7 @@ with lib; {
   options = {
     machshev.printing = mkOption {
       type = types.bool;
-      default = true;
+      default = false;
       description = "Enable printing services.";
     };
   };
