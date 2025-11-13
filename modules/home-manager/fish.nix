@@ -33,6 +33,7 @@
     just
     ranger
     skim
+    miniserve
 
     # system
     bottom
@@ -138,6 +139,8 @@
     kc = "kubectl";
 
     r = "ranger";
+
+    webs = "miniserve";
   };
 
   home.sessionVariables = {
