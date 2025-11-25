@@ -3,7 +3,8 @@
   description = "Dev environment Nix Packages";
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.05";
+    # nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.11";
+    nixpkgs.url = "github:NixOS/nixpkgs/release-25.11";
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
 
     flake-utils.url = "github:numtide/flake-utils";
@@ -32,7 +33,7 @@
     };
 
     lanzaboote = {
-      url = "github:nix-community/lanzaboote/v0.4.2";
+      url = "github:nix-community/lanzaboote/v0.4.3";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
