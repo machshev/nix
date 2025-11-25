@@ -47,14 +47,18 @@ with lib; {
       services.xserver.xkb.variant = "";
 
       fonts.fontDir.enable = true;
-      fonts.packages = with pkgs;
-        [
-          font-awesome
-          google-fonts
-          meslo-lgs-nf
-        ]
-        ++ builtins.filter lib.attrsets.isDerivation (builtins.attrValues
-          pkgs.nerd-fonts);
+      fonts.packages = with pkgs; [
+        font-awesome
+        google-fonts
+        meslo-lgs-nf
+        nerd-fonts.symbols-only
+        nerd-fonts.jetbrains-mono
+        nerd-fonts.fira-code
+        nerd-fonts.droid-sans-mono
+        nerd-fonts.noto
+        nerd-fonts.hack
+        nerd-fonts.ubuntu
+      ];
 
       nixpkgs.config.allowUnfree = true;
     })

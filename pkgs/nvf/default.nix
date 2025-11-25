@@ -258,7 +258,6 @@
         regex
         toml
         udev
-        verilog
         typescript
       ];
     };

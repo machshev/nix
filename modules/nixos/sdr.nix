@@ -18,7 +18,7 @@ with lib; {
 
     environment.systemPackages = with pkgs; [
       rtl-sdr
-      sdrangel
+      # sdrangel
       gqrx
     ];
   };

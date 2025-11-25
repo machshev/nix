@@ -1,10 +1,6 @@
-{
-  lib,
-  pkgs,
-  ...
-}: {
+{pkgs, ...}: {
   home.packages = with pkgs; [
-    firefox-wayland
+    firefox
     google-chrome
     chromium
   ];

@@ -104,7 +104,6 @@ in {
   ans = pkgs.mkShell {
     name = "Ansible dev shell";
     packages = with pkgs; [
-      ansible-language-server
       ansible-lint
     ];
   };

@@ -31,7 +31,6 @@
     bitwarden-desktop
     bitwarden-cli
     bitwarden-menu
-    goldwarden
   ];
 
   wayland.windowManager.sway = let

@@ -23,7 +23,6 @@
       zls # zig
       nil # nix
       nodePackages.bash-language-server
-      ansible-language-server
       buf
 
       # lua
