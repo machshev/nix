@@ -37,6 +37,7 @@
   # environment.
   home.packages = with pkgs; [
     taskwarrior3
+    wireguard-tools
   ];
 
   programs.git = {
