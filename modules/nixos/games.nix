@@ -23,6 +23,7 @@ with lib; {
     (mkIf config.machshev.games.enable {
       environment.systemPackages = with pkgs; [
         lunar-client
+        zeroad
       ];
     })
 

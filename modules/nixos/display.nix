@@ -11,6 +11,11 @@ with lib; {
       default = true;
       description = "Enable display.";
     };
+    machshev.vulkan = mkOption {
+      type = types.bool;
+      default = true;
+      description = "Enable vulkan.";
+    };
   };
 
   config = mkIf config.machshev.display {
@@ -63,23 +68,28 @@ with lib; {
 
     services.dbus.enable = true;
 
-    environment.systemPackages = with pkgs; [
-      xdg-desktop-portal-gtk
-      xdg-desktop-portal-wlr
-      wlroots
-      xwayland
-      wlr-randr
-      vulkan-tools
-      vulkan-validation-layers
-      vulkan-loader
-      vulkan-tools-lunarg
-      qt5.qtwayland
-      qt6.qmake
-      qt6.qtwayland
-      adwaita-qt
-      adwaita-fonts
-      adwaita-icon-theme
-    ];
+    environment.systemPackages = with pkgs;
+      lib.mkMerge [
+        [
+          xdg-desktop-portal-gtk
+          xdg-desktop-portal-wlr
+          wlroots
+          xwayland
+          wlr-randr
+          qt5.qtwayland
+          qt6.qmake
+          qt6.qtwayland
+          adwaita-qt
+          adwaita-fonts
+          adwaita-icon-theme
+        ]
+        (mkIf config.machshev.vulkan [
+          vulkan-tools
+          vulkan-validation-layers
+          vulkan-loader
+          vulkan-tools-lunarg
+        ])
+      ];
 
     qt = {
       enable = true;
@@ -87,21 +97,25 @@ with lib; {
       #style = "adwaita-dark";
     };
 
-    environment.sessionVariables = {
-      CLUTTER_BACKEND = "wayland";
-      GSETTINGS_SCHEMA_DIR = "${pkgs.gsettings-desktop-schemas}/share/gsettings-schemas/${pkgs.gsettings-desktop-schemas.name}/glib-2.0/schemas";
-      GTK_USE_PORTAL = "1";
-      MOZ_ENABLE_WAYLAND = "1";
-      NIXOS_OZONE_WL = "1";
-      NIXOS_XDG_OPEN_USE_PORTAL = "1";
-      POLKIT_AUTH_AGENT = "${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1";
-      SDL_VIDEODRIVER = "wayland";
-      WLR_NO_HARDWARE_CURSORS = "1";
-      WLR_RENDERER = "vulkan";
-      XDG_CURRENT_DESKTOP = "sway";
-      XDG_SESSION_DESKTOP = "sway";
-      XDG_SESSION_TYPE = "wayland";
-      _JAVA_AWT_WM_NONREPARENTING = "1";
-    };
+    environment.sessionVariables = lib.mkMerge [
+      {
+        CLUTTER_BACKEND = "wayland";
+        GSETTINGS_SCHEMA_DIR = "${pkgs.gsettings-desktop-schemas}/share/gsettings-schemas/${pkgs.gsettings-desktop-schemas.name}/glib-2.0/schemas";
+        GTK_USE_PORTAL = "1";
+        MOZ_ENABLE_WAYLAND = "1";
+        NIXOS_OZONE_WL = "1";
+        NIXOS_XDG_OPEN_USE_PORTAL = "1";
+        POLKIT_AUTH_AGENT = "${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1";
+        SDL_VIDEODRIVER = "wayland";
+        WLR_NO_HARDWARE_CURSORS = "1";
+        XDG_CURRENT_DESKTOP = "sway";
+        XDG_SESSION_DESKTOP = "sway";
+        XDG_SESSION_TYPE = "wayland";
+        _JAVA_AWT_WM_NONREPARENTING = "1";
+      }
+      (mkIf config.machshev.vulkan {
+        WLR_RENDERER = "vulkan";
+      })
+    ];
   };
 }

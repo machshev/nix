@@ -18,6 +18,7 @@
     autoupdate.enable = true;
     closedFirmwareUpdates = true;
     graphics.enable = true;
+    vulkan = false;
     games = {
       enable = true;
     };
