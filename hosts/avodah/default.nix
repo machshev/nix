@@ -24,6 +24,7 @@
     closedFirmwareUpdates = true;
     networkWait = false;
     wireshark = true;
+    sdr = true;
     graphics = {
       enable = true;
       intel = true;

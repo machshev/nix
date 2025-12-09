@@ -46,6 +46,8 @@ with lib; {
         };
         openFirewall = true;
       };
+      # Root ssh key
+      users.users.root.openssh.authorizedKeys.keyFiles = [../../keys/david.keys];
 
       boot.kernel.sysctl = {
         "net.core.default_qdisc" = "fq";

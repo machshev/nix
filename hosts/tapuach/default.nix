@@ -22,6 +22,7 @@
       enable = true;
       steam.enable = true;
     };
+    sdr = true;
   };
 
   users.users.david = user-helpers.mkUserCfg {

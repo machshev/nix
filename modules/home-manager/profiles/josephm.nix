@@ -33,10 +33,12 @@
 
   programs.git = {
     enable = true;
-    userEmail = "joseph.mccorrie@gmail.com";
-    userName = "Joseph McCorrie";
-    # signing.key = "GPG-KEY-ID";
-    # signing.signByDefault = true;
+    settings.user = {
+      email = "joseph.mccorrie@gmail.com";
+      name = "Joseph McCorrie";
+      # signing.key = "GPG-KEY-ID";
+      # signing.signByDefault = true;
+    };
   };
 
   # Let Home Manager install and manage itself.

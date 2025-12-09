@@ -10,7 +10,7 @@
   machshev = {
     hostName = "anan";
     machineID = "1c4c095a3728942bbc73011192e82ead";
-    autoupdate.enable = true;
+    autoupdate.enable = false;
     graphics.enable = false;
     display = false;
     sound = false;

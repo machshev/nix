@@ -24,6 +24,18 @@ with lib; {
       environment.systemPackages = with pkgs; [
         lunar-client
         zeroad
+        superTux
+        superTuxKart
+        mindustry
+      ];
+
+      networking.firewall.allowedUDPPorts = [
+        2759 # superTuxKart
+        20595 # 0ad
+      ];
+
+      networking.firewall.allowedTCPPorts = [
+        6567 # Mindustry
       ];
     })
 
