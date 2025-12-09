@@ -15,7 +15,8 @@
     hostName = "hadasa";
     machineID = "efbd05b7865e4152b98207339f6a2cec";
     applyUdevRules = true;
-    autoupdate.enable = true;
+    autoupdate.enable = false;
+    nixAutoGC = false;
     closedFirmwareUpdates = true;
     graphics.enable = true;
     vulkan = false;

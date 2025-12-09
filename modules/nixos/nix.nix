@@ -3,12 +3,18 @@
   inputs,
   lib,
   ...
-}: {
+}:
+with lib; {
   imports = [
     inputs.flake-programs-sqlite.nixosModules.programs-sqlite
   ];
 
   options = {
+    machshev.nixAutoGC = mkOption {
+      type = types.bool;
+      default = true;
+      description = "Enable nix auto gc.";
+    };
   };
 
   config = {
@@ -38,14 +44,14 @@
     # uses it.
     programs-sqlite.enable = config.programs.command-not-found.enable;
 
-    nix.gc = {
+    nix.gc = mkIf config.machshev.nixAutoGC {
       automatic = true;
       dates = "weekly";
       options = "--delete-older-than 14d";
     };
 
     # nix.settings.auto-optimise-store = true;
-    nix.optimise = {
+    nix.optimise = mkIf config.machshev.nixAutoGC {
       automatic = true;
       dates = ["weekly"];
     };
