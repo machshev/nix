@@ -13,7 +13,6 @@
     hostName = "gadol";
     machineID = "127faeee905223190bb95dba67694307";
     applyUdevRules = true;
-    autoupdate.enable = true;
     closedFirmwareUpdates = true;
     # graphics.nvidia = true;
     games = {
