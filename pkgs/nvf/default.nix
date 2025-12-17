@@ -164,7 +164,7 @@
 
       nix = {
         enable = true;
-        lsp.server = "nixd";
+        lsp.servers = ["nixd"];
       };
 
       markdown = {
@@ -185,11 +185,11 @@
       python = {
         enable = true;
         lsp.enable = false; # use `lsp.servers` instead
-        format.type = "ruff";
+        format.type = ["ruff"];
       };
       rust = {
         enable = true;
-        crates.enable = true;
+        extensions.crates-nvim.enable = true;
       };
       go.enable = true;
       lua.enable = true;

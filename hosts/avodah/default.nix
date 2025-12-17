@@ -29,7 +29,6 @@
       enable = true;
       intel = true;
     };
-    sdr = true;
   };
 
   lowrisc = {
