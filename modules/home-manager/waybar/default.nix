@@ -5,7 +5,7 @@
     settings = [
       {
         position = "bottom";
-        height = 25;
+        height = 24;
         spacing = 8;
         modules-left = ["sway/workspaces" "sway/mode" "sway/scratchpad" "custom/media"];
         modules-center = ["sway/window"];
@@ -17,10 +17,8 @@
           "memory"
           "temperature"
           "backlight"
-          "keyboard-state"
           "sway/language"
           "battery"
-          "battery#bat2"
           "clock"
           "tray"
         ];
@@ -74,8 +72,23 @@
           spacing = "10";
         };
         clock = {
-          tooltip-format = "<big>{ =%Y %B}</big>\n<tt><small>{calendar}</small></tt>";
-          format-alt = "{ =%Y-%m-%d}";
+          format = "{:%H:%M}";
+          format-alt = "{:%Y-%m-%d}";
+          tooltip-format = "<big>{:%B %Y}</big>\n<tt><small>{calendar}</small></tt>";
+          calendar = {
+            mode = "year";
+            mode-mon-col = 3;
+            weeks-pos = "right";
+            on-scroll = 1;
+            first-day-of-week = 0;
+            format = {
+              months = "<span color='#ffead3'><b>{}</b></span>";
+              days = "<span color='#ecc6d9'><b>{}</b></span>";
+              weeks = "<span color='#99ffdd'><b>W{}</b></span>";
+              weekdays = "<span color='#ffcc66'><b>{}</b></span>";
+              today = "<span color='#ff6699'><b><u>{}</u></b></span>";
+            };
+          };
         };
         cpu = {
           format = "{usage}%";

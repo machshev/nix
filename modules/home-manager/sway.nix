@@ -14,8 +14,9 @@
     blueman
     brightnessctl
     dunst
-    nautilus
     grim
+    nautilus
+    networkmanagerapplet
     pavucontrol
     playerctl
     slurp
