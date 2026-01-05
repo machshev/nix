@@ -42,7 +42,10 @@
       inputs.utils.follows = "flake-utils";
     };
 
-    nvf.url = "github:notashelf/nvf";
+    nvf = {
+      url = "github:notashelf/nvf";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     lowrisc-it = {
       url = "git+ssh://git@github.com/lowRISC/lowrisc-it";
