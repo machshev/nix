@@ -1,12 +1,12 @@
 # SPDX-License-Identifier: MIT
 {
-  nixpkgs,
+  nixpkgs-unstable,
   flake-utils,
   nvf,
   ...
 }:
 flake-utils.lib.eachDefaultSystemMap (system: let
-  pkgs = import nixpkgs {
+  pkgs = import nixpkgs-unstable {
     inherit system;
   };
 in {

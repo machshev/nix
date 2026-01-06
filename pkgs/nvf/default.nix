@@ -1,5 +1,8 @@
 {pkgs, ...}: {
   config.vim = {
+    viAlias = true;
+    vimAlias = true;
+
     theme = {
       enable = true;
       name = "tokyonight";
@@ -7,7 +10,10 @@
       transparent = false;
     };
 
-    spellcheck.enable = true;
+    spellcheck = {
+      enable = true;
+      programmingWordlist.enable = true;
+    };
 
     options = {
       wrap = false;
@@ -246,20 +252,11 @@
     };
 
     treesitter = {
+      enable = true;
       context.enable = true;
       highlight.enable = true;
       indent.enable = true;
-      grammars = with pkgs.vimPlugins.nvim-treesitter.builtGrammars; [
-        jq
-        dockerfile
-        markdown
-        markdown_inline
-        mermaid
-        regex
-        toml
-        udev
-        typescript
-      ];
+      grammars = pkgs.vimPlugins.nvim-treesitter.allGrammars;
     };
 
     binds = {
@@ -276,7 +273,7 @@
 
     minimap = {
       minimap-vim.enable = false;
-      codewindow.enable = true; # lighter, faster, and uses lua for configuration
+      codewindow.enable = false; # FIX: Currently broken with tree sitter changes
     };
 
     notify = {
