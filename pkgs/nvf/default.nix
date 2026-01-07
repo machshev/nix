@@ -12,7 +12,7 @@
 
     spellcheck = {
       enable = true;
-      programmingWordlist.enable = false;
+      programmingWordlist.enable = false; # FIX: Tries to download but fails
     };
 
     options = {
@@ -84,22 +84,6 @@
         "rust-analyser" = {
           root_markers = [".git" "cargo.toml"];
           filetypes = ["rust"];
-        };
-        "ruff" = {
-          root_markers = [".git" "pyproject.toml" "setup.py"];
-          filetypes = ["python"];
-        };
-        "pyright" = {
-          root_markers = [".git" "pyproject.toml" "setup.py"];
-          filetypes = ["python"];
-        };
-        #"pyrefly" = {
-        #  root_markers = [".git" "pyproject.toml" "setup.py"];
-        #  filetypes = ["python"];
-        #};
-        "ty" = {
-          root_markers = [".git" "pyproject.toml" "setup.py"];
-          filetypes = ["python"];
         };
       };
 
@@ -190,7 +174,7 @@
 
       python = {
         enable = true;
-        lsp.enable = false; # use `lsp.servers` instead
+        lsp.servers = ["ruff" "pyright" "ty"];
         format.type = ["ruff"];
       };
       rust = {
