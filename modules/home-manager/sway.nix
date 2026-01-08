@@ -117,21 +117,13 @@
       };
 
       input = {
-        "1:1:AT_Translated_Set_2_keyboard" = {
-          xkb_layout = "gb";
-        };
-
-        "7247:21:SIGMACH1P_USB_Keyboard" = {
-          xkb_layout = "gb";
-        };
-
-        "1118:2040:Microsoft_Wired_Keyboard_600" = {
-          xkb_layout = "gb";
-        };
-
         "16700:8467:Dell_KB216_Wired_Keyboard" = {
           xkb_layout = "us,il";
           xkb_options = "grp:rctrl_toggle";
+        };
+
+        "*" = {
+          xkb_layout = "gb";
         };
       };
 

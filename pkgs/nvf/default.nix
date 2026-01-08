@@ -12,7 +12,7 @@
 
     spellcheck = {
       enable = true;
-      programmingWordlist.enable = true;
+      programmingWordlist.enable = false;
     };
 
     options = {
