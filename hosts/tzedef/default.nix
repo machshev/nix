@@ -20,6 +20,7 @@
     graphics.enable = true;
     wireshark = true;
     sdr = true;
+    games.enable = true;
   };
 
   users.users.david = user-helpers.mkUserCfg {
