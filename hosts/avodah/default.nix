@@ -29,6 +29,7 @@
       enable = true;
       intel = true;
     };
+    printing = true;
   };
 
   lowrisc = {
