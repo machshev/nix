@@ -81,10 +81,6 @@
           };
         };
         "typos_lsp" = {};
-        "rust-analyser" = {
-          root_markers = [".git" "cargo.toml"];
-          filetypes = ["rust"];
-        };
       };
 
       mappings = {
@@ -151,6 +147,7 @@
       enableFormat = true;
       enableTreesitter = true;
       enableExtraDiagnostics = true;
+      enableDAP = true;
 
       nix = {
         enable = true;
@@ -179,14 +176,18 @@
       };
       rust = {
         enable = true;
-        extensions.crates-nvim.enable = true;
+        extensions.crates-nvim = {
+          enable = true;
+        };
       };
       go.enable = true;
       lua.enable = true;
 
       dart.enable = true;
       zig.enable = true;
-      terraform.enable = true;
+      terraform = {
+        enable = true;
+      };
     };
 
     # Disable the built-in lualine module to avoid conflicts with custom plugin
@@ -378,7 +379,5 @@
         '';
       };
     };
-
-    extraPackages = [pkgs.pyright pkgs.ruff pkgs.ty];
   };
 }
