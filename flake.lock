@@ -157,11 +157,11 @@
         "utils": "utils"
       },
       "locked": {
-        "lastModified": 1768048626,
-        "narHash": "sha256-hbTL+r1Vf/+QtdG3ixnWHWPyev5iiWNOWu7jhJC0WZY=",
+        "lastModified": 1768301234,
+        "narHash": "sha256-qYkwxc93Z5Q7hML86coZSrJEKJBDEOSZ03uAKFZNiDw=",
         "owner": "wamserma",
         "repo": "flake-programs-sqlite",
-        "rev": "3e194542cd2063b522e59724e313e7188f6a6909",
+        "rev": "bf5144c0fae3f3ba41cf822cded553d934126639",
         "type": "github"
       },
       "original": {
@@ -285,11 +285,11 @@
         "system-manager": "system-manager"
       },
       "locked": {
-        "lastModified": 1767957182,
-        "narHash": "sha256-Ebcn6iph3ioO4ka0MzbvgCLS0phYFVFWpYo0Vz7/3uw=",
+        "lastModified": 1768305586,
+        "narHash": "sha256-iMveoBXUJvG43C9ME8/qyvpexaYSzYvDpbncfcbW42E=",
         "ref": "refs/heads/master",
-        "rev": "e52e444011b7c157db76741866be363b41274212",
-        "revCount": 1433,
+        "rev": "5da05c29123f7522b21c5ff935fd5461d37b1bbc",
+        "revCount": 1463,
         "type": "git",
         "url": "ssh://git@github.com/lowRISC/lowrisc-it"
       },
@@ -310,11 +310,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1765996918,
-        "narHash": "sha256-ITu86FBJ1moDYdDSOXPXQTHX8V7Wz+Ab3Y6h4lUmlJY=",
+        "lastModified": 1767631699,
+        "narHash": "sha256-xnqoBGI+p/Kg3t+CVKhKVun6BlBBNr8aOrdtZ1Pqj/I=",
         "owner": "lowRISC",
         "repo": "lowrisc-nix",
-        "rev": "f091644699bd07bafe2492d0c0648b4ba495f683",
+        "rev": "06a2330d819f5a568f9929d8a49df7db82b1cd24",
         "type": "github"
       },
       "original": {
@@ -399,11 +399,11 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1767799921,
-        "narHash": "sha256-r4GVX+FToWVE2My8VVZH4V0pTIpnu2ZE8/Z4uxGEMBE=",
+        "lastModified": 1768242861,
+        "narHash": "sha256-F4IIxa5xDHjtrmMcayM8lHctUq1oGltfBQu2+oqDWP4=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "d351d0653aeb7877273920cd3e823994e7579b0b",
+        "rev": "1327e798cb055f96f92685df444e9a2c326ab5ed",
         "type": "github"
       },
       "original": {
@@ -415,11 +415,11 @@
     },
     "nixpkgs-unstable": {
       "locked": {
-        "lastModified": 1767892417,
-        "narHash": "sha256-dhhvQY67aboBk8b0/u0XB6vwHdgbROZT3fJAjyNh5Ww=",
+        "lastModified": 1768127708,
+        "narHash": "sha256-1Sm77VfZh3mU0F5OqKABNLWxOuDeHIlcFjsXeeiPazs=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "3497aa5c9457a9d88d71fa93a4a8368816fbeeba",
+        "rev": "ffbc9f8cbaacfb331b6017d5a5abb21a492c9a38",
         "type": "github"
       },
       "original": {
@@ -441,11 +441,11 @@
         "systems": "systems_4"
       },
       "locked": {
-        "lastModified": 1767992839,
-        "narHash": "sha256-qDcSFxMs6d/WjaVD1RtvFKtlv3FKEt8U10AFMSz+wvE=",
+        "lastModified": 1768307761,
+        "narHash": "sha256-Y4Y5wa75ft5Ix7ydiZc5aMzfQdAuxOsC2mSQ+qWWOHU=",
         "owner": "notashelf",
         "repo": "nvf",
-        "rev": "5b5548d2182063aa81e1e2dd0f0bc8cbb055179b",
+        "rev": "b985468159a02513773b3f9256bde9c85c5d8626",
         "type": "github"
       },
       "original": {
@@ -525,11 +525,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1768032389,
-        "narHash": "sha256-BVpTd93G0XmAK1iXiBdhUA5Uvt+WmM1YL0mA4REcT68=",
+        "lastModified": 1768271704,
+        "narHash": "sha256-jJqlW8A3OZ5tYbXphF7U8P8g/3Cn8PPwPa4YlJ/9agg=",
         "owner": "Mic92",
         "repo": "sops-nix",
-        "rev": "a8cfe238b93166f9f96c0df67a94e572554ee624",
+        "rev": "691b8b6713855d0fe463993867291c158472fc6f",
         "type": "github"
       },
       "original": {
@@ -546,11 +546,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1766013091,
-        "narHash": "sha256-qFKkS3kz8gzQ1hjFeXYINOOGNHeYSmsa5Nj1Xs4rAec=",
+        "lastModified": 1768210918,
+        "narHash": "sha256-INGxggdg84FhendGNXt5f2dvcfg431xpERXjTSGdn5c=",
         "owner": "numtide",
         "repo": "system-manager",
-        "rev": "bd3e4193c2bde18329e314b896b8e0ac8e17debd",
+        "rev": "778c9a60dd6bd9cb72ca9566fd733f7cf05eeeeb",
         "type": "github"
       },
       "original": {
