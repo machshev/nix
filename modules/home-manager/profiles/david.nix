@@ -1,6 +1,7 @@
 {pkgs, ...}: {
   imports = [
     # ../cad.nix
+    ../ai.nix
     ../dev.nix
     ../fish.nix
     ../internet.nix

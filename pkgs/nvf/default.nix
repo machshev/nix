@@ -57,6 +57,9 @@
       swapfile = false;
       backup = false;
       undofile = true;
+
+      exrc = true; # Enable project-local .nvim.lua / .exrc files
+      secure = true; # Restrict what .nvim.lua can do
     };
 
     lsp = {

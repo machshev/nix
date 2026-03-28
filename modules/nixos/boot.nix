@@ -31,7 +31,6 @@ with lib; {
     hardware.enableRedistributableFirmware = true;
 
     # Closed drivers
-    nixpkgs.config.allowUnfree = config.machshev.closedFirmwareUpdates;
     hardware.enableAllFirmware = config.machshev.closedFirmwareUpdates;
   };
 }

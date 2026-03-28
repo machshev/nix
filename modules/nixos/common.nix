@@ -59,8 +59,6 @@ with lib; {
         nerd-fonts.hack
         nerd-fonts.ubuntu
       ];
-
-      nixpkgs.config.allowUnfree = true;
     })
     {
       # Set your time zone.

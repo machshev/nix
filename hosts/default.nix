@@ -7,6 +7,8 @@
   ...
 }: let
   inherit (inputs) home-manager disko nixos-facter-modules sops-nix;
+  inherit (nixpkgs) lib;
+
   # This could just be inputs.deploy-rs, but doing so will require rebuild instead of using binary cache.
   # See instruction from the upstream repo: https://github.com/serokell/deploy-rs
   deploy-rs.lib = flake-utils.lib.eachDefaultSystemMap (
@@ -15,10 +17,10 @@
         inherit system;
         overlays = [
           inputs.deploy-rs.overlays.default
-          (final: prev: {
+          (prev: {
             deploy-rs = {
               inherit (nixpkgs.legacyPackages.${prev.system}) deploy-rs;
-              lib = prev.deploy-rs.lib;
+              inherit (prev.deploy-rs) lib;
             };
           })
         ];
@@ -28,8 +30,13 @@
   );
 
   system = "x86_64-linux";
-  lib = nixpkgs.lib;
-  pkgs-unstable = nixpkgs-unstable.legacyPackages.${system};
+
+  pkgs-unstable = import nixpkgs-unstable {
+    inherit system;
+    config = {
+      allowUnfree = true;
+    };
+  };
 
   user-helpers = import ../modules/users {inherit lib machshev-pkgs;};
 
@@ -37,6 +44,8 @@
 in rec {
   nixosConfigurations = lib.genAttrs machines (name:
     lib.nixosSystem {
+      inherit system;
+
       specialArgs = {inherit inputs pkgs-unstable machshev-pkgs user-helpers;};
       modules = [
         disko.nixosModules.disko
@@ -83,5 +92,5 @@ in rec {
       };
   };
 
-  checks = builtins.mapAttrs (system: deployLib: deployLib.deployChecks deploy) deploy-rs.lib;
+  checks = builtins.mapAttrs (deployLib: deployLib.deployChecks deploy) deploy-rs.lib;
 }

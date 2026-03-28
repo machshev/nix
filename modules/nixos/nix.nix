@@ -35,7 +35,7 @@ with lib; {
 
     nix.channel.enable = false;
 
-    nixpkgs.config.allowUnfree = true;
+    nixpkgs.config.allowUnfree = lib.mkForce true;
 
     programs.git.enable = lib.mkDefault true;
     programs.nix-ld.enable = true;
