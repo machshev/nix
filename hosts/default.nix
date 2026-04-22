@@ -44,10 +44,9 @@
 in rec {
   nixosConfigurations = lib.genAttrs machines (name:
     lib.nixosSystem {
-      inherit system;
-
       specialArgs = {inherit inputs pkgs-unstable machshev-pkgs user-helpers;};
       modules = [
+        {nixpkgs.hostPlatform = system;}
         disko.nixosModules.disko
         sops-nix.nixosModules.sops
         ../modules/nixos
@@ -64,7 +63,7 @@ in rec {
         hostname = name;
         profiles.system = {
           user = "root";
-          path = deploy-rs.lib.${nixosConfigurations.${name}.pkgs.system}.activate.nixos nixosConfigurations.${name};
+          path = deploy-rs.lib.${nixosConfigurations.${name}.pkgs.stdenv.hostPlatform.system}.activate.nixos nixosConfigurations.${name};
         };
         interactiveSudo = true;
       }) {

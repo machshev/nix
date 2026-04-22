@@ -11,7 +11,7 @@
     isNormalUser = true;
     createHome = true;
     description = "${cfg.fullName}";
-    extraGroups = [
+    extraGroups = cfg.extraGroups or [
       "networkmanager"
       "wheel"
       "dialout"

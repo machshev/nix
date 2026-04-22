@@ -17,5 +17,6 @@
     "docker"
     "libvirtd"
     "cdrom"
+    "buildkit"
   ];
 }

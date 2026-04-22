@@ -13,6 +13,7 @@
     ./games.nix
     ./graphics.nix
     ./jlink.nix
+    ./k8s.nix
     ./net.nix
     ./nix.nix
     ./printing.nix

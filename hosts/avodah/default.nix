@@ -30,6 +30,7 @@
       intel = true;
     };
     printing = true;
+    localDevK8s = true;
   };
 
   lowrisc = {
