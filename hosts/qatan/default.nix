@@ -66,9 +66,5 @@
   # Disable waitonline - workaround until working config found
   systemd.network.wait-online.enable = lib.mkForce false;
 
-  services.rke2 = {
-    enable = true;
-  };
-
   system.stateVersion = "24.11";
 }
