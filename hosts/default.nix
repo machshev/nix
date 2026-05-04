@@ -17,7 +17,7 @@
         inherit system;
         overlays = [
           inputs.deploy-rs.overlays.default
-          (prev: {
+          (final: prev: {
             deploy-rs = {
               inherit (nixpkgs.legacyPackages.${prev.system}) deploy-rs;
               inherit (prev.deploy-rs) lib;
@@ -90,6 +90,5 @@ in rec {
         };
       };
   };
-
-  checks = builtins.mapAttrs (deployLib: deployLib.deployChecks deploy) deploy-rs.lib;
+  checks = builtins.mapAttrs (system: deployLib: deployLib.deployChecks deploy) deploy-rs.lib;
 }
