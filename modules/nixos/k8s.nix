@@ -8,7 +8,7 @@ with lib; {
   options = {
     machshev.localDevK8s = mkOption {
       type = types.bool;
-      default = true;
+      default = false;
       description = "Enable local development K8s cluster.";
     };
   };
