@@ -151,8 +151,6 @@
         {
           command = "${pkgs.waybar}/bin/waybar";
           position = "bottom";
-          #height = 25;
-          #spacing = 8;
         }
       ];
 

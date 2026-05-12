@@ -62,7 +62,7 @@
       window = {
         padding.x = 0;
         padding.y = 0;
-        decorations = "buttonless";
+        decorations = "none";
       };
 
       font = {

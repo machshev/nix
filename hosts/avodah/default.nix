@@ -29,6 +29,7 @@
       enable = true;
       intel = true;
     };
+    niri.enable = true;
     printing = true;
     localDevK8s = true;
   };

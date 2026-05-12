@@ -16,6 +16,7 @@ with lib; {
       default = true;
       description = "Enable vulkan.";
     };
+    machshev.niri.enable = mkEnableOption "niri wayland compositor (system-level)";
   };
 
   config = mkIf config.machshev.display {
@@ -33,15 +34,24 @@ with lib; {
     xdg.portal = {
       enable = true;
       wlr.enable = true;
-      config = {
-        sway = {
-          default = ["gtk"];
-          "org.freedesktop.impl.portal.Secret" = ["gnome-keyring"];
-          "org.freedesktop.portal.ScreenCast" = ["wlr"];
-          "org.freedesktop.portal.Screenshot" = ["wlr"];
-          "org.freedesktop.portal.OpenURI" = ["gtk"];
-        };
-      };
+      config = mkMerge [
+        {
+          sway = {
+            default = ["gtk"];
+            "org.freedesktop.impl.portal.Secret" = ["gnome-keyring"];
+            "org.freedesktop.portal.ScreenCast" = ["wlr"];
+            "org.freedesktop.portal.Screenshot" = ["wlr"];
+            "org.freedesktop.portal.OpenURI" = ["gtk"];
+          };
+        }
+        (mkIf config.machshev.niri.enable {
+          niri = {
+            default = ["gnome" "gtk"];
+            "org.freedesktop.impl.portal.Secret" = ["gnome-keyring"];
+            "org.freedesktop.portal.OpenURI" = ["gtk"];
+          };
+        })
+      ];
       xdgOpenUsePortal = true;
       extraPortals = [
         pkgs.xdg-desktop-portal-wlr
@@ -117,5 +127,7 @@ with lib; {
         WLR_RENDERER = "vulkan";
       })
     ];
+
+    programs.niri.enable = mkIf config.machshev.niri.enable true;
   };
 }

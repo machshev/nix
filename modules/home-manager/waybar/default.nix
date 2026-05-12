@@ -1,6 +1,7 @@
 {pkgs, ...}: {
   programs.waybar = {
     enable = true;
+    systemd.enable = false;
     style = builtins.readFile ./style.css;
     settings = [
       {
@@ -91,11 +92,11 @@
           };
         };
         cpu = {
-          format = "{usage}%";
+          format = "  {usage}%";
           tooltip = false;
         };
         memory = {
-          format = "M ={}%";
+          format = "M {}%";
         };
         temperature = {
           critical-threshold = "80";

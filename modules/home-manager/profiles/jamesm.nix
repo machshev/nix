@@ -8,9 +8,12 @@
     #./office.nix
     ../starship
     ../sway.nix
+    ../niri.nix
     ../term.nix
     ../nixvim.nix
   ];
+
+  machshev.niri.enable = true;
 
   home.stateVersion = "24.11"; # Please read the comment before changing.
 
