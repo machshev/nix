@@ -11,20 +11,21 @@
     isNormalUser = true;
     createHome = true;
     description = "${cfg.fullName}";
-    extraGroups = cfg.extraGroups or [
-      "networkmanager"
-      "wheel"
-      "dialout"
-      "plugdev"
-      "wireshark"
-      "tty"
-      "audio"
-      "video"
-      "kvm"
-      "docker"
-      "libvirtd"
-      "cdrom"
-    ];
+    extraGroups =
+      cfg.extraGroups or [
+        "networkmanager"
+        "wheel"
+        "dialout"
+        "plugdev"
+        "wireshark"
+        "tty"
+        "audio"
+        "video"
+        "kvm"
+        "docker"
+        "libvirtd"
+        "cdrom"
+      ];
     openssh.authorizedKeys.keyFiles = [../../keys/${name}.keys];
     shell = pkgs.${cfg.shell};
     initialHashedPassword = cfg.initialHashedPassword;

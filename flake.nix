@@ -57,6 +57,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.flake-utils.follows = "flake-utils";
     };
+
+    treefmt-nix = {
+      url = "github:numtide/treefmt-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = {
@@ -65,8 +70,14 @@
     flake-utils,
     deploy-rs,
     nvf,
+    treefmt-nix,
     ...
   } @ inputs: let
+    treefmtEval = system:
+      treefmt-nix.lib.evalModule (nixpkgs.legacyPackages.${system}) {
+        projectRootFile = "flake.nix";
+        programs.alejandra.enable = true;
+      };
     machshev-pkgs = import ./pkgs {
       inherit
         inputs
@@ -108,6 +119,6 @@
     checks = machines.checks;
 
     # nix fmt
-    formatter.x86_64-linux = nixpkgs.legacyPackages.x86_64-linux.alejandra;
+    formatter = flake-utils.lib.eachDefaultSystemMap (system: (treefmtEval system).config.build.wrapper);
   };
 }
