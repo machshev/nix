@@ -196,11 +196,11 @@
         "utils": "utils"
       },
       "locked": {
-        "lastModified": 1778574706,
-        "narHash": "sha256-CTe3pHNWzPmZ9xVCWoilBzUHbXadYdZQQfIbVR9DRqY=",
+        "lastModified": 1778769528,
+        "narHash": "sha256-tVhANEDGeEQCg8OPQWXv6JK+5FbIzu3QINVXaNE31b4=",
         "owner": "wamserma",
         "repo": "flake-programs-sqlite",
-        "rev": "ca23bbc23149cf45d86f73f76b6bc37a5e931829",
+        "rev": "f7500348734fa471aebbf5c248b582da80111ba1",
         "type": "github"
       },
       "original": {
@@ -298,11 +298,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1778401693,
-        "narHash": "sha256-OVHdCqXXUF5UdGkH+FF2ZL06OLZjj2kvP2dIUmzVWoo=",
+        "lastModified": 1778606796,
+        "narHash": "sha256-P2krpSkFVYJ89bgsnAZ9RtQiGwiTW77sfSJp9SEDscM=",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "389b83002efc26f1145e89a6a8e6edc5a6435948",
+        "rev": "e1fd7350f4410972bcb8c42a697d8c924ffe642a",
         "type": "github"
       },
       "original": {
@@ -348,11 +348,11 @@
         "system-manager": "system-manager"
       },
       "locked": {
-        "lastModified": 1778496639,
-        "narHash": "sha256-e6Y30f/cqzttVNWoeUZQ+v8xvzEkSEKPGsDnc5DigoY=",
+        "lastModified": 1778771988,
+        "narHash": "sha256-RpStr0S1xoUK7dBXtdML/c+G45eJKgkv1NpkrUkOM38=",
         "ref": "refs/heads/master",
-        "rev": "ca8bfc79c6ab3daaead4072e57e6230d84ffb25f",
-        "revCount": 1681,
+        "rev": "8d8093f2ee55ae18bed3c71c8bd9f3c98c36ee84",
+        "revCount": 1684,
         "type": "git",
         "url": "ssh://git@github.com/lowRISC/lowrisc-it"
       },
@@ -373,11 +373,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1777979502,
-        "narHash": "sha256-mwCH4e20n6ZQfKb2mA1QXEcimXZm3P7v/zC6Wyx2hCE=",
+        "lastModified": 1778066499,
+        "narHash": "sha256-EzZhINb99tgy6coGLvfWf4WFYj2Ocv/3gOvPm+zF5X0=",
         "owner": "lowRISC",
         "repo": "lowrisc-nix",
-        "rev": "71dfb5f2978b42c62907de6f0ef49a3fce32585e",
+        "rev": "dbdb63a2f4048181dd8ae77406fbb6637cf1d3fb",
         "type": "github"
       },
       "original": {
@@ -479,11 +479,11 @@
     },
     "nixpkgs-unstable": {
       "locked": {
-        "lastModified": 1777954456,
-        "narHash": "sha256-hGdgeU2Nk87RAuZyYjyDjFL6LK7dAZN5RE9+hrDTkDU=",
+        "lastModified": 1778443072,
+        "narHash": "sha256-zi7/fsqM/kFdNuED//4WOCUtezGtKKqRNORjMvfwjnA=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "549bd84d6279f9852cae6225e372cc67fb91a4c1",
+        "rev": "da5ad661ba4e5ef59ba743f0d112cbc30e474f32",
         "type": "github"
       },
       "original": {
@@ -505,11 +505,11 @@
         "systems": "systems_5"
       },
       "locked": {
-        "lastModified": 1778408907,
-        "narHash": "sha256-QXjdRz5fssxAWDrtfBYxvjMtTqJzQAbnAmX3u22xCck=",
+        "lastModified": 1778784436,
+        "narHash": "sha256-YZtyd/3pdFcei72GtffA0OFjBf6x2cJQ1LEBIAcNMCk=",
         "owner": "notashelf",
         "repo": "nvf",
-        "rev": "e86a92e4b29b499e5f1285b737b7612115103da9",
+        "rev": "8b000238aa8c4727296c456a734f7ad63c2e236e",
         "type": "github"
       },
       "original": {
