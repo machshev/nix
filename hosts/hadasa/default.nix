@@ -38,6 +38,7 @@
   home-manager = user-helpers.mkHomeManager {
     inherit inputs;
     users = ["david" "lydiam"];
+    isDesktop = true;
   };
 
   # Workstation set default root password - MUST be changed on first login

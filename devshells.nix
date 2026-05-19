@@ -20,10 +20,18 @@ in {
         rage
         yubikey-manager
         age-plugin-yubikey
+        gparted
       ])
       ++ (with pkgs-unstable; [
         sops
       ]);
+  };
+
+  embedded = pkgs.mkShell {
+    name = "Embedded dev shell";
+    packages = with pkgs; [
+      screen
+    ];
   };
 
   re-hacking = pkgs.mkShell {
@@ -53,6 +61,7 @@ in {
       rustc
       rust-analyzer
       cargo
+      evcxr
     ];
   };
 
@@ -60,6 +69,7 @@ in {
     name = "Go dev shell";
     packages = with pkgs; [
       go
+      gopls
       buf
     ];
   };
@@ -78,6 +88,29 @@ in {
       ++ (with pkgs-unstable; [
         pyrefly
       ]);
+  };
+
+  zig = pkgs.mkShell {
+    name = "Zig dev shell";
+    packages = with pkgs; [
+      zig
+      zls
+    ];
+  };
+
+  js = pkgs.mkShell {
+    name = "JS/Node dev shell";
+    packages = with pkgs; [
+      nodejs
+    ];
+  };
+
+  wasm = pkgs.mkShell {
+    name = "WASM dev shell";
+    packages = with pkgs; [
+      wabt
+      asm-lsp
+    ];
   };
 
   lua = pkgs.mkShell {

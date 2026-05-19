@@ -34,12 +34,13 @@
   mkHomeManager = {
     inputs,
     users,
+    isDesktop ? false,
   }: let
     system = "x86_64-linux";
     pkgs-unstable = inputs.nixpkgs-unstable.legacyPackages.${system};
     pkgs-machshev = machshev-pkgs.${system};
   in {
-    extraSpecialArgs = {inherit inputs pkgs-unstable pkgs-machshev;};
+    extraSpecialArgs = {inherit inputs pkgs-unstable pkgs-machshev isDesktop;};
     useUserPackages = true;
     useGlobalPkgs = true;
     users = lib.genAttrs users (name:

@@ -27,7 +27,9 @@ in {
 
       blueman
       brightnessctl
+      conky
       grim
+      maim
       nautilus
       networkmanagerapplet
       pavucontrol

@@ -1,28 +1,22 @@
 {
   pkgs,
   pkgs-machshev,
+  lib,
+  isDesktop ? false,
   ...
 }: {
   home.packages =
     (with pkgs; [
       nnn
-      screen
       tmux
 
-      cosmic-term
-
-      # system
-      gparted
-
       # installing and syncing
-      stow
       rclone
 
       # ssh and remote
       mosh
       wget
       curl
-      wayvnc
 
       # git
       gitui
@@ -47,12 +41,13 @@
       nmap
       ipcalc
     ])
-    ++ (with pkgs-machshev; [
+    ++ lib.optionals isDesktop (with pkgs; [wayvnc])
+    ++ [
       # editors and viewing
-      neovim # custom version of Neovim (nvf)
-    ]);
+      (if isDesktop then pkgs-machshev.neovim else pkgs.neovim)
+    ];
 
-  programs.alacritty = {
+  programs.alacritty = lib.mkIf isDesktop {
     enable = true;
     settings = {
       env = {

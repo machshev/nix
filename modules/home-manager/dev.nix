@@ -1,81 +1,39 @@
 {
   pkgs,
-  pkgs-unstable,
+  lib,
+  isDesktop ? false,
   ...
 }: {
   home.packages =
     (with pkgs; [
-      # Common
-      direnv
-      gh
-      git
-      git-interactive-rebase-tool
-      gnumake
-      teehee
-      tokei
+    # Common
+    direnv
+    gh
+    git
+    git-interactive-rebase-tool
+    gnumake
+    tokei
 
-      # Common lsp
-      typos-lsp
-      yamllint
-      yaml-language-server
-      terraform-ls # opentofu-ls not yet included
-      asm-lsp
-      zls # zig
-      nil # nix
-      nodePackages.bash-language-server
-      buf
+    # Common lsp
+    typos-lsp
+    nil # nix
+    nodePackages.bash-language-server
 
-      # lua
-      lua-language-server
+    # C
+    gcc
 
-      # WASM
-      wabt
+    # Shell
+    shellcheck
+    shfmt
 
-      # Zig
-      zig
+    # Docker
+    docker-compose
 
-      # C
-      gcc
-      maim
-      conky
-
-      # Rust
-      evcxr # rust repl
-
-      # Go
-      gopls
-
-      # Python
-      ruff
-      ty
-      pyright
-
-      # Node
-      nodejs
-
-      # Shell
-      shellcheck
-      shfmt
-
-      # Docker
-      docker-compose
-
-      # libvirt
-      virt-manager
-
-      # eda
-      usbutils
-
-      # Programmers
-      #segger-ozone
-      openssl.dev
-
-      # Misc [old]
-      v4l-utils
-      vlc
-    ])
-    ++ (with pkgs-unstable; [
-      # Python
-      pyrefly
-    ]);
+    # eda
+    usbutils
+  ])
+  ++ lib.optionals isDesktop (with pkgs; [
+    # libvirt
+    virt-manager
+  ]);
 }

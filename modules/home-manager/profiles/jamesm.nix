@@ -10,7 +10,6 @@
     ../sway.nix
     ../niri.nix
     ../term.nix
-    ../nixvim.nix
   ];
 
   machshev.niri.enable = true;

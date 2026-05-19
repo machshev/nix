@@ -12,7 +12,6 @@
     ../starship
     ../sway.nix
     ../term.nix
-    ../nixvim.nix
   ];
 
   home.stateVersion = "24.11"; # Please read the comment before changing.
