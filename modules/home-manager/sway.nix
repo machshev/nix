@@ -163,6 +163,8 @@
           command = "nitrogen --restore";
           always = true;
         }
+        {command = "systemctl --user import-environment XDG_DATA_DIRS PATH";}
+        {command = "dbus-update-activation-environment --systemd XDG_DATA_DIRS PATH";}
       ];
     };
   };

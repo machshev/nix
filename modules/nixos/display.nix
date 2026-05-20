@@ -21,14 +21,19 @@ with lib; {
 
   config = mkIf config.machshev.display {
     xdg.icons.enable = true;
-    xdg.mime.enable = true;
 
-    xdg.mime.defaultApplications = {
-      "text/html" = "firefox";
-      "x-scheme-handler/http" = "firefox";
-      "x-scheme-handler/https" = "firefox";
-      "x-scheme-handler/about" = "firefox";
-      "x-scheme-handler/unknown" = "firefox";
+    xdg.mime = {
+      enable = true;
+      defaultApplications = {
+        "text/html" = "firefox";
+        "x-scheme-handler/http" = "firefox";
+        "x-scheme-handler/https" = "firefox";
+        "x-scheme-handler/about" = "firefox";
+        "x-scheme-handler/unknown" = "firefox";
+        "x-scheme-handler/zoommtg" = "Zoom.desktop";
+        "x-scheme-handler/zoomus" = "Zoom.desktop";
+        "x-scheme-handler/zoom" = "Zoom.desktop";
+      };
     };
 
     xdg.portal = {
@@ -39,20 +44,19 @@ with lib; {
           sway = {
             default = ["gtk"];
             "org.freedesktop.impl.portal.Secret" = ["gnome-keyring"];
-            "org.freedesktop.portal.ScreenCast" = ["wlr"];
-            "org.freedesktop.portal.Screenshot" = ["wlr"];
-            "org.freedesktop.portal.OpenURI" = ["gtk"];
+            "org.freedesktop.impl.portal.ScreenCast" = ["wlr"];
+            "org.freedesktop.impl.portal.Screenshot" = ["wlr"];
+            "org.freedesktop.impl.portal.OpenURI" = ["gtk"];
           };
         }
         (mkIf config.machshev.niri.enable {
           niri = {
             default = ["gnome" "gtk"];
             "org.freedesktop.impl.portal.Secret" = ["gnome-keyring"];
-            "org.freedesktop.portal.OpenURI" = ["gtk"];
+            "org.freedesktop.impl.portal.OpenURI" = ["gtk"];
           };
         })
       ];
-      xdgOpenUsePortal = true;
       extraPortals = [
         pkgs.xdg-desktop-portal-wlr
         pkgs.xdg-desktop-portal-gtk
