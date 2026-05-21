@@ -12,3 +12,8 @@ creation_rules:
         - *david-yk2
         - *qatan
 
+  - path_regex: secrets/david\.yaml
+    key_groups:
+      - age:
+        - *david-yk1
+        - *david-yk2
