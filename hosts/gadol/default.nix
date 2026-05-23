@@ -2,7 +2,6 @@
   inputs,
   pkgs,
   user-helpers,
-  lib,
   ...
 }: {
   imports = [
@@ -20,7 +19,9 @@
       steam.enable = true;
     };
     wireshark = true;
+    niri.enable = true;
     sdr = true;
+    localDevK8s = true;
   };
 
   users.users.david = user-helpers.mkUserCfg {
@@ -35,16 +36,6 @@
   };
 
   users.users.root.initialHashedPassword = "$6$z8fXf0P0ap18L20y$NCe1iQXlG.Rv.br/sAnj7cpIQk5pvpikddLfxQKebJU0xJhsGj9/Pyu.MQ2vW/9St7unvHQo5AoqsjUX8bqZl1";
-
-  virtualisation.podman.dockerCompat = lib.mkForce false;
-  virtualisation.docker = {
-    enable = true;
-    autoPrune.enable = true;
-  };
-
-  environment.systemPackages = with pkgs; [
-    docker-compose
-  ];
 
   system.stateVersion = "24.11";
 }
