@@ -60,6 +60,7 @@
   home-manager = user-helpers.mkHomeManager {
     inherit inputs;
     users = ["jamesm"];
+    isDesktop = true;
   };
 
   services.printing.drivers = [pkgs.hplip];
