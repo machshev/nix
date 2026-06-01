@@ -22,7 +22,7 @@ in {
 
   config = lib.mkIf config.machshev.niri.enable {
     home.packages = with pkgs; [
-      swww
+      awww
       mako
 
       blueman
@@ -259,7 +259,7 @@ in {
 
       spawn-at-startup "blueman-applet"
       spawn-at-startup "/run/current-system/sw/libexec/polkit-gnome-authentication-agent-1"
-      spawn-at-startup "swww-daemon"
+      spawn-at-startup "awww-daemon"
       spawn-at-startup "systemctl" "--user" "restart" "waybar-niri.service"
 
       binds {

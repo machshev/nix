@@ -66,7 +66,6 @@ with lib; {
     # Gnome (required for gtk portal)
     services.xserver.enable = true;
     services.displayManager.gdm.enable = true;
-    services.displayManager.gdm.wayland = true;
     services.desktopManager.gnome.enable = true;
 
     services.gnome.core-apps.enable = false;

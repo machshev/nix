@@ -37,11 +37,17 @@ with lib; {
 
     nixpkgs.config.allowUnfree = lib.mkForce true;
 
+    # bitwarden-desktop in 26.05 is pinned to electron 39 (EOL). Permit until
+    # upstream bumps the electron dependency.
+    nixpkgs.config.permittedInsecurePackages = ["electron-39.8.10"];
+
     programs.git.enable = lib.mkDefault true;
     programs.nix-ld.enable = true;
 
     # with channels disabled we need a replacement for command-not-found as fish
-    # uses it.
+    # uses it. Set enable explicitly to avoid its default reading dbPath, which
+    # flake-programs-sqlite drives off programs-sqlite.enable (infinite recursion).
+    programs.command-not-found.enable = true;
     programs-sqlite.enable = config.programs.command-not-found.enable;
 
     nix.gc = mkIf config.machshev.nixAutoGC {

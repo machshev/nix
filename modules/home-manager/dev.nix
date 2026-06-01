@@ -17,7 +17,7 @@
     # Common lsp
     typos-lsp
     nil # nix
-    nodePackages.bash-language-server
+    bash-language-server
 
     # C
     gcc
