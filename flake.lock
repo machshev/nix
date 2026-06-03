@@ -196,11 +196,11 @@
         "utils": "utils"
       },
       "locked": {
-        "lastModified": 1780465832,
-        "narHash": "sha256-uoktIDEqmJzXY8mupX8zN21Y+V2D4+4CWjNTd6Cu9ik=",
+        "lastModified": 1780507850,
+        "narHash": "sha256-K7cFBqpzUGz1XJmxcLWWZztwJlcDS99hakRn0460Qlk=",
         "owner": "wamserma",
         "repo": "flake-programs-sqlite",
-        "rev": "4cdbfb34d4215aa91415f4ad5c78b22e6c526843",
+        "rev": "c797d9ab1c3cb2d4245bdd6972bfa323e28a1626",
         "type": "github"
       },
       "original": {
@@ -348,11 +348,11 @@
         "system-manager": "system-manager"
       },
       "locked": {
-        "lastModified": 1780477648,
-        "narHash": "sha256-I76sL1fQ+amTSySr84Q48hiF/wEDi2eKaGIWBsTg+Kw=",
+        "lastModified": 1780496854,
+        "narHash": "sha256-XImh9VVzVHD1fluvB3omWM+Qb6py9+DMOIH966egCRA=",
         "ref": "refs/heads/master",
-        "rev": "9117c200b9fca3d62f6fe8f33fcbac39b9802be2",
-        "revCount": 1736,
+        "rev": "d7c7ad996346ecc1fc07d9eb22469515dcd899a9",
+        "revCount": 1738,
         "type": "git",
         "url": "ssh://git@github.com/lowRISC/lowrisc-it"
       },
@@ -396,11 +396,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1780410653,
-        "narHash": "sha256-GgjcPoL9ZDuasunwIP0I9JTkP2oGvoZ93Vzwbwz1ldI=",
+        "lastModified": 1780500542,
+        "narHash": "sha256-XKbtr82IfB5RXhBzWgsTnuZcS230Lq9NdFE13IM/Zi8=",
         "owner": "lowRISC",
         "repo": "lowrisc-nix",
-        "rev": "560d419c61cb216001f05db14ac64a310b64e4af",
+        "rev": "c134ded39dab6c6dc15ad4675a446269c12756ff",
         "type": "github"
       },
       "original": {
@@ -505,11 +505,11 @@
         "systems": "systems_5"
       },
       "locked": {
-        "lastModified": 1780421419,
-        "narHash": "sha256-EkZYvhK9B9M9j9vuLNSexG1Uf51UshGkPy5iVpYORe8=",
+        "lastModified": 1780511420,
+        "narHash": "sha256-Ib44d47GTijSfCtcxFDliP3C9uUiLDYaAE/nVH8TQoY=",
         "owner": "notashelf",
         "repo": "nvf",
-        "rev": "8265ea062b4c37dc1b9846ec83bb8c9615048ef1",
+        "rev": "29f7eb8491d9833ee55006ab11169130a60c2652",
         "type": "github"
       },
       "original": {
