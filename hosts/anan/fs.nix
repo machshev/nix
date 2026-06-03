@@ -3,10 +3,8 @@
     inputs.disko.nixosModules.disko
   ];
 
-  boot.loader.grub = {
-    enable = true;
-    device = "/dev/vda";
-  };
+  machshev.boot = false;
+  boot.loader.grub.enable = true;
 
   disko.devices = {
     disk.vda = {

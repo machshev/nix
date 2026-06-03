@@ -348,11 +348,11 @@
         "system-manager": "system-manager"
       },
       "locked": {
-        "lastModified": 1780471503,
-        "narHash": "sha256-zx7cLxIIeyGC8Qj2+8rxs/STMddB9ZJl2ol721pHPXs=",
+        "lastModified": 1780477648,
+        "narHash": "sha256-I76sL1fQ+amTSySr84Q48hiF/wEDi2eKaGIWBsTg+Kw=",
         "ref": "refs/heads/master",
-        "rev": "01167a40d3f8147d53ad916bbbb0d6b2aa762288",
-        "revCount": 1732,
+        "rev": "9117c200b9fca3d62f6fe8f33fcbac39b9802be2",
+        "revCount": 1736,
         "type": "git",
         "url": "ssh://git@github.com/lowRISC/lowrisc-it"
       },
@@ -373,11 +373,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1778839577,
-        "narHash": "sha256-KtbcYK/X9MuJXvhHIjyd65j/QGWPFpHJr/yTy8W7xg8=",
+        "lastModified": 1780410653,
+        "narHash": "sha256-GgjcPoL9ZDuasunwIP0I9JTkP2oGvoZ93Vzwbwz1ldI=",
         "owner": "lowRISC",
         "repo": "lowrisc-nix",
-        "rev": "d3ef4932bf95666853cb879468c4228ddc8104e6",
+        "rev": "560d419c61cb216001f05db14ac64a310b64e4af",
         "type": "github"
       },
       "original": {
