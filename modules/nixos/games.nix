@@ -24,8 +24,8 @@ with lib; {
       environment.systemPackages = with pkgs; [
         lunar-client
         zeroad
-        superTux
-        superTuxKart
+        supertux
+        supertuxkart
         mindustry
       ];
 
