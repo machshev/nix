@@ -37,7 +37,10 @@
     isDesktop ? false,
   }: let
     system = "x86_64-linux";
-    pkgs-unstable = inputs.nixpkgs-unstable.legacyPackages.${system};
+    pkgs-unstable = import inputs.nixpkgs-unstable {
+      inherit system;
+      config.allowUnfree = true;
+    };
     pkgs-machshev = machshev-pkgs.${system};
   in {
     extraSpecialArgs = {inherit inputs pkgs-unstable pkgs-machshev isDesktop;};

@@ -1,7 +1,11 @@
-{pkgs, ...}: {
-  home.packages = with pkgs; [
-    claude-code
-    opencode
-    # claude-code-router
+{
+  pkgs,
+  pkgs-unstable,
+  ...
+}: {
+  home.packages = [
+    pkgs-unstable.claude-code
+    pkgs.opencode
+    # pkgs.claude-code-router
   ];
 }
