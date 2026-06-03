@@ -6,6 +6,7 @@
 }: {
   imports =
     [
+      ../bash.nix
       ../dev.nix
       ../fish.nix
       ../starship
