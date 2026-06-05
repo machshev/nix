@@ -1,6 +1,7 @@
 {
   config,
   lib,
+  pkgs,
   ...
 }:
 with lib; {
@@ -15,8 +16,12 @@ with lib; {
   config = mkIf config.machshev.sound {
     # Bluetooth
     services.blueman.enable = true;
-    hardware.bluetooth.enable = true;
-    hardware.bluetooth.powerOnBoot = true;
+
+    hardware.bluetooth = {
+      enable = true;
+      powerOnBoot = true;
+      package = pkgs.bluez5_85; # or check exact attribute with `nix search nixpkgs bluez`
+    };
 
     # Enable sound with pipewire.
     security.rtkit.enable = true;
@@ -38,18 +43,13 @@ with lib; {
       };
     };
 
-    # services.pipewire.wireplumber.extraConfig."10-bluez" = {
-    #   "monitor.bluez.properties" = {
-    #     "bluez5.enable-sbc-xq" = true;
-    #     "bluez5.enable-msbc" = true;
-    #     "bluez5.enable-hw-volume" = true;
-    #     "bluez5.roles" = [
-    #       "hsp_hs"
-    #       "hsp_ag"
-    #       "hfp_hf"
-    #       "hfp_ag"
-    #     ];
-    #   };
-    # };
+    services.pipewire.wireplumber.extraConfig."10-bluetooth" = {
+      "monitor.bluez.properties" = {
+        "bluez5.roles" = ["a2dp_sink" "a2dp_source" "hsp_hs" "hsp_ag" "hfp_hf" "hfp_ag"];
+        "bluez5.enable-sbc-xq" = true;
+        "bluez5.enable-msbc" = true;
+        "bluez5.enable-hw-volume" = true;
+      };
+    };
   };
 }
