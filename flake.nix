@@ -62,6 +62,8 @@
       url = "github:numtide/treefmt-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    claude-code.url = "github:sadjow/claude-code-nix";
   };
 
   outputs = {
@@ -71,6 +73,7 @@
     deploy-rs,
     nvf,
     treefmt-nix,
+    claude-code,
     ...
   } @ inputs: let
     treefmtEval = system:
@@ -96,6 +99,7 @@
         flake-utils
         machshev-pkgs
         deploy-rs
+        claude-code
         ;
     };
   in {

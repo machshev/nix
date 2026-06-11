@@ -20,7 +20,6 @@ with lib; {
     hardware.bluetooth = {
       enable = true;
       powerOnBoot = true;
-      package = pkgs.bluez5_85; # or check exact attribute with `nix search nixpkgs bluez`
     };
 
     # Enable sound with pipewire.
