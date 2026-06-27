@@ -46,6 +46,7 @@ with lib; {
 
       environment.systemPackages = with pkgs; [
         steam-run
+        gamemode
       ];
     })
   ];
