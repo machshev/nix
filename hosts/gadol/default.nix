@@ -13,7 +13,8 @@
     machineID = "127faeee905223190bb95dba67694307";
     applyUdevRules = true;
     closedFirmwareUpdates = true;
-    # graphics.nvidia = true;
+    # graphics.nvidia = true; # GT 710 (470 driver) incompatible with wlroots — no GBM support
+    vulkan = false; # nouveau on Kepler has limited Vulkan support
     games = {
       enable = true;
       steam.enable = true;

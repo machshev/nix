@@ -119,7 +119,6 @@ with lib; {
         NIXOS_OZONE_WL = "1";
         NIXOS_XDG_OPEN_USE_PORTAL = "1";
         POLKIT_AUTH_AGENT = "${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1";
-        SDL_VIDEODRIVER = "wayland";
         WLR_NO_HARDWARE_CURSORS = "1";
         XDG_CURRENT_DESKTOP = "sway";
         XDG_SESSION_DESKTOP = "sway";

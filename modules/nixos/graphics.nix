@@ -65,6 +65,20 @@ with lib; {
 
       # boot.blacklistedKernelModules = ["nouveau"];
 
+      # modesetting.enable doesn't reliably add this in newer nixpkgs
+      boot.kernelParams = [ "nvidia-drm.modeset=1" ];
+
+      # GDM Wayland greeter fails with NVIDIA 470 — use X11 for the greeter only
+      services.displayManager.gdm.settings.daemon.WaylandEnable = false;
+
+      # Required for wlroots (Sway) to use the NVIDIA driver
+      environment.sessionVariables = {
+        GBM_BACKEND = "nvidia-drm";
+        __GLX_VENDOR_LIBRARY_NAME = "nvidia";
+        WLR_NO_HARDWARE_CURSORS = lib.mkForce "1";
+        WLR_DRM_NO_ATOMIC = "1";
+      };
+
       programs.sway.extraOptions = ["--unsupported-gpu"];
     })
   ];
