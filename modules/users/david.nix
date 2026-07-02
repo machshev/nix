@@ -18,5 +18,6 @@
     "libvirtd"
     "cdrom"
     "buildkit"
+    "input"
   ];
 }

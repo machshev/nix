@@ -13,6 +13,7 @@
     "tty"
     "audio"
     "video"
+    "input"
     "kvm"
     "docker"
     "libvirtd"

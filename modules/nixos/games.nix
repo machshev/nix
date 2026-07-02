@@ -21,12 +21,23 @@ with lib; {
 
   config = lib.mkMerge [
     (mkIf config.machshev.games.enable {
+      # Enable the uinput kernel module (required to create virtual controllers)
+      boot.kernelModules = ["uinput"];
+
       environment.systemPackages = with pkgs; [
         lunar-client
         zeroad
         supertux
         supertuxkart
         mindustry
+      ];
+
+      # Enable advanced drivers for Xbox-style controller profiles
+      hardware.xpadneo.enable = true;
+      hardware.uinput.enable = true;
+
+      services.udev.packages = with pkgs; [
+        game-devices-udev-rules
       ];
 
       networking.firewall.allowedUDPPorts = [
