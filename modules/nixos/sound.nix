@@ -20,6 +20,15 @@ with lib; {
     hardware.bluetooth = {
       enable = true;
       powerOnBoot = true;
+      package = pkgs.bluez.overrideAttrs (old: rec {
+        version = "5.85";
+        src = pkgs.fetchurl {
+          url = "mirror://kernel/linux/bluetooth/bluez-${version}.tar.xz";
+          # You'll need the correct hash — run the build once to get it, or use the one below if it matches
+          sha256 = "sha256-rQKOSSVLxFUaE/CP55BMY9ArplDXe+iuFbs7CgrZSm8="; # placeholder — replace after first failure
+        };
+        patches = [];
+      });
     };
 
     # Enable sound with pipewire.
