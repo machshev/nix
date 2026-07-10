@@ -9,6 +9,7 @@
     pkgs-unstable.opencode
     pkgs-unstable.gemini-cli
     pkgs-unstable.grok-cli
+    pkgs-unstable.codex
     # pkgs.claude-code-router
   ];
 }
