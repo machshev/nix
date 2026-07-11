@@ -5,6 +5,7 @@
   machshev-pkgs,
   flake-utils,
   claude-code,
+  codex-cli-nix,
   ...
 }: let
   inherit (inputs) home-manager disko nixos-facter-modules sops-nix;
@@ -55,7 +56,12 @@ in rec {
         {config.facter.reportPath = ./${name}/facter.json;}
         nixos-facter-modules.nixosModules.facter
         home-manager.nixosModules.default
-        {nixpkgs.overlays = [claude-code.overlays.default];}
+        {
+          nixpkgs.overlays = [
+            claude-code.overlays.default
+            codex-cli-nix.overlays.default
+          ];
+        }
       ];
     });
 

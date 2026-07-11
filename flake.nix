@@ -64,6 +64,7 @@
     };
 
     claude-code.url = "github:sadjow/claude-code-nix";
+    codex-cli-nix.url = "github:sadjow/codex-cli-nix";
   };
 
   outputs = {
@@ -74,6 +75,7 @@
     nvf,
     treefmt-nix,
     claude-code,
+    codex-cli-nix,
     ...
   } @ inputs: let
     treefmtEval = system:
@@ -100,6 +102,7 @@
         machshev-pkgs
         deploy-rs
         claude-code
+        codex-cli-nix
         ;
     };
   in {
