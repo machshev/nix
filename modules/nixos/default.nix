@@ -37,6 +37,12 @@
       (final: prev: {
         machshev = machshev-pkgs.${prev.system};
       })
+      # cpplint's test suite fails on newer Pythons: codecs.open() now emits
+      # a DeprecationWarning that leaks into stderr, breaking tests that
+      # assert stderr is empty. Not our bug to fix; skip checks.
+      (final: prev: {
+        cpplint = prev.cpplint.overridePythonAttrs (_: {doCheck = false;});
+      })
     ];
   };
 }

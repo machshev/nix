@@ -1,4 +1,10 @@
-{pkgs, ...}: {
+{
+  pkgs,
+  lib,
+  ...
+}: let
+  codelldb = pkgs.vscode-extensions.vadimcn.vscode-lldb.adapter;
+in {
   config.vim = {
     viAlias = true;
     vimAlias = true;
@@ -96,6 +102,27 @@
       nvim-dap = {
         enable = true;
         ui.enable = true;
+        # HACK: nvf's `adapters` option is `attrsOf (oneOf [luaInline
+        # execAdapterType serverAdapterType pipeAdapterType])`. `oneOf`'s
+        # merge picks the first type whose `check` passes, and a submodule's
+        # `check` only tests "is this an attrset" (it never looks at the
+        # `type` field), so a server-shaped attrset like the `codelldb`
+        # preset's gets routed into `execAdapterType` and fails with
+        # "option `executable` does not exist". Supplying the value as
+        # `luaInline` instead hits the first branch and skips that broken
+        # submodule dispatch; `mkForce` is needed because
+        # `vim.languages.rust` auto-enables the (broken) `codelldb` preset,
+        # which would otherwise conflict with this definition.
+        adapters.codelldb = lib.mkForce (lib.generators.mkLuaInline ''
+          {
+            type = "server",
+            port = "''${port}",
+            executable = {
+              command = "${codelldb}/bin/codelldb",
+              args = { "--liblldb", "${codelldb}/share/lldb/lib/liblldb.so", "--port", "''${port}" },
+            },
+          }
+        '');
       };
     };
 
