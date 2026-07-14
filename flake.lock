@@ -344,6 +344,31 @@
         "type": "github"
       }
     },
+    "haqor-core": {
+      "inputs": {
+        "flake-utils": [
+          "flake-utils"
+        ],
+        "nixpkgs": [
+          "nixpkgs"
+        ],
+        "rust-overlay": "rust-overlay"
+      },
+      "locked": {
+        "lastModified": 1784071958,
+        "narHash": "sha256-XLhp3gCFRuWEVekYtn5Uu0+yPF+FlGn5FrDwIkGcOn0=",
+        "owner": "machshev",
+        "repo": "haqor-core",
+        "rev": "61768225110b9a64390069e8f235649fc914b49e",
+        "type": "github"
+      },
+      "original": {
+        "owner": "machshev",
+        "ref": "sync-server",
+        "repo": "haqor-core",
+        "type": "github"
+      }
+    },
     "home-manager": {
       "inputs": {
         "nixpkgs": [
@@ -374,7 +399,7 @@
           "nixpkgs"
         ],
         "pre-commit-hooks-nix": "pre-commit-hooks-nix",
-        "rust-overlay": "rust-overlay"
+        "rust-overlay": "rust-overlay_2"
       },
       "locked": {
         "lastModified": 1762205063,
@@ -642,6 +667,7 @@
         "disko": "disko",
         "flake-programs-sqlite": "flake-programs-sqlite",
         "flake-utils": "flake-utils_3",
+        "haqor-core": "haqor-core",
         "home-manager": "home-manager",
         "lanzaboote": "lanzaboote",
         "lowrisc-it": "lowrisc-it",
@@ -655,6 +681,28 @@
       }
     },
     "rust-overlay": {
+      "inputs": {
+        "nixpkgs": [
+          "haqor-core",
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1778642276,
+        "narHash": "sha256-bhk4lawR4ZnFhPtamB5WkCyvfgyZmsEUbWfT/3FRxFY=",
+        "owner": "oxalica",
+        "repo": "rust-overlay",
+        "rev": "77265d2dc1e61b2abfd3b1d6609dbb66fe75e0a5",
+        "type": "github"
+      },
+      "original": {
+        "owner": "oxalica",
+        "ref": "stable",
+        "repo": "rust-overlay",
+        "type": "github"
+      }
+    },
+    "rust-overlay_2": {
       "inputs": {
         "nixpkgs": [
           "lanzaboote",

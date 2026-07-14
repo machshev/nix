@@ -1,5 +1,6 @@
 # SPDX-License-Identifier: MIT
 {
+  inputs,
   nixpkgs-unstable,
   flake-utils,
   nvf,
@@ -19,6 +20,13 @@ flake-utils.lib.eachDefaultSystemMap (system: let
   };
 in {
   dev-udev-rules = pkgs.callPackage ./dev-udev-rules {};
+  haqor = inputs.haqor-core.packages.${system}.haqor;
+  haqor-cli = inputs.haqor-core.packages.${system}.haqor-cli;
+  haqor-admin = inputs.haqor-core.packages.${system}.haqor-admin;
+  haqor-core = inputs.haqor-core.packages.${system}.haqor-core;
+  haqor-db-gen = inputs.haqor-core.packages.${system}.haqor-db-gen;
+  haqor-morphology = inputs.haqor-core.packages.${system}.haqor-morphology;
+  haqor-sync-server = inputs.haqor-core.packages.${system}.haqor-sync-server;
   neovim =
     (nvf.lib.neovimConfiguration {
       inherit pkgs;
