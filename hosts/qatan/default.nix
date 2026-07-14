@@ -8,6 +8,7 @@
   imports = [
     ./fs.nix
     ./ha.nix
+    ./haqor-sync.nix
     ./task.nix
     ./minecraft.nix
   ];

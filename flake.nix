@@ -67,7 +67,7 @@
     codex-cli-nix.url = "github:sadjow/codex-cli-nix";
 
     haqor-core = {
-      url = "github:machshev/haqor-core/sync-server";
+      url = "github:machshev/haqor-core";
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.flake-utils.follows = "flake-utils";
     };
