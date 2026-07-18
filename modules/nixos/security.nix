@@ -44,6 +44,11 @@ with lib; {
         enableSSHSupport = true;
       };
 
+      # gcr's ssh-agent wrapper otherwise races gpg-agent for SSH_AUTH_SOCK
+      # and wins, so gpg-agent's passphrase cache never gets used.
+      systemd.user.services.gcr-ssh-agent.enable = false;
+      systemd.user.sockets.gcr-ssh-agent.enable = false;
+
       services.pcscd.enable = true;
     })
     {
