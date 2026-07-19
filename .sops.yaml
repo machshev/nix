@@ -8,12 +8,12 @@ creation_rules:
   - path_regex: hosts/qatan/*
     key_groups:
       - age:
-        - *david-yk1
-        - *david-yk2
-        - *qatan
+          - *david-yk1
+          - *david-yk2
+          - *qatan
 
-  - path_regex: secrets/david\.yaml
+  - path_regex: secrets/*
     key_groups:
       - age:
-        - *david-yk1
-        - *david-yk2
+          - *david-yk1
+          - *david-yk2
