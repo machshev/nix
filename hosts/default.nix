@@ -44,31 +44,42 @@
 
   machines = ["gadol" "tzedef" "qatan" "tapuach" "hadasa" "avodah" "anan"];
 in rec {
-  nixosConfigurations = lib.genAttrs machines (name:
-    lib.nixosSystem {
-      specialArgs = {inherit inputs pkgs-unstable machshev-pkgs user-helpers;};
-      modules = [
-        {nixpkgs.hostPlatform = system;}
-        disko.nixosModules.disko
-        sops-nix.nixosModules.sops
-        ../modules/nixos
-        ./${name}
-        {config.facter.reportPath = ./${name}/facter.json;}
-        nixos-facter-modules.nixosModules.facter
-        home-manager.nixosModules.default
-        {
-          nixpkgs.overlays = [
-            claude-code.overlays.default
-            codex-cli-nix.overlays.default
-          ];
-        }
-      ];
-    });
+  nixosConfigurations =
+    lib.genAttrs machines (name:
+      lib.nixosSystem {
+        specialArgs = {inherit inputs pkgs-unstable machshev-pkgs user-helpers;};
+        modules = [
+          {nixpkgs.hostPlatform = system;}
+          disko.nixosModules.disko
+          sops-nix.nixosModules.sops
+          ../modules/nixos
+          ./${name}
+          {config.facter.reportPath = ./${name}/facter.json;}
+          nixos-facter-modules.nixosModules.facter
+          home-manager.nixosModules.default
+          {
+            nixpkgs.overlays = [
+              claude-code.overlays.default
+              codex-cli-nix.overlays.default
+            ];
+          }
+        ];
+      })
+    // {
+      mb7ujm = lib.nixosSystem {
+        system = "aarch64-linux";
+        specialArgs = {inherit inputs;};
+        modules = [
+          {nixpkgs.hostPlatform = "aarch64-linux";}
+          ./mb7ujm
+        ];
+      };
+    };
 
   deploy = {
     nodes =
-      builtins.mapAttrs (name: _: {
-        hostname = name;
+      builtins.mapAttrs (name: node: {
+        hostname = node.hostname or name;
         profiles.system = {
           user = "root";
           path = deploy-rs.lib.${nixosConfigurations.${name}.pkgs.stdenv.hostPlatform.system}.activate.nixos nixosConfigurations.${name};
@@ -94,6 +105,10 @@ in rec {
           sshUser = "david";
         };
         avodah = {
+          sshUser = "jamesm";
+        };
+        mb7ujm = {
+          hostname = "mb7ujm.local";
           sshUser = "jamesm";
         };
       };
