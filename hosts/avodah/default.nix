@@ -63,7 +63,9 @@
     isDesktop = true;
   };
 
-  services.printing.drivers = [pkgs.hplip];
+  # gutenprint provides the Canon PIXMA MX420 driver; the printer has no
+  # IPP-USB interface, so it cannot use the driverless "everywhere" PPD.
+  services.printing.drivers = [pkgs.hplip pkgs.gutenprint];
 
   services.clamav = {
     daemon.enable = true;
