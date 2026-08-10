@@ -29,7 +29,7 @@
       enable = true;
       intel = true;
     };
-    niri.enable = true;
+    niri.enable = false; # Currently not working due to upstream issues
     printing = true;
     localDevK8s = true;
   };
@@ -45,6 +45,11 @@
     };
     applyUdevRules = true;
     faillock.enable = true;
+    inactivity_lock = {
+      enable = true;
+      desktop = "manual";
+      disclaimer = "I have manually set up an inactivity lockout";
+    };
     itPolicy.workstation = true;
     kubeAuthPlugin.enable = true;
     network = true;
