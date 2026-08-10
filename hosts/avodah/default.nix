@@ -31,7 +31,7 @@
     };
     niri.enable = false; # Currently not working due to upstream issues
     printing = true;
-    localDevK8s = true;
+    localDevK8s = false;
   };
 
   lowrisc = {
