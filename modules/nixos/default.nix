@@ -14,6 +14,7 @@
     ./graphics.nix
     ./jlink.nix
     ./k8s.nix
+    ./memory.nix
     ./net.nix
     ./nix.nix
     ./printing.nix
