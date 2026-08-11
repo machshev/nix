@@ -18,6 +18,7 @@
     hostName = "avodah";
     machineID = "50056b9ffefaf919166d579d676a9115";
     applyUdevRules = true;
+    btrfs = true;
     autoupdate = {
       enable = false;
     };
