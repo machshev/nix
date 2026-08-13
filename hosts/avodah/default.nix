@@ -33,6 +33,9 @@
     niri.enable = false; # Currently not working due to upstream issues
     printing = true;
     localDevK8s = false;
+    # Coexists with the other overlay on this machine: separate service, tun
+    # device and ephemeral port, and non-overlapping address ranges.
+    nebula.enable = true;
   };
 
   lowrisc = {

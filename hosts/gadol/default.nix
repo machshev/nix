@@ -23,6 +23,7 @@
     niri.enable = true;
     sdr = true;
     localDevK8s = true;
+    nebula.enable = true;
   };
 
   users.users.david = user-helpers.mkUserCfg {

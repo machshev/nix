@@ -86,9 +86,10 @@ in rec {
         };
         interactiveSudo = true;
       }) {
-        anan = {
-          sshUser = "david";
-        };
+        # anan is deliberately absent: it runs the provider's stock Ubuntu with
+        # nebula installed by scripts/nebula-lighthouse-ubuntu.sh, not NixOS.
+        # Deploying to it would replace a working lighthouse with a system that
+        # boots but has no network. hosts/anan/ is kept for a future retry.
         qatan = {
           sshUser = "david";
         };
@@ -113,5 +114,21 @@ in rec {
         };
       };
   };
-  checks = builtins.mapAttrs (system: deployLib: deployLib.deployChecks deploy) deploy-rs.lib;
+  # deployChecks builds an activation profile for every node it is given, so
+  # handing it the whole fleet makes `nix flake check` on an x86_64 machine try
+  # to build the aarch64 nodes and fail on a platform mismatch. Since deploy-rs
+  # runs this check before deploying, that would block deploying anything at all.
+  # Give each system only the nodes belonging to it.
+  checks =
+    builtins.mapAttrs (
+      system: deployLib:
+        deployLib.deployChecks (deploy
+          // {
+            nodes =
+              lib.filterAttrs
+              (name: _: nixosConfigurations.${name}.pkgs.stdenv.hostPlatform.system == system)
+              deploy.nodes;
+          })
+    )
+    deploy-rs.lib;
 }

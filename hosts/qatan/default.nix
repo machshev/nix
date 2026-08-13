@@ -36,6 +36,7 @@
     applyUdevRules = true;
     autoupdate.enable = true;
     closedFirmwareUpdates = true;
+    nebula.enable = true;
   };
 
   users.users.david = user-helpers.mkUserCfg {

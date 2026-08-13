@@ -16,6 +16,7 @@
     ./k8s.nix
     ./memory.nix
     ./net.nix
+    ./nebula.nix
     ./nix.nix
     ./printing.nix
     ./sdr.nix
