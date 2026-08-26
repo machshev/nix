@@ -222,7 +222,13 @@ in {
 
     # Disable the built-in lualine module to avoid conflicts with custom plugin
     # below
-    statusline.lualine.enable = false;
+    statusline.lualine = {
+      enable = false;
+      integrations.breadcrumbs = {
+        navbuddy.enable = false;
+        nvim-navic.enable = false;
+      };
+    };
 
     autopairs.nvim-autopairs.enable = true;
 
@@ -288,7 +294,6 @@ in {
 
     minimap = {
       minimap-vim.enable = false;
-      codewindow.enable = false; # FIX: Currently broken with tree sitter changes
     };
 
     notify = {
@@ -342,10 +347,6 @@ in {
       colorizer.enable = true;
       modes-nvim.enable = false; # default colors don't work with theme
       illuminate.enable = true;
-      breadcrumbs = {
-        enable = false;
-        navbuddy.enable = false;
-      };
       smartcolumn = {
         enable = true;
         setupOpts.custom_colorcolumn = {
