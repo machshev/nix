@@ -189,6 +189,13 @@ in {
           set -eu
           ${amixer} sset 'Auto Gain Control' off
           ${amixer} sset 'Mic' 35% cap
+
+          # Transmit level into the radio. PROVISIONAL: no transmission from
+          # this station has yet been received by anyone, so this value is
+          # unvalidated -- it is recorded only so a reboot does not silently
+          # restore the 73% default. Set properly once the radio side is
+          # sorted and a beacon is actually heard.
+          ${amixer} sset 'Speaker' 46%
         '';
     };
   };
