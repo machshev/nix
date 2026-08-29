@@ -190,12 +190,12 @@ in {
           ${amixer} sset 'Auto Gain Control' off
           ${amixer} sset 'Mic' 35% cap
 
-          # Transmit level into the radio. PROVISIONAL: no transmission from
-          # this station has yet been received by anyone, so this value is
-          # unvalidated -- it is recorded only so a reboot does not silently
-          # restore the 73% default. Set properly once the radio side is
-          # sorted and a beacon is actually heard.
-          ${amixer} sset 'Speaker' 46%
+          # Transmit level into the radio. Full output: the interface attenuates for
+          # a line-level source, so the dongle has to drive it hard. Lower settings
+          # under-deviate: at 46% the carrier showed on a spectrum analyser as a thin
+          # line barely wider than an unmodulated one, and nothing decoded it. At 100%
+          # the burst is a normal ~15 kHz wide, and MB7UKR digipeats it.
+          ${amixer} sset 'Speaker' 100%
         '';
     };
   };
