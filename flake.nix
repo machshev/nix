@@ -50,6 +50,9 @@
     lowrisc-it = {
       url = "git+ssh://git@github.com/lowRISC/lowrisc-it";
       inputs.nixpkgs.follows = "nixpkgs";
+      inputs.home-manager.follows = "home-manager";
+      inputs.lowrisc-nix.follows = "lowrisc-nix";
+      inputs.flake-utils.follows = "flake-utils";
     };
 
     lowrisc-nix = {

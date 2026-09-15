@@ -262,24 +262,6 @@
         "type": "github"
       }
     },
-    "flake-utils_3": {
-      "inputs": {
-        "systems": "systems_5"
-      },
-      "locked": {
-        "lastModified": 1731533236,
-        "narHash": "sha256-l0KFg5HjrsfsO/JpG+r7fRrqm12kzFHyUHqHCVpMMbI=",
-        "owner": "numtide",
-        "repo": "flake-utils",
-        "rev": "11707dc2f618dd54ca8739b309ec4fc024de578b",
-        "type": "github"
-      },
-      "original": {
-        "owner": "numtide",
-        "repo": "flake-utils",
-        "type": "github"
-      }
-    },
     "gitignore": {
       "inputs": {
         "nixpkgs": [
@@ -371,28 +353,6 @@
         "type": "github"
       }
     },
-    "home-manager_2": {
-      "inputs": {
-        "nixpkgs": [
-          "lowrisc-it",
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1789182507,
-        "narHash": "sha256-9nt4W0HNNP84B+b37yRs9Zxat1ZR5guJxEZDEjAgex4=",
-        "owner": "nix-community",
-        "repo": "home-manager",
-        "rev": "b1d1b60084970f9d1e2b72662639dab6d039be71",
-        "type": "github"
-      },
-      "original": {
-        "owner": "nix-community",
-        "ref": "release-26.05",
-        "repo": "home-manager",
-        "type": "github"
-      }
-    },
     "lanzaboote": {
       "inputs": {
         "crane": "crane",
@@ -421,9 +381,15 @@
     },
     "lowrisc-it": {
       "inputs": {
-        "flake-utils": "flake-utils_3",
-        "home-manager": "home-manager_2",
-        "lowrisc-nix": "lowrisc-nix",
+        "flake-utils": [
+          "flake-utils"
+        ],
+        "home-manager": [
+          "home-manager"
+        ],
+        "lowrisc-nix": [
+          "lowrisc-nix"
+        ],
         "nixpkgs": [
           "nixpkgs"
         ],
@@ -445,31 +411,6 @@
       }
     },
     "lowrisc-nix": {
-      "inputs": {
-        "flake-utils": [
-          "lowrisc-it",
-          "flake-utils"
-        ],
-        "nixpkgs": [
-          "lowrisc-it",
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1786372443,
-        "narHash": "sha256-remtZOOf+RtqgWFDYDvLd01KyzDexeWhBBdeDlbFDgw=",
-        "owner": "lowRISC",
-        "repo": "lowrisc-nix",
-        "rev": "8479a3130685816b8c3cdd484a0f583fa2d8e4d1",
-        "type": "github"
-      },
-      "original": {
-        "owner": "lowRISC",
-        "repo": "lowrisc-nix",
-        "type": "github"
-      }
-    },
-    "lowrisc-nix_2": {
       "inputs": {
         "flake-utils": [
           "flake-utils"
@@ -701,7 +642,7 @@
         "home-manager": "home-manager",
         "lanzaboote": "lanzaboote",
         "lowrisc-it": "lowrisc-it",
-        "lowrisc-nix": "lowrisc-nix_2",
+        "lowrisc-nix": "lowrisc-nix",
         "nixos-facter-modules": "nixos-facter-modules",
         "nixpkgs": "nixpkgs_3",
         "nixpkgs-unstable": "nixpkgs-unstable",
@@ -872,21 +813,6 @@
         "type": "github"
       }
     },
-    "systems_6": {
-      "locked": {
-        "lastModified": 1681028828,
-        "narHash": "sha256-Vy1rq5AaRuLzOxct8nz4T6wlgyUR7zLU309k9mBC768=",
-        "owner": "nix-systems",
-        "repo": "default",
-        "rev": "da67096a3b9bf56a91d16901293e51ba5b49a27e",
-        "type": "github"
-      },
-      "original": {
-        "owner": "nix-systems",
-        "repo": "default",
-        "type": "github"
-      }
-    },
     "treefmt-nix": {
       "inputs": {
         "nixpkgs": [
@@ -921,7 +847,7 @@
           "nixpkgs"
         ],
         "pre-commit-hooks-nix": "pre-commit-hooks-nix_2",
-        "systems": "systems_6"
+        "systems": "systems_5"
       },
       "locked": {
         "lastModified": 1770377964,
