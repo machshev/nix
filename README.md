@@ -1,6 +1,13 @@
 # nix
 Nix flake for my configs
 
+## Midtown Madness 2
+
+Run `nix run .#midtown-madness-2` on x86_64 Linux, or enable
+`machshev.games.midtownMadness2.enable = true;` in a host configuration for an
+applications-menu entry. See [the package notes](pkgs/midtown-madness-2/README.md)
+for save locations and Wine settings.
+
 ## Haqor packages
 
 The flake exposes the Haqor CLI, its standalone sync server, and the individual

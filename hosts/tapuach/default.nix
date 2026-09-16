@@ -21,6 +21,7 @@
     games = {
       enable = true;
       steam.enable = true;
+      midtownMadness2.enable = true;
     };
     sdr = true;
   };

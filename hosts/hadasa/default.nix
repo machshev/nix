@@ -22,6 +22,7 @@
     vulkan = false;
     games = {
       enable = true;
+      midtownMadness2.enable = true;
     };
   };
 

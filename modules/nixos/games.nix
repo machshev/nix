@@ -17,9 +17,24 @@ with lib; {
       default = false;
       description = "Enable steam.";
     };
+
+    machshev.games.midtownMadness2.enable = mkEnableOption "Midtown Madness 2 with Wine";
   };
 
   config = lib.mkMerge [
+    (mkIf config.machshev.games.midtownMadness2.enable {
+      environment.systemPackages = [pkgs.machshev.midtown-madness-2];
+      hardware.graphics.enable = true;
+
+      # Midtown Madness 2 uses DirectPlay 4 for multiplayer.
+      networking.firewall = {
+        allowedTCPPortRanges = [{from = 2300; to = 2400;}];
+        allowedUDPPortRanges = [{from = 2300; to = 2400;}];
+        allowedTCPPorts = [47624];
+        allowedUDPPorts = [47624];
+      };
+    })
+
     (mkIf config.machshev.games.enable {
       # Enable the uinput kernel module (required to create virtual controllers)
       boot.kernelModules = ["uinput"];

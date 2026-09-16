@@ -18,6 +18,7 @@
     games = {
       enable = true;
       steam.enable = true;
+      midtownMadness2.enable = true;
     };
     wireshark = true;
     niri.enable = true;

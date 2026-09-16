@@ -21,6 +21,7 @@
     wireshark = true;
     sdr = true;
     games.enable = true;
+    games.midtownMadness2.enable = true;
   };
 
   users.users.david = user-helpers.mkUserCfg {
