@@ -1,4 +1,5 @@
 {
+  config,
   pkgs,
   lib,
   ...
@@ -219,6 +220,23 @@ in {
         enable = true;
       };
     };
+
+    # nvf still passes lsp.color even when disabled, which flutter-tools warns
+    # about on Neovim 0.12+. Omit it until nvf updates its Dart module.
+    pluginRC.flutter-tools = let
+      dart = config.vim.languages.dart;
+    in
+      lib.mkIf (dart.enable && dart.flutter-tools.enable) (
+        lib.mkForce (lib.nvim.dag.entryAfter ["lsp-servers"] ''
+          require('flutter-tools').setup {
+            ${lib.optionalString (dart.flutter-tools.flutterPackage != null) ''
+            flutter_path = "${dart.flutter-tools.flutterPackage}/bin/flutter",
+          ''}
+            lsp = { capabilities = capabilities },
+            debugger = { enabled = ${lib.boolToString dart.dap.enable} },
+          }
+        '')
+      );
 
     # Disable the built-in lualine module to avoid conflicts with custom plugin
     # below
