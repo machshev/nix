@@ -37,7 +37,7 @@
     nixpkgs.overlays = [
       # repositories so they can be used in modules.
       (final: prev: {
-        machshev = machshev-pkgs.${prev.system};
+        machshev = machshev-pkgs.${prev.stdenv.hostPlatform.system};
       })
       # cpplint's test suite fails on newer Pythons: codecs.open() now emits
       # a DeprecationWarning that leaks into stderr, breaking tests that
