@@ -24,8 +24,12 @@ with lib; {
         defaultNetwork.settings.dns_enabled = true;
       };
 
-      # Useful other development tools
       environment.systemPackages = with pkgs; [
+        # Bible study app, built from the upstream GitHub release.
+        # Bump the version in pkgs/haqor when a new one is tagged.
+        machshev.haqor
+
+        # Useful other development tools
         dive # look into docker image layers
         podman-tui # status of containers in the terminal
         podman-compose # start group of containers for dev

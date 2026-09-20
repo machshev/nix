@@ -27,7 +27,6 @@ flake-utils.lib.eachDefaultSystemMap (system: let
 in
   {
     dev-udev-rules = pkgs.callPackage ./dev-udev-rules {};
-    haqor = inputs.haqor-core.packages.${system}.haqor;
     haqor-cli = inputs.haqor-core.packages.${system}.haqor-cli;
     haqor-admin = inputs.haqor-core.packages.${system}.haqor-admin;
     haqor-core = inputs.haqor-core.packages.${system}.haqor-core;
@@ -44,5 +43,7 @@ in
     .neovim;
   }
   // pkgs.lib.optionalAttrs (system == "x86_64-linux") {
+    # The desktop app. Upstream publishes a Linux bundle for x86_64 only.
+    haqor = pkgs.callPackage ./haqor {};
     midtown-madness-2 = pkgs.callPackage ./midtown-madness-2 {};
   })

@@ -268,6 +268,7 @@ in {
         Mod+Return { spawn "alacritty"; }
         Mod+N { spawn "firefox"; }
         Mod+X { spawn "bash" "-c" "wofi --modi drun,run --show drun"; }
+        Mod+H { spawn "haqor"; }
 
         Mod+Shift+Slash { show-hotkey-overlay; }
 
@@ -278,7 +279,6 @@ in {
         Mod+Shift+F { toggle-window-floating; }
 
         // Focus
-        Mod+H { focus-column-left; }
         Mod+L { focus-column-right; }
         Mod+J { focus-window-down; }
         Mod+K { focus-window-up; }

@@ -61,6 +61,7 @@
         "${modifier}+n" = "exec firefox";
         "${modifier}+t" = "exec cosmic-term";
         "${modifier}+x" = "exec 'wofi --modi drun,run --show drun'";
+        "${modifier}+h" = "exec haqor";
 
         # Move workspace
         "${modifier}+Ctrl+Shift+Right" = "move workspace to output right";
