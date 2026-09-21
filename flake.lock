@@ -212,11 +212,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1789905753,
-        "narHash": "sha256-OmhYMTmEMGZNWByeaUaC9hPSBhLtMpgyCy0mP1fZBbg=",
+        "lastModified": 1789996129,
+        "narHash": "sha256-OkixIBSmA6TRvXXhyWM+qw0DWgMSenTnRHr96ca/JgM=",
         "owner": "wamserma",
         "repo": "flake-programs-sqlite",
-        "rev": "5d625df3a1db25100c68d240d8d44b5cd5337a73",
+        "rev": "1b035fe65bf5e614a0b39b9eb3727eb59191a4a7",
         "type": "github"
       },
       "original": {
@@ -396,11 +396,11 @@
         "system-manager": "system-manager"
       },
       "locked": {
-        "lastModified": 1789753884,
-        "narHash": "sha256-ko47YdPIhta+VxR0cO4jABdjiB3PjzWP+vbOzAkViv4=",
+        "lastModified": 1789983934,
+        "narHash": "sha256-tw1V00v38Ouvl3Hjnf9Iih90d8IDzW0IVUaLCeDwLC8=",
         "ref": "refs/heads/master",
-        "rev": "e4536f75a09134195a956dc28d3506ce5555c7d0",
-        "revCount": 2100,
+        "rev": "2b5efbfa36148fabb948974ae40527a1bdaae5ec",
+        "revCount": 2101,
         "type": "git",
         "url": "ssh://git@github.com/lowRISC/lowrisc-it"
       },
@@ -480,11 +480,11 @@
     },
     "nixpkgs-unstable": {
       "locked": {
-        "lastModified": 1789785513,
-        "narHash": "sha256-B44WL6h0XoLjJ41bUPJk0X5SDinLCII//6EcBLXKiJ0=",
+        "lastModified": 1789921291,
+        "narHash": "sha256-Ft/BRnIqw1MywFoXydKobjjWmDFgDdYtSpJliE8+yUw=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "20b1ddd1aa5ace70c9468305030aa4f9ef79671b",
+        "rev": "44a91898084f46797b5fac650c7e8c9ac38c43d4",
         "type": "github"
       },
       "original": {

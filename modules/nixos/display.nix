@@ -30,6 +30,7 @@ with lib; {
         "x-scheme-handler/https" = "firefox";
         "x-scheme-handler/about" = "firefox";
         "x-scheme-handler/unknown" = "firefox";
+        "application/pdf" = "org.gnome.Papers.desktop";
         "x-scheme-handler/zoommtg" = "Zoom.desktop";
         "x-scheme-handler/zoomus" = "Zoom.desktop";
         "x-scheme-handler/zoom" = "Zoom.desktop";
@@ -95,6 +96,7 @@ with lib; {
           adwaita-qt
           adwaita-fonts
           adwaita-icon-theme
+          papers
         ]
         (mkIf config.machshev.vulkan [
           vulkan-tools

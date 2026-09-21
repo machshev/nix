@@ -65,6 +65,9 @@ with lib; {
       ];
     })
     {
+      # Make TMPDIR explicit everywhere (shells and graphical sessions)
+      environment.sessionVariables.TMPDIR = "/tmp";
+
       # Set your time zone.
       time.timeZone = "Europe/London";
 
