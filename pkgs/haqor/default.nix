@@ -21,7 +21,7 @@
 }:
 stdenv.mkDerivation (finalAttrs: {
   pname = "haqor";
-  version = "0.7.16";
+  version = "0.8.0";
 
   # The upstream release tarball is a Flutter Linux bundle built on Ubuntu, so
   # it needs autoPatchelf rather than a source build. Building from source
@@ -29,7 +29,7 @@ stdenv.mkDerivation (finalAttrs: {
   # project's devshell does imperatively and Nix cannot reproduce offline.
   src = fetchurl {
     url = "https://github.com/machshev/haqor/releases/download/v${finalAttrs.version}/haqor-${finalAttrs.version}-linux-x64.tar.gz";
-    hash = "sha256-F5jHFffUoD2XYrsYxeRD418dCg5f1EGfCKaeOdN8KVU=";
+    hash = "sha256-S7GRZ2gBt3nU1XkAAqHIpkMiOCo3hQBak7Djzcjew3U=";
   };
 
   # The release bundle carries no icon; take it from the matching tag.
