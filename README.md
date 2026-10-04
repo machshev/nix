@@ -10,8 +10,11 @@ for save locations and Wine settings.
 
 ## Haqor packages
 
-The flake exposes the Haqor CLI, its standalone sync server, and the individual
-workspace crates. Qatan runs `haqor-sync.service` on TCP port 8788. Its state
+On x86_64 Linux, `nix run .#haqor` runs the desktop app from the upstream
+Haqor flake. Update its pinned package with `nix flake update haqor`.
+
+The flake also exposes the Haqor CLI, its standalone sync server, and the
+individual workspace crates. Qatan runs `haqor-sync.service` on TCP port 8788. Its state
 and generated bearer token are private to the `haqor-sync` system user;
 retrieve the token after the first activation with:
 

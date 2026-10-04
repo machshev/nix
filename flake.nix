@@ -69,6 +69,12 @@
     claude-code.url = "github:sadjow/claude-code-nix";
     codex-cli-nix.url = "github:sadjow/codex-cli-nix";
 
+    haqor = {
+      url = "github:machshev/haqor";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.flake-utils.follows = "flake-utils";
+    };
+
     haqor-core = {
       url = "github:machshev/haqor-core";
       inputs.nixpkgs.follows = "nixpkgs";

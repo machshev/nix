@@ -44,6 +44,6 @@ in
   }
   // pkgs.lib.optionalAttrs (system == "x86_64-linux") {
     # The desktop app. Upstream publishes a Linux bundle for x86_64 only.
-    haqor = pkgs.callPackage ./haqor {};
+    haqor = inputs.haqor.packages.${system}.haqor;
     midtown-madness-2 = pkgs.callPackage ./midtown-madness-2 {};
   })

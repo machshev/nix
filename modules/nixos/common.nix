@@ -25,8 +25,7 @@ with lib; {
       };
 
       environment.systemPackages = with pkgs; [
-        # Bible study app, built from the upstream GitHub release.
-        # Bump the version in pkgs/haqor when a new one is tagged.
+        # Bible study app, packaged by the upstream Haqor flake.
         machshev.haqor
 
         # Useful other development tools

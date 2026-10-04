@@ -307,6 +307,29 @@
         "type": "github"
       }
     },
+    "haqor": {
+      "inputs": {
+        "flake-utils": [
+          "flake-utils"
+        ],
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1791139901,
+        "narHash": "sha256-Vmwo1F4OMLhL2zwqb9p13P4yntKQ5Hzj0Q6wFC7PetI=",
+        "owner": "machshev",
+        "repo": "haqor",
+        "rev": "ebb03d4e2fa153149fade3b6ab82d33fc797bc4e",
+        "type": "github"
+      },
+      "original": {
+        "owner": "machshev",
+        "repo": "haqor",
+        "type": "github"
+      }
+    },
     "haqor-core": {
       "inputs": {
         "flake-utils": [
@@ -637,6 +660,7 @@
         "disko": "disko",
         "flake-programs-sqlite": "flake-programs-sqlite",
         "flake-utils": "flake-utils_2",
+        "haqor": "haqor",
         "haqor-core": "haqor-core",
         "home-manager": "home-manager",
         "lanzaboote": "lanzaboote",
