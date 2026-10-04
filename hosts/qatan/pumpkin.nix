@@ -3,7 +3,6 @@
   inputs,
   lib,
   pkgs,
-  pkgs-unstable,
   ...
 }: let
   # Players given op level 4, copied from the Paper server's ops.json.
@@ -68,9 +67,11 @@ in {
   # in the stable release.
   imports = ["${inputs.nixpkgs-unstable}/nixos/modules/services/games/pumpkin.nix"];
 
+  system.autoUpgrade.flags = lib.mkAfter ["--update-input" "pumpkin"];
+
   services.pumpkin = {
     enable = true;
-    package = pkgs-unstable.pumpkin;
+    package = inputs.pumpkin.packages.${pkgs.stdenv.hostPlatform.system}.default;
     openFirewall = true;
     # Offline mode: logins aren't checked against Mojang/Xbox Live, so anyone
     # who can reach the ports can join under any username.

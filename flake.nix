@@ -6,6 +6,8 @@
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-26.05";
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
 
+    pumpkin.url = "git+https://github.com/Pumpkin-MC/Pumpkin?ref=master&submodules=1";
+
     flake-utils.url = "github:numtide/flake-utils";
 
     home-manager = {
