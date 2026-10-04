@@ -1,4 +1,5 @@
 {
+  config,
   inputs,
   user-helpers,
   pkgs,
@@ -36,9 +37,19 @@
     machineID = "92fe87dfa38d10d30eda16a267693da2";
     applyUdevRules = true;
     autoupdate.enable = true;
+    nixAutoGC = true;
     closedFirmwareUpdates = true;
     nebula.enable = true;
   };
+
+  boot.loader.systemd-boot.configurationLimit = 3;
+
+  # Prune by generation count instead of age, retaining three system
+  # generations including the current one before collecting unused paths.
+  nix.gc.options = lib.mkForce "";
+  systemd.services.nix-gc.preStart = ''
+    ${config.nix.package}/bin/nix-env --profile /nix/var/nix/profiles/system --delete-generations +3
+  '';
 
   users.users.david = user-helpers.mkUserCfg {
     inherit pkgs;
