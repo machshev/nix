@@ -32,7 +32,7 @@
     description = "Update Minecraft plugins to their latest upstream builds";
     wants = ["network-online.target"];
     after = ["network-online.target"];
-    path = with pkgs; [bash coreutils curl unzip systemd];
+    path = with pkgs; [bash coreutils curl diffutils unzip systemd];
     environment.MINECRAFT_DATA_DIR = config.services.minecraft-server.dataDir;
     serviceConfig = {
       Type = "oneshot";
