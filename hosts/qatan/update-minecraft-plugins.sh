@@ -41,7 +41,9 @@ download "https://hangar.papermc.io/api/v1/projects/ViaVersion/versions/$via_ver
   "$staging/ViaVersion-$via_version.jar"
 download https://download.geysermc.org/v2/projects/floodgate/versions/latest/builds/latest/downloads/spigot \
   "$staging/floodgate-spigot.jar"
-download https://download.geysermc.org/v2/projects/geyser/versions/latest/builds/latest/downloads/spigot \
+# Follow the latest build of the official Java 26.3 support preview.
+# https://github.com/GeyserMC/Geyser/pull/6712
+download https://download.geysermc.org/v2/projects/geyserpreview/versions/pr.6712/builds/latest/downloads/spigot \
   "$staging/Geyser-Spigot.jar"
 
 changed=false
