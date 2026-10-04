@@ -1,6 +1,9 @@
-{pkgs-unstable, ...}: {
-  # manually installed ViaVersion and geysermc to get things going
-  # TODO: look at https://github.com/Infinidoge/nix-minecraft/issues/68
+{
+  config,
+  pkgs,
+  pkgs-unstable,
+  ...
+}: {
 
   networking.firewall.allowedUDPPorts = [
     19132 # Minecraft bedrock (GeyserMC)
@@ -22,6 +25,31 @@
       motd = "NixOS Minecraft server!";
       white-list = false;
       allow-cheats = true;
+    };
+  };
+
+  systemd.services.minecraft-plugin-update = {
+    description = "Update Minecraft plugins to their latest upstream builds";
+    wants = ["network-online.target"];
+    after = ["network-online.target"];
+    path = with pkgs; [bash coreutils curl unzip systemd];
+    environment.MINECRAFT_DATA_DIR = config.services.minecraft-server.dataDir;
+    serviceConfig = {
+      Type = "oneshot";
+      User = "root";
+      TimeoutStartSec = "15min";
+      UMask = "0077";
+    };
+    script = builtins.readFile ./update-minecraft-plugins.sh;
+  };
+
+  systemd.timers.minecraft-plugin-update = {
+    description = "Check for Minecraft plugin updates daily";
+    wantedBy = ["timers.target"];
+    timerConfig = {
+      OnCalendar = "*-*-* 04:00:00";
+      RandomizedDelaySec = "15min";
+      Persistent = true;
     };
   };
 }
