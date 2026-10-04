@@ -69,6 +69,12 @@ in {
 
   system.autoUpgrade.flags = lib.mkAfter ["--update-input" "pumpkin"];
 
+  # The packaged NixOS module still reads bedrock.address for firewall
+  # rules. Pumpkin 0.2 uses nethernet.address and also binds the next UDP
+  # port for IPv6 status; NetherNet signaling needs TCP as well.
+  networking.firewall.allowedTCPPorts = [19133];
+  networking.firewall.allowedUDPPorts = [19134 7551];
+
   services.pumpkin = {
     enable = true;
     package = inputs.pumpkin.packages.${pkgs.stdenv.hostPlatform.system}.default;
@@ -93,6 +99,7 @@ in {
         bedrock = {
           enabled = true;
           address = "0.0.0.0:19133";
+          nethernet.address = "0.0.0.0:19133";
           max_players = 6;
           motd = "NixOS Pumpkin server!";
           online_mode = false;
