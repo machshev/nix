@@ -40,7 +40,19 @@ with lib; {
       boot.kernelModules = ["uinput"];
 
       environment.systemPackages = with pkgs; [
-        lunar-client
+        (lunar-client.overrideAttrs (old: {
+          # Minecraft 26.3 uses EGL through LWJGL on Wayland, even when SDL
+          # falls back to XWayland. Keep SDL on EGL too so OpenGL can initialise.
+          buildCommand =
+            old.buildCommand
+            + ''
+              wrapProgram $out/bin/lunarclient --run '
+                if [ "''${XDG_SESSION_TYPE:-}" = wayland ] && [ -n "''${WAYLAND_DISPLAY:-}" ]; then
+                  export SDL_VIDEO_FORCE_EGL="''${SDL_VIDEO_FORCE_EGL-1}"
+                fi
+              '
+            '';
+        }))
         zeroad
         supertux
         supertuxkart
