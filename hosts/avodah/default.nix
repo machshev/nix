@@ -141,13 +141,12 @@
 
   systemd.services.NetworkManager-wait-online.enable = false;
   systemd.network.wait-online.anyInterface = true;
-  systemd.network.networks."50-enp0s" = {
-    matchConfig.Name = "enp0s";
-    # acquire a DHCP lease on link up
-    networkConfig.DHCP = "yes";
-    # this port is not always connected and not required to be online
-    linkConfig.RequiredForOnline = "no";
-  };
+
+  # NetworkManager (enabled by GNOME) owns the physical interfaces here. Stop
+  # facter/networkd from also running DHCP on them, otherwise the two daemons
+  # fight over the same addresses and routes, causing periodic connection drops.
+  facter.detected.dhcp.enable = false;
+  networking.useDHCP = false;
 
   system.stateVersion = "24.11";
 }
