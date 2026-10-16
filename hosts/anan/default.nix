@@ -81,8 +81,10 @@
   # This replaces the DHCP network that nixos-facter generates for this link.
   # Matched on link type rather than name: this VPS has exactly one ethernet
   # device, and a name that fails to match would silently leave it unconfigured
-  # on a machine with no other way in. Sorts before the generated 40-/99- units,
-  # and networkd applies only the first match.
+  # on a machine with no other way in. The generated DHCP units are disabled
+  # below so this is the only network networkd can match.
+  facter.detected.dhcp.enable = false;
+  networking.useDHCP = false;
   systemd.network.networks."10-wan" = {
     matchConfig.Type = "ether";
     address = ["87.106.54.175/32"];
