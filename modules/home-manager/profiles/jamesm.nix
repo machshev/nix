@@ -3,6 +3,7 @@
     # ../cad.nix
     ../ai.nix
     ../dev.nix
+    ../dictation.nix
     ../fish.nix
     ../internet.nix
     #./office.nix
@@ -13,6 +14,7 @@
   ];
 
   machshev.niri.enable = true;
+  machshev.dictation.enable = true;
 
   home.stateVersion = "24.11"; # Please read the comment before changing.
 

@@ -351,11 +351,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1791914842,
-        "narHash": "sha256-CMXI5lBqF0672YwaqBDILaIa5HszsdsN8uCK3L4w7Kw=",
+        "lastModified": 1792322328,
+        "narHash": "sha256-X0mhW456H4SrSyk4JAOB322RGhZd1TtHFJQb3imxook=",
         "owner": "machshev",
         "repo": "haqor",
-        "rev": "87b7f44375d66cc33ac14536ae090897b8103f5d",
+        "rev": "3a5510d43b8a9065a71dc24c9152cd8af69968f4",
         "type": "github"
       },
       "original": {

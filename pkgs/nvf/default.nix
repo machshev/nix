@@ -19,6 +19,7 @@ in {
 
     spellcheck = {
       enable = true;
+      languages = ["en_gb"];
       programmingWordlist.enable = false; # FIX: Tries to download but fails
     };
 
