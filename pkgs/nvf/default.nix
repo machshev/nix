@@ -144,8 +144,35 @@ in {
       {
         key = "<leader>fF";
         mode = ["n"];
+        lua = true;
+        action = "function() require('telescope.builtin').find_files({hidden = true, file_ignore_patterns = {'^%.git/'}}) end";
+        desc = "Find files (incl. hidden)";
+      }
+      {
+        key = "<leader>FF";
+        mode = ["n"];
         action = "<cmd>Telescope find_files hidden=true no_ignore=true<CR>";
-        desc = "";
+        desc = "Find files (everything)";
+      }
+      {
+        key = "<leader>fg";
+        mode = ["n"];
+        action = "<cmd>Telescope live_grep<CR>";
+        desc = "Live grep";
+      }
+      {
+        key = "<leader>fG";
+        mode = ["n"];
+        lua = true;
+        action = "function() require('telescope.builtin').live_grep({additional_args = {'--hidden', '--glob=!.git/'}}) end";
+        desc = "Live grep (incl. hidden)";
+      }
+      {
+        key = "<leader>FG";
+        mode = ["n"];
+        lua = true;
+        action = "function() require('telescope.builtin').live_grep({additional_args = {'--hidden', '--no-ignore'}}) end";
+        desc = "Live grep (everything)";
       }
     ];
 
@@ -163,8 +190,6 @@ in {
           "--line-number"
           "--column"
           "--smart-case"
-          "--no-ignore"
-          "-u"
         ];
         layout_config = {
           horizontal = {
@@ -422,6 +447,21 @@ in {
           local custom_theme = require 'lualine.themes.tokyonight'
           custom_theme.inactive.c.bg = '#101010'
           custom_theme.normal.c.bg = '#101010'
+
+          local prose_filetypes = { markdown = true, text = true, gitcommit = true, tex = true }
+          local function word_count()
+            local wc = vim.fn.wordcount()
+            if wc.visual_words then
+              return wc.visual_words .. '/' .. wc.words .. ' words'
+            end
+            return wc.words .. ' words'
+          end
+          custom_opts["sections"] = {
+            lualine_x = {
+              { word_count, cond = function() return prose_filetypes[vim.bo.filetype] end },
+              'encoding', 'fileformat', 'filetype',
+            },
+          }
 
           custom_opts["options"]["theme"] = custom_theme
           require('lualine').setup(custom_opts)
