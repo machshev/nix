@@ -1,0 +1,96 @@
+--- a/src/daemon.rs	2026-10-29 21:15:31.278497813 +0000
++++ b/src/daemon.rs	2026-10-29 21:15:41.611502412 +0000
+@@ -1687,19 +1687,14 @@
+             if file_output {
+                 tracing::info!("Stopping streaming session (file output); closing capture");
+             } else {
+-                tracing::info!("Stopping streaming session; closing capture and disowning session");
++                tracing::info!("Stopping streaming session; closing capture and draining");
+             }
+             self.stop_streaming_capture(audio_capture).await;
+-            if !file_output {
+-                // Drop the typing surface synchronously so any
+-                // Final/Partial events the backend emits while
+-                // draining its internal buffer reach the event-pump
+-                // arm with `streaming_session = None` and get
+-                // discarded instead of typed into whatever window
+-                // has focus by then.
+-                *streaming_session = None;
+-                *streaming_chain = None;
+-            }
++            // Keep the session so the words still being transcribed when
++            // recording stopped are typed as the backend drains, rather than
++            // discarded; it ends on the backend's Ended event as for file
++            // output. They land in whichever window has focus by then.
++            let _ = (&streaming_session, &streaming_chain);
+         } else if let State::Recording { model_override, .. } = &*state {
+             let model_override = model_override.clone();
+ 
+--- a/src/output/dotool.rs	2026-10-29 20:36:40.910532022 +0000
++++ b/src/output/dotool.rs	2026-10-29 20:36:40.920526664 +0000
+@@ -156,8 +156,9 @@
+         // Note: dotool's type command takes text on the same line
+         commands.push_str(&format!("type {}\n", text));
+ 
+-        // Append text if configured (e.g., a space to separate sentences)
+-        if let Some(ref append) = self.append_text {
++        // Append text if configured (e.g., a space to separate sentences),
++        // but not at the start of a new line or paragraph
++        if let Some(ref append) = self.append_text.as_ref().filter(|_| !text.ends_with('\n')) {
+             commands.push_str(&format!("type {}\n", append));
+         }
+ 
+--- a/src/output/wtype.rs	2026-10-29 20:36:40.905532099 +0000
++++ b/src/output/wtype.rs	2026-10-29 20:36:40.919531884 +0000
+@@ -179,8 +179,9 @@
+             self.type_text(text).await?;
+         }
+ 
+-        // Append text if configured (e.g., a space to separate sentences)
+-        if let Some(ref append) = self.append_text {
++        // Append text if configured (e.g., a space to separate sentences),
++        // but not at the start of a new line or paragraph
++        if let Some(ref append) = self.append_text.as_ref().filter(|_| !text.ends_with('\n')) {
+             self.type_text(append).await?;
+         }
+ 
+--- a/src/text/mod.rs	2026-10-29 20:36:17.217896231 +0000
++++ b/src/text/mod.rs	2026-10-29 20:36:24.102342516 +0000
+@@ -173,6 +173,14 @@
+             result = self.apply_replacements(&result);
+         }
+ 
++        // A spoken "new paragraph" replaced mid-sentence leaves Whisper's
++        // punctuation and spacing around the break ("earth. \n\n. And").
++        // Keep any punctuation before the break and drop what follows it.
++        if result.contains('\n') {
++            let re = Regex::new(r"[ \t]*(\n+)[ \t]*[.,;:!?]*[ \t]*").expect("valid regex");
++            result = re.replace_all(&result, "$1").into_owned();
++        }
++
+         result
+     }
+ 
+--- a/src/transcribe/sliding_window.rs	2026-10-29 20:55:49.708406569 +0000
++++ b/src/transcribe/sliding_window.rs	2026-10-29 20:55:49.718406409 +0000
+@@ -281,13 +281,19 @@
+ 
+             loop {
+                 let outcome = runtime.block_on(async {
++                    // Biased, with audio ahead of the ticker: once inference is
++                    // slower than the tick interval the ticker is always ready,
++                    // and a random pick leaves audio queueing faster than it is
++                    // read. The backlog then has to be transcribed through
++                    // before end-of-stream is seen, stalling the stop.
+                     tokio::select! {
++                        biased;
++                        _ = &mut cancel_rx => Outcome::Cancelled,
+                         chunk = samples_rx.recv() => match chunk {
+                             Some(c) => Outcome::Chunk(c),
+                             None => Outcome::Eof,
+                         },
+                         _ = ticker.tick() => Outcome::Tick,
+-                        _ = &mut cancel_rx => Outcome::Cancelled,
+                     }
+                 });
+ 

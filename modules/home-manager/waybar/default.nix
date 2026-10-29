@@ -1,4 +1,11 @@
-{pkgs, ...}: {
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}: let
+  dictation = config.machshev.dictation.enable or false;
+in {
   programs.waybar = {
     enable = true;
     systemd.enable = false;
@@ -10,21 +17,38 @@
         spacing = 8;
         modules-left = ["sway/workspaces" "sway/mode" "sway/scratchpad" "custom/media"];
         modules-center = ["sway/window"];
-        modules-right = [
-          "idle_inhibitor"
-          "pulseaudio"
-          "network"
-          "cpu"
-          "memory"
-          "temperature"
-          "backlight"
-          "sway/language"
-          "battery"
-          "clock"
-          "tray"
-        ];
+        modules-right =
+          lib.optional dictation "custom/voxtype"
+          ++ [
+            "idle_inhibitor"
+            "pulseaudio"
+            "network"
+            "cpu"
+            "memory"
+            "temperature"
+            "backlight"
+            "sway/language"
+            "battery"
+            "clock"
+            "tray"
+          ];
 
         # Modules configuration
+
+        # Dictation state; empty (hidden) while idle
+        "custom/voxtype" = {
+          exec = "voxtype status --follow --format json";
+          return-type = "json";
+          format = "{icon}";
+          format-icons = {
+            idle = "";
+            recording = "🔴";
+            streaming = "🔴";
+            transcribing = "⏳";
+            stopped = "";
+          };
+          tooltip = true;
+        };
 
         "sway/workspaces" = {
           disable-scroll = true;

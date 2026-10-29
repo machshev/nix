@@ -51,6 +51,12 @@ with lib; {
       };
     };
 
+    # The X11 bell module segfaults PipeWire whenever sway's on-demand Xwayland
+    # exits, dropping every audio stream (e.g. mid video call).
+    services.pipewire.extraConfig.pipewire."93-no-x11-bell" = {
+      "context.properties"."module.x11.bell" = false;
+    };
+
     services.pipewire.wireplumber.extraConfig."10-bluetooth" = {
       "monitor.bluez.properties" = {
         "bluez5.roles" = ["a2dp_sink" "a2dp_source" "hsp_hs" "hsp_ag" "hfp_hf" "hfp_ag"];

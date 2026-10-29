@@ -12,6 +12,26 @@
     {config.facter.reportPath = ./facter.json;}
     inputs.nixos-facter-modules.nixosModules.facter
     inputs.lowrisc-it.nixosModules.lowrisc
+
+    # Meteor Lake NPU: the userspace driver lets OpenVINO dictate on it, for
+    # comparison with whisper.cpp on the iGPU (`voxtype-engine` switches).
+    {
+      hardware.cpu.intel.npu.enable = true;
+      # nixpkgs' driver lacks the compiler that builds models for the NPU
+      hardware.graphics.extraPackages = [pkgs.machshev.intel-npu-compiler];
+      assertions = [
+        {
+          assertion = pkgs.intel-npu-driver.version == pkgs.machshev.intel-npu-compiler.version;
+          message = "intel-npu-driver is ${pkgs.intel-npu-driver.version}; bump pkgs/intel-npu-compiler to match";
+        }
+      ];
+
+      home-manager.users.jamesm.machshev.dictation = {
+        openvino.enable = true;
+        streaming = true;
+        languages = ["en" "he"];
+      };
+    }
   ];
 
   machshev = {
