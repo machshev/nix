@@ -62,7 +62,12 @@
     identity = "james.mccorrie@lowrisc.org";
     auth.gcloudCli.enable = true;
     configSync.enable = true;
-    nebula.enable = true;
+    nebula = {
+      enable = true;
+      # Run Nebula with the cross-platform agent instead of lowrisc-nebula. See
+      # lowrisc-it doc/nebula/agent.md.
+      agent.enable = true;
+    };
     tools = {
       enable = true;
       admin.enable = true;
