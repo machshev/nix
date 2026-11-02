@@ -80,6 +80,7 @@ in rec {
     nodes =
       builtins.mapAttrs (name: node: {
         hostname = node.hostname or name;
+        inherit (node) sshUser;
         profiles.system = {
           user = "root";
           path = deploy-rs.lib.${nixosConfigurations.${name}.pkgs.stdenv.hostPlatform.system}.activate.nixos nixosConfigurations.${name};
