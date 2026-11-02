@@ -77,7 +77,10 @@ in {
 
   services.pumpkin = {
     enable = true;
-    package = inputs.pumpkin.packages.${pkgs.stdenv.hostPlatform.system}.default;
+    # The upstream flake package lacks meta.mainProgram, which the module's
+    # lib.getExe needs to find the binary without a deprecation warning.
+    package = lib.addMetaAttrs {mainProgram = "pumpkin";}
+      inputs.pumpkin.packages.${pkgs.stdenv.hostPlatform.system}.default;
     openFirewall = true;
     # Offline mode: logins aren't checked against Mojang/Xbox Live, so anyone
     # who can reach the ports can join under any username.

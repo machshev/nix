@@ -21,7 +21,7 @@
           inputs.deploy-rs.overlays.default
           (final: prev: {
             deploy-rs = {
-              inherit (nixpkgs.legacyPackages.${prev.system}) deploy-rs;
+              inherit (nixpkgs.legacyPackages.${prev.stdenv.hostPlatform.system}) deploy-rs;
               inherit (prev.deploy-rs) lib;
             };
           })

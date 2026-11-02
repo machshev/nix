@@ -65,7 +65,7 @@
   security.sudo.wheelNeedsPassword = false;
 
   # Prevent gdm from suspending the server
-  services.xserver.displayManager.gdm.autoSuspend = false;
+  services.displayManager.gdm.autoSuspend = false;
   systemd.targets.sleep.enable = false;
   systemd.targets.suspend.enable = false;
 
