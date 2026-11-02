@@ -1,5 +1,6 @@
 {
   config,
+  lib,
   pkgs,
   pkgs-unstable,
   ...
@@ -27,6 +28,13 @@
       allow-cheats = true;
     };
   };
+
+  # Geyser 2.12.1+ loads a bundled WebRTC library (libdatachannel-java.so)
+  # for NetherNet. It links against the system OpenSSL 3 and libgcc_s, which
+  # NixOS does not put on the default search path; without them Geyser fails
+  # to start its Bedrock listener at all.
+  systemd.services.minecraft-server.environment.LD_LIBRARY_PATH =
+    lib.makeLibraryPath [pkgs.openssl pkgs.stdenv.cc.cc];
 
   systemd.services.minecraft-plugin-update = {
     description = "Update Minecraft plugins to their latest upstream builds";
