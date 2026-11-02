@@ -375,11 +375,11 @@
         "rust-overlay": "rust-overlay"
       },
       "locked": {
-        "lastModified": 1793639832,
-        "narHash": "sha256-+AtdbFeVOiuLtl1KP0tHzq0r5aRNXHSoy1u97p711QA=",
+        "lastModified": 1793657919,
+        "narHash": "sha256-Z4kMflW3barEVAxDCVekq6gyJV/ja1ZT2Fpm4Uyv3T4=",
         "owner": "machshev",
         "repo": "haqor-core",
-        "rev": "627f4685cbe33a03b1468c398748a1e4814c57e6",
+        "rev": "7dae49ee25b5581087fd06bead54e941beeee29a",
         "type": "github"
       },
       "original": {

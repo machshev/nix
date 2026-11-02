@@ -85,6 +85,17 @@ in {
       '';
     };
 
+    address = mkOption {
+      type = types.str;
+      readOnly = true;
+      default = self.ip;
+      defaultText = literalExpression "this host's ip in the node table";
+      description = ''
+        This host's overlay address, for services that hand it to clients
+        (for example in a sync join link).
+      '';
+    };
+
     subnet = mkOption {
       type = types.str;
       default = "10.42.0.0/24";
