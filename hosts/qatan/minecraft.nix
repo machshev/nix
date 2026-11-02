@@ -9,6 +9,9 @@
   networking.firewall.allowedUDPPorts = [
     19132 # Minecraft bedrock (GeyserMC)
   ];
+  # Geyser's NetherNet transport runs its built-in signaling server on the
+  # Bedrock port over TCP; Bedrock clients contact it before the UDP session.
+  networking.firewall.allowedTCPPorts = [19132];
 
   services.minecraft-server = {
     enable = true;
@@ -35,6 +38,11 @@
   # to start its Bedrock listener at all.
   systemd.services.minecraft-server.environment.LD_LIBRARY_PATH =
     lib.makeLibraryPath [pkgs.openssl pkgs.stdenv.cc.cc];
+  # libdatachannel enumerates local interfaces (getifaddrs, via netlink) to
+  # offer LAN candidates; without AF_NETLINK it only advertises the public
+  # STUN address, which LAN clients can't reach without hairpin NAT.
+  systemd.services.minecraft-server.serviceConfig.RestrictAddressFamilies =
+    lib.mkForce ["AF_INET" "AF_INET6" "AF_NETLINK"];
 
   systemd.services.minecraft-plugin-update = {
     description = "Update Minecraft plugins to their latest upstream builds";
