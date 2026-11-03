@@ -81,14 +81,13 @@ in {
           echo "Moved the single-learner sync state to $learner"
         fi
       '';
+      # HTTPS only: a device still on plain-HTTP settings is told to rejoin
+      # with a link from haqor-sync-join.
       ExecStart = pkgs.writeShellScript "haqor-sync" ''
-        # --allow-plain-http keeps devices joined before HTTPS syncing until
-        # they rejoin with a link from haqor-sync-join; drop it afterwards.
         exec ${server}/bin/haqor-sync-server \
           --bind 0.0.0.0:${toString port} \
           --users-dir ${usersDir} \
-          --tls-dir ${tlsDir} \
-          --allow-plain-http
+          --tls-dir ${tlsDir}
       '';
       Restart = "on-failure";
       RestartSec = "5s";
