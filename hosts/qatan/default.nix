@@ -11,6 +11,7 @@
     ./ha.nix
     ./haqor-sync.nix
     ./task.nix
+    ./luanti.nix
     ./minecraft.nix
     # ./pumpkin.nix
   ];

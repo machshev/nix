@@ -53,6 +53,7 @@ with lib; {
               '
             '';
         }))
+        luanti-client
         zeroad
         supertux
         supertuxkart
