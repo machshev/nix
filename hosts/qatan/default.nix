@@ -12,7 +12,7 @@
     ./haqor-sync.nix
     ./task.nix
     ./minecraft.nix
-    ./pumpkin.nix
+    # ./pumpkin.nix
   ];
 
   sops = {
