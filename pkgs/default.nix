@@ -16,6 +16,12 @@ flake-utils.lib.eachDefaultSystemMap (system: let
         "midtown-madness-2-directplay"
       ];
     overlays = [
+      # asm-lsp's zstd-sys dependency probes for libzstd via pkg-config.
+      (final: prev: {
+        asm-lsp = prev.asm-lsp.overrideAttrs (old: {
+          buildInputs = (old.buildInputs or []) ++ [final.zstd];
+        });
+      })
       # cpplint's test suite fails on newer Pythons: codecs.open() now emits
       # a DeprecationWarning that leaks into stderr, breaking tests that
       # assert stderr is empty. Not our bug to fix; skip checks.
