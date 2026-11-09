@@ -50,13 +50,76 @@
     '';
   };
 
+  # Release zips from ContentDB (content.luanti.org); upload URLs are
+  # immutable per release. Some zips are flat rather than wrapped in a
+  # directory, hence stripRoot.
+  contentdb = {
+    file,
+    hash,
+    stripRoot ? true,
+  }:
+    pkgs.fetchzip {
+      url = "https://cdn.content.luanti.org/uploads/${file}.zip";
+      inherit hash stripRoot;
+    };
+
+  # Mods keyed by their mod name (the directory name must match mod.conf).
+  mods = {
+    inherit creatura draconis;
+
+    # New biomes, blocks and items. Only affects newly generated chunks.
+    everness = contentdb {
+      file = "86b30e742e"; # 3.4.8
+      hash = "sha256-wkVs9adjgt2v/9YbJo1vkHVn7q6QuwTqAaMEoyWbt9s=";
+      stripRoot = false;
+    };
+
+    # Crops, trees, bees, ice fishing, composter and so on. Some of its
+    # Mineclonia item names are wrong: without this the stove and fruit bowl
+    # are uncraftable, and iced coffee from snowballs and drying sweet
+    # berries don't work.
+    x_farming = pkgs.applyPatches {
+      name = "x_farming";
+      src = contentdb {
+        file = "95bbf237af"; # 4.3.5
+        hash = "sha256-WujpTax2lZR6bBH/TpLQ4Z32azDb4C/4hOMmJ/SsSKs=";
+        stripRoot = false;
+      };
+      postPatch = ''
+        substituteInPlace crafting.lua \
+          --replace-fail "'default:furnace'" "'mcl_furnaces:furnace'" \
+          --replace-fail "'mcl_core:sweet_berries'" "'mcl_farming:sweet_berry'" \
+          --replace-fail "'mcl_core:snowball'" "'mcl_throwing:snowball'"
+        substituteInPlace drying_rack.lua \
+          --replace-fail "'mcl_farming:sweet_berries'" "'mcl_farming:sweet_berry'"
+      '';
+    };
+
+    # Furniture and decorations; depends on mcl_cozy.
+    mcl_decor = contentdb {
+      file = "e75cbf5ef7"; # 2.0.1
+      hash = "sha256-QU45D9LRaZ2CpFWijY7OfsghovneMguzf2PZcQpfv9E=";
+    };
+
+    # Sit and lie down (/sit, /lay, or right-click a block).
+    mcl_cozy = contentdb {
+      file = "4140e25f4b"; # 3.3.1
+      hash = "sha256-Cq8HMSOCavF0AGOZf9ZD0VXKQdR2/b+F/+8OlQNNGo0=";
+    };
+
+    # Leads for moving and tethering animals.
+    leads = contentdb {
+      file = "4a97f0585a"; # 0.4.0
+      hash = "sha256-H+dlg1ZAUSy6MWyjF3uhZsShu4Go6qzNiruetnyJ4Ms=";
+    };
+  };
+
   # Mods inside a game's mods/ directory are always enabled, so bundling them
   # avoids managing load_mod_* lines in the world's world.mt.
   mineclonia-modded = pkgs.runCommand "mineclonia-modded" {} ''
     cp -r ${mineclonia} $out
     chmod u+w $out/mods
-    ln -s ${creatura} $out/mods/creatura
-    ln -s ${draconis} $out/mods/draconis
+    ${pkgs.lib.concatLines (pkgs.lib.mapAttrsToList (name: mod: "ln -s ${mod} $out/mods/${name}") mods)}
   '';
 
   # LUANTI_GAME_PATH points at a directory of games, each named by its id.
@@ -70,7 +133,10 @@ in {
     inherit port;
     world = "/var/lib/minetest/.minetest/worlds/mineclonia";
     config = {
-      # Admin: this player gets every privilege. Luanti names are
+      # Admin: this player gets every privilege except the "cheaty" ones
+      # (give, fly, fast, noclip, teleport, settime, ...), which Luanti
+      # withholds by default. The admin has "privs", so grant those in game
+      # with e.g. /grantme give; grants persist in auth.sqlite. Luanti names are
       # case-sensitive, so log in as exactly "david". Anyone can claim the
       # name first if it's unregistered, so join once soon after deploying.
       name = "david";
