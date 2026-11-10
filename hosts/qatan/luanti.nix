@@ -35,6 +35,15 @@
       hash = "sha256-Zk4aLgJH1GtIXdHQo2gl64KGuO+cW9ij9RXlVx4faSc=";
     };
     postPatch = ''
+      # Mineclonia's per-player creative mode requires player names, not
+      # ObjectRefs. Passing the object crashes target selection, feeding
+      # dragons/wyverns and picking up eggs.
+      substituteInPlace api/behaviors.lua \
+        --replace-fail 'minetest.is_creative_enabled(target)' 'minetest.is_creative_enabled(target:get_player_name())'
+      substituteInPlace api/api.lua \
+        --replace-fail 'minetest.is_creative_enabled(player)' 'minetest.is_creative_enabled(player:get_player_name())'
+      substituteInPlace craftitems.lua \
+        --replace-fail 'minetest.is_creative_enabled(clicker)' 'minetest.is_creative_enabled(clicker:get_player_name())'
       substituteInPlace init.lua craftitems.lua \
         --replace-fail '"default:ice"' '"mcl_core:ice"'
       substituteInPlace init.lua craftitems.lua mapgen.lua \
