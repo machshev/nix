@@ -14,6 +14,9 @@
   # can run either engine and `--engine` picks between them at runtime. The
   # openvino-whisper feature needs voxtype >= 1.1, hence unstable.
   voxtypeOpenvino = (pkgs-unstable.voxtype.override {vulkanSupport = true;}).overrideAttrs (old: {
+    # Voxtype 1.1 links system SQLite, which nixpkgs omits from buildInputs.
+    buildInputs = (old.buildInputs or []) ++ [pkgs-unstable.sqlite];
+
     # buildRustPackage copies buildFeatures into these when it's called, so
     # overriding buildFeatures alone doesn't reach cargo.
     cargoBuildFeatures = old.cargoBuildFeatures ++ ["openvino-whisper"];
