@@ -351,11 +351,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1794245676,
-        "narHash": "sha256-fJbNpPbfE9SUWZvaB5YeP84fLIxeCYR1PYsKvxiGTkI=",
+        "lastModified": 1794670026,
+        "narHash": "sha256-9JmdY7/rV1NkyddhYbImZ45WG9ld0Cg/haKqghOz8G4=",
         "owner": "machshev",
         "repo": "haqor",
-        "rev": "eb7f51c81e5ea01e1ae8265308ecdaa3eb219b09",
+        "rev": "31b10a84a2a137d9ffc221cf8e0ff24a2ce0089b",
         "type": "github"
       },
       "original": {
@@ -375,11 +375,11 @@
         "rust-overlay": "rust-overlay"
       },
       "locked": {
-        "lastModified": 1794216014,
-        "narHash": "sha256-ZJnwP6REnra8K/H5LY5EoXQ+i4mSO89S660Mo4ULvYc=",
+        "lastModified": 1794663249,
+        "narHash": "sha256-1gq4p5NxJrhiuZ0/arzcJhtN+L/qdTHRDaeyR6y3eDA=",
         "owner": "machshev",
         "repo": "haqor-core",
-        "rev": "407dc3c1e7a14b7a07f5db2b2c04f1af09b1eada",
+        "rev": "53d1046f49d0780170aa7a0ef92db11afd592e67",
         "type": "github"
       },
       "original": {
