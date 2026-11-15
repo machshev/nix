@@ -10,6 +10,9 @@
   ];
 
   boot.kernelPackages = lib.mkForce pkgs.linuxPackages;
+  # Firmware sometimes leaves the keyboard controller in raw mode after reboot.
+  # Reset it before the kernel detects the built-in keyboard.
+  boot.kernelParams = ["i8042.reset=1"];
 
   machshev = {
     hostName = "tzedef";
