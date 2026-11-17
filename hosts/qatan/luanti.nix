@@ -72,7 +72,8 @@
       inherit hash stripRoot;
     };
 
-  # Mods keyed by their mod name (the directory name must match mod.conf).
+  # Mods keyed by their mod name (the directory name must match mod.conf), or
+  # by modpack name for modpacks.
   mods = {
     inherit creatura draconis;
 
@@ -116,10 +117,183 @@
       hash = "sha256-Cq8HMSOCavF0AGOZf9ZD0VXKQdR2/b+F/+8OlQNNGo0=";
     };
 
+    # Aircraft library and fuel (the biofuel distiller is craftable in
+    # Mineclonia). Required by the Super Cub.
+    airutils = contentdb {
+      file = "cc6062d99e"; # 0.97
+      hash = "sha256-aK98dcDyhcMQh3LAqSh76R5fGqcD/XQuZP97rV5FgR4=";
+    };
+
+    # Flyable Super Cub plane. Its recipes are only registered when Minetest
+    # Game's default mod is present and use MTG items, so drop that check
+    # and use Mineclonia items (mese becomes redstone). Its break drops get
+    # the same renaming.
+    supercub = pkgs.applyPatches {
+      name = "supercub";
+      src = contentdb {
+        file = "4cddc94cd5"; # 0.64a
+        hash = "sha256-4HUlgUP07Vp0NxFvtvEAQauCPz+Pfcro7PdY4Gn6hh4=";
+      };
+      postPatch = ''
+        for f in crafts.lua init.lua; do
+          substituteInPlace $f \
+            --replace-quiet '"wool:white"' '"mcl_wool:white"' \
+            --replace-quiet "'wool:white'" "'mcl_wool:white'" \
+            --replace-quiet '"farming:string"' '"mcl_mobitems:string"' \
+            --replace-quiet '"default:steel_ingot"' '"mcl_core:iron_ingot"' \
+            --replace-quiet "'default:steel_ingot'" "'mcl_core:iron_ingot'" \
+            --replace-quiet '"default:diamondblock"' '"mcl_core:diamondblock"' \
+            --replace-quiet "'default:diamond'" "'mcl_core:diamond'" \
+            --replace-quiet '"default:mese_block"' '"mcl_redstone_torch:redstoneblock"' \
+            --replace-quiet "'default:mese_crystal'" "'mcl_redstone:redstone'"
+        done
+        substituteInPlace crafts.lua \
+          --replace-fail 'and minetest.get_modpath("default")' ""
+        ! grep -nE "default:|'wool:|\"wool:|farming:" crafts.lua init.lua
+      '';
+    };
+
+    # Entity API used by the motorboat.
+    mobkit = contentdb {
+      file = "269b82ebde"; # 2026-08-29
+      hash = "sha256-KWhnwVA7f4oawiYxWoFFgtZxpnTXpZCQ8HpUl+x1yuc=";
+    };
+
+    # Motorboat. Written for Minetest Game only, so for Mineclonia:
+    # - drop the hard default and biofuel deps (it also takes airutils'
+    #   biofuel, and only uses default for its recipes);
+    # - shim Minetest Game's player_api onto Mineclonia's mcl_player;
+    # - register the recipes with Mineclonia items (mese becomes redstone).
+    # Mineclonia's mcl_dye:<colour> names already work for painting it.
+    motorboat = pkgs.applyPatches {
+      name = "motorboat";
+      src = contentdb {
+        file = "35de2727d8"; # 0.43c
+        hash = "sha256-x50/EgYyQlOE9XfYcfAR90JfbvunRl/cPq43K7KVKSg=";
+      };
+      postPatch = ''
+        substituteInPlace mod.conf \
+          --replace-fail "depends = mobkit,default,biofuel" \
+            $'depends = mobkit\noptional_depends = mcl_player, airutils'
+        sed -i '1i local player_api = rawget(_G, "player_api") or {player_attached = mcl_player.player_attached, registered_models = {}, set_animation = function(p, a, s) mcl_player.player_set_animation(p, a, s) end}' init.lua
+        substituteInPlace init.lua \
+          --replace-fail 'if core.get_modpath("default") then' 'do' \
+          --replace-fail '"default:mese_block"' '"mcl_redstone_torch:redstoneblock"' \
+          --replace-fail '"default:diamond"' '"mcl_core:diamond"' \
+          --replace-fail '"default:glass"' '"mcl_core:glass"' \
+          --replace-fail '"default_water.png^' '"default_water_source_animated.png^[verticalframe:16:0^' \
+          --replace-fail '"default:steel_ingot"' '"mcl_core:iron_ingot"'
+      '';
+    };
+
     # Leads for moving and tethering animals.
     leads = contentdb {
       file = "4a97f0585a"; # 0.4.0
       hash = "sha256-H+dlg1ZAUSy6MWyjF3uhZsShu4Go6qzNiruetnyJ4Ms=";
+    };
+
+    # Steampunk airship; has its own Mineclonia recipes.
+    steampunk_blimp = contentdb {
+      file = "62aefece71"; # 0.60
+      hash = "sha256-XgV8hMhVLr56TtUimBv4NQUL+d3RKXLyinXueaSbzcc=";
+    };
+
+    # Helicopter. Same treatment as the Super Cub; Mineclonia has no tin, so
+    # copper stands in for it.
+    heli = pkgs.applyPatches {
+      name = "heli";
+      src = contentdb {
+        file = "3b4262a239"; # 0.15a
+        hash = "sha256-xB66/0f3SMI+PBVUZ1XecPueAt6PnlcoF2/svaaufrI=";
+      };
+      postPatch = ''
+        for f in crafts.lua init.lua; do
+          substituteInPlace $f \
+            --replace-quiet '"default:tin_ingot"' '"mcl_copper:copper_ingot"' \
+            --replace-quiet "'default:tin_ingot'" "'mcl_copper:copper_ingot'" \
+            --replace-quiet '"default:tinblock"' '"mcl_copper:block"' \
+            --replace-quiet '"default:steel_ingot"' '"mcl_core:iron_ingot"' \
+            --replace-quiet '"default:glass"' '"mcl_core:glass"' \
+            --replace-quiet '"default:diamondblock"' '"mcl_core:diamondblock"' \
+            --replace-quiet "'default:diamond'" "'mcl_core:diamond'" \
+            --replace-quiet '"default:mese_block"' '"mcl_redstone_torch:redstoneblock"' \
+            --replace-quiet "'default:mese_crystal'" "'mcl_redstone:redstone'"
+        done
+        substituteInPlace crafts.lua \
+          --replace-fail 'and minetest.get_modpath("default")' ""
+        ! grep -nE "default:" crafts.lua init.lua
+      '';
+    };
+
+    # Cars, motorcycles and scooters (a modpack). Driving works in Mineclonia,
+    # but every recipe is behind a check for Minetest Game's default mod, so
+    # drop those and use Mineclonia items (copper for tin, redstone for mese).
+    automobiles_pck = pkgs.applyPatches {
+      name = "automobiles_pck";
+      src = contentdb {
+        file = "fc944c216f"; # 0.74
+        hash = "sha256-RXnbrJ59nCWxAq+1dGzq9Uar5BgClJnuUIOEo014Up4=";
+      };
+      postPatch = ''
+        files=$(grep -rl --include='*.lua' 'get_modpath("default")' .)
+        sed -i \
+          -e 's/if minetest\.get_modpath("default") then/if true then/' \
+          -e 's/"default:steel_ingot"/"mcl_core:iron_ingot"/g' \
+          -e 's/"default:steelblock"/"mcl_core:ironblock"/g' \
+          -e 's/"default:tin_ingot"/"mcl_copper:copper_ingot"/g' \
+          -e 's/"default:glass"/"mcl_core:glass"/g' \
+          -e 's/"default:stick"/"mcl_core:stick"/g' \
+          -e 's/"default:mese_block"/"mcl_redstone_torch:redstoneblock"/g' \
+          -e 's/"default:mese"/"mcl_redstone_torch:redstoneblock"/g' \
+          -e 's/"wool:\([a-z]*\)"/"mcl_wool:\1"/g' \
+          $files
+        ! grep -nE '"default:|"wool:|get_modpath\("default"\)' $files
+      '';
+    };
+
+    # On-demand item transport, networked storage and autocrafting.
+    logistica = contentdb {
+      file = "545ef8d544"; # 2.0.13
+      hash = "sha256-sZgSHcvwXlz0ab3P3Z4xLYQv2tQ1t4F5PnyzDI6tqLo=";
+    };
+
+    # Electricity and machines, in the style of Technic/IndustrialCraft 2.
+    industrialtest = contentdb {
+      file = "2bacabeafd"; # 2.2.0
+      hash = "sha256-e5eeAsTAK33Gp90FqtZKgQjnEPxs5qNnvw3Xh5+OFnM=";
+    };
+
+    # Player cannons, pipes and tractor beams.
+    traverse = contentdb {
+      file = "4a2f15ebb0"; # 3.1
+      hash = "sha256-h4pXS21i5zLdXngHcKLJ4LuEC3xjjYdWoCDAJj0svpE=";
+    };
+
+    # Machines, power and fluids (a modpack), with a Mineclonia compat layer.
+    # Needs fluid_lib's tanks and transfer mods.
+    elepower = contentdb {
+      file = "50ccd715c1"; # Beta 3.10
+      hash = "sha256-WOtwZpXAXIZg7UC2+7TzcxHlXM3ilTioeLrHRBM6+EA=";
+    };
+    fluid_lib = contentdb {
+      file = "379b054861"; # 2026-06-08
+      hash = "sha256-IGNmCEQfszguv1etvpFkII3y/ljv6NAtm4LCgArCer4=";
+    };
+
+    # Trains (a modpack). Its recipes use Minetest Game items, which the
+    # compatibility patch re-registers with Mineclonia ones. advtrains itself
+    # only has track, signals and automation; dlxtrains adds the trains.
+    advtrains = contentdb {
+      file = "a285f8b36a"; # v2.10.0
+      hash = "sha256-1RQTF/Xx2/dQTAtQ38hPTXAIdbAxPeML8JsZozS9rak=";
+    };
+    advtrains_crafting_compatibility_patch = contentdb {
+      file = "32f5d77376"; # 0.4.0
+      hash = "sha256-yub1jp54PrPxgAtNZbcwAJHESd40dMN5hfVag84HKKY=";
+    };
+    dlxtrains = contentdb {
+      file = "b0c6451657"; # 1.20.0
+      hash = "sha256-KJm0vKR53GjWL2+JKM2m6sRpSoYoJ7odAxokP1DfW+4=";
     };
   };
 
