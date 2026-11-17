@@ -1,6 +1,13 @@
 # nix
 Nix flake for my configs
 
+## Local NPU models
+
+An opt-in Qwen3 4B coding experiment is available with
+`nix run path:.#local-npu -- start`. See
+[the experiment notes](pkgs/local-npu/README.md) for the OpenCode client,
+status and stop commands.
+
 ## Midtown Madness 2
 
 Run `nix run .#midtown-madness-2` on x86_64 Linux, or enable
