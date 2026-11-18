@@ -1,0 +1,311 @@
+--- a/mods/HELP/mcl_craftguide/init.lua
++++ b/mods/HELP/mcl_craftguide/init.lua
+@@ -14,6 +14,39 @@
+ local C = core.colorize
+ local F = core.formspec_escape
+ local S = core.get_translator("mcl_craftguide")
++
++local categories = {
++	{label = S("All")},
++	{label = S("Blocks"), matches = function(_, def)
++		return def.groups.building_block or def.groups.deco_block
++	end},
++	{label = S("Materials"), matches = function(_, def)
++		return def.type == "craft" and not def.groups.food and not def.groups.eatable
++	end},
++	{label = S("Tools"), matches = function(_, def)
++		return def.type == "tool" or def.groups.tool
++	end},
++	{label = S("Food"), matches = function(_, def)
++		return def.groups.food or def.groups.eatable
++	end},
++	{label = S("Redstone"), matches = function(_, def)
++		return def._mcl_redstone or def.groups.redstone_wire
++	end},
++	{label = S("Vehicles"), matches = function(item, def)
++		local mod = item:match("^[^:]+")
++		return def.groups.transport or mod == "supercub" or mod == "heli"
++			or mod == "steampunk_blimp" or mod == "motorboat"
++			or mod:match("^automobiles_") or mod:match("^dlxtrains")
++	end},
++	{label = S("Machines"), matches = function(item, def)
++		return def.type == "node" and (
++			item:match("^elepower_machines:") or item:match("^industrialtest:")
++			or item:match("^logistica:") or item == "airutils:biofuel_distiller"
++			or item:match("^mcl_furnaces:")
++		)
++	end},
++}
++local FILTER_HEIGHT = 1.25
+ 
+ local DEFAULT_SIZE = 10
+ local MIN_LIMIT, MAX_LIMIT = 10, 12
+@@ -208,6 +241,8 @@
+ 	if not player_data[name] and init ~= false then
+ 		player_data[name] = {
+ 			filter  = "",
++			category = 1,
++			have_ingredients = false,
+ 			pagenum = 1,
+ 			iX      = DEFAULT_SIZE,
+ 			items   = init_items,
+@@ -439,7 +474,7 @@
+ 
+ 	for i, item in pairs(recipe.items) do
+ 		local X = math.ceil((i - 1) % width + xoffset - width) - (0.2)
+-		local Y = math.ceil(i / width + (iY + 2) - math.min(2, rows))
++		local Y = math.floor((i - 1) / width) + iY + 3 - math.min(2, rows)
+ 
+ 		if width > 3 or rows > 3 then
+ 			btn_size = width > 3 and 3 / width or 3 / rows
+@@ -609,7 +644,7 @@
+ 
+ 	local fs = {}
+ 
+-	fs[#fs + 1] = string.format("size[%f,%f;]", data.iX - 0.35, iY + 4)
++	fs[#fs + 1] = string.format("size[%f,%f;]", data.iX - 0.35, iY + 4 + FILTER_HEIGHT)
+ 
+ 	fs[#fs + 1] = "background9[1,1;1,1;mcl_base_textures_background9.png;true;7]"
+ 
+@@ -652,11 +687,24 @@
+ 
+ 	fs[#fs + 1] = string.format("field[0.3,0.32;2.5,1;filter;;%s]", F(data.filter))
+ 
++	local category_width = (data.iX - 0.35) / #categories
++	for index, category in ipairs(categories) do
++		local field = "recipe_category_" .. index
++		if index == data.category then
++			fs[#fs + 1] = "style[" .. field .. ";bgcolor=#b3cba9]"
++		end
++		fs[#fs + 1] = string.format(FMT.button, (index - 1) * category_width + 0.05,
++			0.92, category_width - 0.10, 0.65, field, F(category.label))
++	end
++
++	fs[#fs + 1] = string.format("checkbox[0.15,1.88;have_ingredients;%s;%s]",
++		F(S("Have ingredients")), tostring(data.have_ingredients))
++
+ 	if #data.items == 0 then
+ 		local no_item = S("No item to show")
+ 		local pos = (data.iX / 2) - 1
+ 
+-		if next(recipe_filters) and #init_items > 0 and data.filter == "" then
++		if next(recipe_filters) and #init_items > 0 and data.filter == "" and data.category == 1 and not data.have_ingredients then
+ 			no_item = S("Collect items to reveal more recipes")
+ 			pos = pos - 1
+ 		end
+@@ -672,7 +720,7 @@
+ 		end
+ 
+ 		local X = i % data.iX
+-		local Y = (i % ipp - X) / data.iX + 1
++		local Y = (i % ipp - X) / data.iX + 1 + FILTER_HEIGHT
+ 
+ 		fs[#fs + 1] = string.format("item_image_button[%f,%f;%f,%f;%s;%s_inv;]",
+ 			X - ((X * 0.05)),
+@@ -687,7 +735,7 @@
+ 	end
+ 
+ 	if data.recipes and #data.recipes > 0 then
+-		fs[#fs + 1] = get_recipe_fs(data, iY, core.get_player_by_name(name))
++		fs[#fs + 1] = get_recipe_fs(data, iY + FILTER_HEIGHT, core.get_player_by_name(name))
+ 	end
+ 
+ 	for elem_name, def in pairs(formspec_elements) do
+@@ -721,10 +769,98 @@
+ 	return true
+ end)
+ 
+-local function search(data)
++local function count_ingredients(player)
++	local counts = {}
++	local inventory = player:get_inventory()
++	for _, list in ipairs({"main", "craft"}) do
++		for _, stack in ipairs(inventory:get_list(list) or {}) do
++			if stack:is_known() and not stack:is_empty() then
++				local name = stack:get_name()
++				counts[name] = (counts[name] or 0) + stack:get_count()
++			end
++		end
++	end
++	return counts
++end
++
++-- Move an already assigned item to another slot if two groups need it.
++local function assign_group(group, candidates, assigned, seen)
++	for _, slot in ipairs(candidates[group]) do
++		if not seen[slot] then
++			seen[slot] = true
++			if not assigned[slot] or assign_group(assigned[slot], candidates, assigned, seen) then
++				assigned[slot] = group
++				return true
++			end
++		end
++	end
++	return false
++end
++
++local function has_ingredients(recipe, counts)
++	if recipe.type ~= "normal" and recipe.type ~= "cooking" then
++		return false
++	end
++
++	local reserved, groups = {}, {}
++	for _, ingredient in pairs(recipe.items) do
++		if ingredient:sub(1, 6) == "group:" then
++			groups[#groups + 1] = extract_groups(ingredient)
++		elseif ingredient ~= "" then
++			local stack = ItemStack(ingredient)
++			local name = stack:get_name()
++			reserved[name] = (reserved[name] or 0) + stack:get_count()
++			if reserved[name] > (counts[name] or 0) then
++				return false
++			end
++		end
++	end
++	if #groups == 0 then
++		return true
++	end
++
++	local candidates, slot = {}, 0
++	for i in ipairs(groups) do candidates[i] = {} end
++	for name, count in pairs(counts) do
++		local available = math.min(count - (reserved[name] or 0), #groups)
++		if available > 0 then
++			local item_groups = core.registered_items[name].groups
++			for i, required_groups in ipairs(groups) do
++				if item_has_groups(item_groups, required_groups) then
++					for j = 1, available do
++						table.insert(candidates[i], slot + j)
++					end
++				end
++			end
++			slot = slot + available
++		end
++	end
++
++	local assigned = {}
++	for i in ipairs(groups) do
++		if not assign_group(i, candidates, assigned, {}) then
++			return false
++		end
++	end
++	return true
++end
++
++local function has_available_recipe(item, counts, player)
++	for _, recipe in ipairs(apply_recipe_filters(get_item_recipes(item), player)) do
++		if has_ingredients(recipe, counts) then
++			return true
++		end
++	end
++	return false
++end
++
++local function search(data, player)
+ 	local filter = data.filter
+-
+-	if searches[filter] then
++	local category = categories[data.category]
++	local counts = data.have_ingredients and count_ingredients(player)
++	local can_cache = not category.matches and not counts and not next(recipe_filters)
++
++	if can_cache and searches[filter] then
+ 		data.items = searches[filter]
+ 		return
+ 	end
+@@ -746,7 +882,7 @@
+ 	for i = 1, #data.items_raw do
+ 		local item = data.items_raw[i]
+ 		local def  = core.registered_items[item]
+-		if def then
++		if def and (not category.matches or category.matches(item, def)) then
+ 			local desc = mcl_util.casefold(core.get_translated_string(data.lang_code, def.description))
+ 			local search_in = item .. desc
+ 			local to_add
+@@ -761,14 +897,14 @@
+ 				to_add = string.find(search_in, filter, 1, true)
+ 			end
+ 
+-			if to_add then
++			if to_add and (not counts or has_available_recipe(item, counts, player)) then
+ 				c = c + 1
+ 				filtered_list[c] = item
+ 			end
+ 		end
+ 	end
+ 
+-	if not next(recipe_filters) then
++	if can_cache then
+ 		-- Cache the results only if searched 2 times
+ 		if searches[filter] == nil then
+ 			searches[filter] = false
+@@ -780,14 +916,14 @@
+ 	data.items = filtered_list
+ end
+ 
+-local function reset_data(data)
++local function reset_data(data, player)
+ 	data.filter      = ""
+ 	data.pagenum     = 1
+ 	data.rnum        = 1
+ 	data.query_item  = nil
+ 	data.show_usages = nil
+ 	data.recipes     = nil
+-	data.items       = data.items_raw
++	search(data, player)
+ end
+ 
+ local function get_init_items()
+@@ -843,8 +979,26 @@
+ 		end
+ 	end
+ 
+-	if fields.clear then
+-		reset_data(data)
++	for index in ipairs(categories) do
++		if fields["recipe_category_" .. index] then
++			data.category = index
++			data.filter = mcl_util.casefold(fields.filter or data.filter)
++			data.pagenum = 1
++			search(data, player)
++			show_fs(player, name)
++			return
++		end
++	end
++
++	if fields.have_ingredients and (fields.have_ingredients == "true") ~= data.have_ingredients then
++		data.have_ingredients = fields.have_ingredients == "true"
++		data.filter = mcl_util.casefold(fields.filter or data.filter)
++		data.pagenum = 1
++		search(data, player)
++		show_fs(player, name)
++
++	elseif fields.clear then
++		reset_data(data, player)
+ 		show_fs(player, name)
+ 
+ 	elseif fields.prev_alternate then
+@@ -874,7 +1028,7 @@
+ 
+ 		data.filter = fltr
+ 		data.pagenum = 1
+-		search(data)
++		search(data, player)
+ 		show_fs(player, name)
+ 
+ 	elseif fields.prev or fields.next then
+@@ -1160,11 +1314,11 @@
+ 
+ function mcl_craftguide.show(name)
+ 	local player = core.get_player_by_name(name)
++	local data = get_player_data(name)
+ 	if next(recipe_filters) then
+-		local data = get_player_data(name)
+ 		data.items_raw = get_filtered_items(player)
+-		search(data)
+-	end
++	end
++	search(data, player)
+ 	show_fs(player, name)
+ end
+ 

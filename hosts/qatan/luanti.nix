@@ -5,12 +5,16 @@
   # Luanti is engine-only since 5.8 and nixpkgs packages no games, so fetch
   # Mineclonia (a Minecraft-like survival game) ourselves. Clients don't need
   # it installed: they download the game's media from the server on joining.
-  mineclonia = pkgs.fetchFromGitea {
-    domain = "codeberg.org";
-    owner = "mineclonia";
-    repo = "mineclonia";
-    rev = "0.124.1";
-    hash = "sha256-ur4LhJ92rk5JQa1PzpGY/5cKCjayLUIh5M64ONtsAGo=";
+  mineclonia = pkgs.applyPatches {
+    name = "mineclonia";
+    src = pkgs.fetchFromGitea {
+      domain = "codeberg.org";
+      owner = "mineclonia";
+      repo = "mineclonia";
+      rev = "0.124.1";
+      hash = "sha256-ur4LhJ92rk5JQa1PzpGY/5cKCjayLUIh5M64ONtsAGo=";
+    };
+    patches = [./luanti-recipe-guide.patch];
   };
 
   # Draconis (dragons) and its mob API, Creatura. Pinned to the ContentDB
@@ -269,11 +273,23 @@
       hash = "sha256-h4pXS21i5zLdXngHcKLJ4LuEC3xjjYdWoCDAJj0svpE=";
     };
 
-    # Machines, power and fluids (a modpack), with a Mineclonia compat layer.
-    # Needs fluid_lib's tanks and transfer mods.
-    elepower = contentdb {
-      file = "50ccd715c1"; # Beta 3.10
-      hash = "sha256-WOtwZpXAXIZg7UC2+7TzcxHlXM3ilTioeLrHRBM6+EA=";
+    # IndustrialTest already smelts iron ingots into refined iron.
+    # Elepower's coal-fired alloy furnace provides the route to low carbon steel.
+    elepower = pkgs.applyPatches {
+      name = "elepower";
+      src = contentdb {
+        file = "50ccd715c1"; # Beta 3.10
+        hash = "sha256-WOtwZpXAXIZg7UC2+7TzcxHlXM3ilTioeLrHRBM6+EA=";
+      };
+      postPatch = ''
+        substituteInPlace elepower_dynamics/crafting.lua \
+          --replace-fail 'minetest.register_craft({
+    type = "cooking",
+    output = "elepower_dynamics:steel_ingot",
+    recipe = "elepower_dynamics:iron_ingot",
+    cooktime = 20
+})' ""
+      '';
     };
     fluid_lib = contentdb {
       file = "379b054861"; # 2026-06-08
@@ -327,6 +343,8 @@ in {
       server_description = "Mineclonia on qatan";
       motd = "Welcome to the NixOS Luanti server!";
       max_users = 10;
+      # Let players browse recipes before discovering their ingredients.
+      mcl_craftguide_progressive_mode = "false";
       # Don't list on the public server list at servers.luanti.org.
       server_announce = "false";
       creative_mode = "false";
