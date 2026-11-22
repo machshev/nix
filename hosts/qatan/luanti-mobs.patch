@@ -1,0 +1,137 @@
+diff -ru a/mods/ENTITIES/mcl_mobs/api.lua b/mods/ENTITIES/mcl_mobs/api.lua
+--- a/mods/ENTITIES/mcl_mobs/api.lua	2026-11-22 20:15:35.933436765 +0000
++++ b/mods/ENTITIES/mcl_mobs/api.lua	2026-11-22 20:19:30.612779695 +0000
+@@ -395,7 +395,8 @@
+ 		return false
+ 	end
+ 
+-	if (mcl_vars.difficulty <= 0 or only_peaceful_mobs) and not self.persist_in_peaceful then
++	if mcl_mobs.removed_mobs[self.name]
++		or ((mcl_vars.difficulty <= 0 or only_peaceful_mobs) and not self.persist_in_peaceful) then
+ 		mcl_burning.extinguish(self.object)
+ 		self.object:remove()
+ 		return false
+diff -ru a/mods/ENTITIES/mcl_mobs/init.lua b/mods/ENTITIES/mcl_mobs/init.lua
+--- a/mods/ENTITIES/mcl_mobs/init.lua	2026-11-22 20:15:35.934436766 +0000
++++ b/mods/ENTITIES/mcl_mobs/init.lua	2026-11-22 20:19:28.194776074 +0000
+@@ -11,6 +11,22 @@
+ ------------------------------------------------------------------------
+ 
+ mcl_mobs.registered_mobs = {}
++
++-- Made-up creatures this server does without: they never spawn naturally and
++-- are deleted when loaded or summoned.
++mcl_mobs.removed_mobs = {
++	["mobs_mc:mooshroom"] = true,
++	["mobs_mc:strider"] = true,
++	["mobs_mc:baby_strider"] = true,
++	["mobs_mc:glow_squid"] = true,
++	["mobs_mc:hoglin"] = true,
++	["mobs_mc:baby_hoglin"] = true,
++	["mobs_mc:zoglin"] = true,
++	["mobs_mc:baby_zoglin"] = true,
++	["mobs_mc:skeleton_horse"] = true,
++	["mobs_mc:zombie_horse"] = true,
++	["mobs_mc:killer_bunny"] = true,
++}
+ local modname = core.get_current_modname()
+ local path = core.get_modpath(modname)
+ local S = core.get_translator(modname)
+diff -ru a/mods/ENTITIES/mcl_mobs/spawning.lua b/mods/ENTITIES/mcl_mobs/spawning.lua
+--- a/mods/ENTITIES/mcl_mobs/spawning.lua	2026-11-22 20:15:35.932436763 +0000
++++ b/mods/ENTITIES/mcl_mobs/spawning.lua	2026-11-22 20:19:32.991783258 +0000
+@@ -858,6 +858,9 @@
+ 		error ("mcl_mobs.register_spawner mustn't be called "
+ 		       .. "after mod initialization")
+ 	end
++	if mcl_mobs.removed_mobs[spawner.name] then
++		return
++	end
+ 	local spawner = table.merge (default_spawner, spawner)
+ 	table.insert (registered_spawners, spawner)
+ 
+diff -ru a/mods/ENTITIES/mobs_mc/cow+mooshroom.lua b/mods/ENTITIES/mobs_mc/cow+mooshroom.lua
+--- a/mods/ENTITIES/mobs_mc/cow+mooshroom.lua	2026-11-22 20:15:35.940436774 +0000
++++ b/mods/ENTITIES/mobs_mc/cow+mooshroom.lua	2026-11-22 20:15:45.587450276 +0000
+@@ -44,6 +44,13 @@
+ 			max = 2,
+ 			looting = "common",
+ 		},
++		{
++			name = "mcl_mobitems:bone",
++			chance = 1,
++			min = 0,
++			max = 2,
++			looting = "common",
++		},
+ 	},
+ 	sounds = {
+ 		random = {name = "mobs_mc_cow", gain = 0.5},
+diff -ru a/mods/ENTITIES/mobs_mc/pig.lua b/mods/ENTITIES/mobs_mc/pig.lua
+--- a/mods/ENTITIES/mobs_mc/pig.lua	2026-11-22 20:15:35.952436791 +0000
++++ b/mods/ENTITIES/mobs_mc/pig.lua	2026-11-22 20:15:47.936453577 +0000
+@@ -36,6 +36,13 @@
+ 			max = 3,
+ 			looting = "common",
+ 		},
++		{
++			name = "mcl_mobitems:bone",
++			chance = 1,
++			min = 0,
++			max = 1,
++			looting = "common",
++		},
+ 	},
+ 	sounds = {
+ 		random = {name="mobs_pig", gain=0.5},
+diff -ru a/mods/ENTITIES/mobs_mc/spawning.lua b/mods/ENTITIES/mobs_mc/spawning.lua
+--- a/mods/ENTITIES/mobs_mc/spawning.lua	2026-11-22 20:15:35.973436820 +0000
++++ b/mods/ENTITIES/mobs_mc/spawning.lua	2026-11-22 20:15:59.600470033 +0000
+@@ -230,7 +230,8 @@
+ 
+ function monster_spawner:test_spawn_position (spawn_pos, node_pos, sdata, node_cache,
+ 					      spawn_flag)
+-	if mcl_vars.difficulty == 0 or only_peaceful_mobs then
++	if mcl_vars.difficulty == 0
++		or (only_peaceful_mobs and not self.spawn_with_only_peaceful_mobs) then
+ 		return false
+ 	end
+ 
+diff -ru a/mods/ENTITIES/mobs_mc/spider.lua b/mods/ENTITIES/mobs_mc/spider.lua
+--- a/mods/ENTITIES/mobs_mc/spider.lua	2026-11-22 20:15:35.973436820 +0000
++++ b/mods/ENTITIES/mobs_mc/spider.lua	2026-11-22 20:15:57.225466673 +0000
+@@ -38,6 +38,8 @@
+ local spider = {
+ 	description = S("Spider"),
+ 	type = "monster",
++	-- Spiders are kept when only_peaceful_mobs removes other monsters.
++	persist_in_peaceful = true,
+ 	_spawn_category = "monster",
+ 	attack_type = "melee",
+ 	_melee_esp = true,
+@@ -194,7 +196,8 @@
+ function spider:on_spawn ()
+ 	-- Spawn as jockeys ridden by skeletons 1% of the time.
+ 	local self_pos = self.object:get_pos ()
+-	if math.random (100) == 1 then
++	if not core.settings:get_bool ("only_peaceful_mobs", false)
++		and math.random (100) == 1 then
+ 		local skelly = core.add_entity (self_pos,
+ 						"mobs_mc:skeleton")
+ 		if skelly then
+@@ -377,6 +380,7 @@
+ 
+ local spider_spawner = table.merge (mobs_mc.monster_spawner, {
+ 	name = "mobs_mc:spider",
++	spawn_with_only_peaceful_mobs = true,
+ 	weight = 100,
+ 	pack_max = 4,
+ 	pack_min = 4,
+@@ -387,6 +391,7 @@
+ 
+ local cave_spider_spawner = table.merge (mobs_mc.monster_spawner, {
+ 	name = "mobs_mc:cave_spider",
++	spawn_with_only_peaceful_mobs = true,
+ 	biomes = {},
+ 	is_canonical = true,
+ })

@@ -14,7 +14,13 @@
       rev = "0.124.1";
       hash = "sha256-ur4LhJ92rk5JQa1PzpGY/5cKCjayLUIh5M64ONtsAGo=";
     };
-    patches = [./luanti-recipe-guide.patch];
+    patches = [
+      ./luanti-recipe-guide.patch
+      # Keep spiders under only_peaceful_mobs, make cows and pigs drop bones
+      # now that skeletons are gone, and remove made-up animals (mooshrooms,
+      # striders, hoglins, ...; see mcl_mobs.removed_mobs).
+      ./luanti-mobs.patch
+    ];
   };
 
   # Draconis (dragons) and its mob API, Creatura. Pinned to the ContentDB
@@ -268,9 +274,17 @@
     };
 
     # Player cannons, pipes and tractor beams.
-    traverse = contentdb {
-      file = "4a2f15ebb0"; # 3.1
-      hash = "sha256-h4pXS21i5zLdXngHcKLJ4LuEC3xjjYdWoCDAJj0svpE=";
+    # The engine collides entities with not-yet-loaded map as if it were
+    # solid, and the mod ends a cannon flight on any collision, so fast shots
+    # were cut short in mid-air whenever they outran map loading. The patch
+    # makes the flight hover until the map ahead has loaded instead.
+    traverse = pkgs.applyPatches {
+      name = "traverse";
+      src = contentdb {
+        file = "4a2f15ebb0"; # 3.1
+        hash = "sha256-h4pXS21i5zLdXngHcKLJ4LuEC3xjjYdWoCDAJj0svpE=";
+      };
+      patches = [./luanti-traverse-cannon.patch];
     };
 
     # IndustrialTest already smelts iron ingots into refined iron.
@@ -345,6 +359,10 @@ in {
       max_users = 10;
       # Let players browse recipes before discovering their ingredients.
       mcl_craftguide_progressive_mode = "false";
+      # No monsters except spiders (see luanti-mobs.patch): they neither spawn
+      # nor survive being loaded. Animals and villagers are unaffected, and
+      # unlike peaceful difficulty this keeps hunger and normal health regen.
+      only_peaceful_mobs = "true";
       # Don't list on the public server list at servers.luanti.org.
       server_announce = "false";
       creative_mode = "false";

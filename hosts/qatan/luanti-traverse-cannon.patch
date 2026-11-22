@@ -1,0 +1,101 @@
+--- a/init.lua	2026-11-22 19:50:52.865217362 +0000
++++ b/init.lua	2026-11-22 19:51:11.244592208 +0000
+@@ -6,6 +6,16 @@
+ local corner_one = vector.new(-0.5,-0.5,-0.5)
+ local gravity = vector.new(0,-9.81,0)
+ 
++-- Cannon flights wait for the map this many seconds ahead of them to load,
++-- and give up (dropping the passenger) after hovering for cannon_max_wait.
++local cannon_lookahead = 0.3
++local cannon_max_wait = 30
++
++local function is_unloaded(pos)
++	local node = core.get_node_or_nil(pos)
++	return not node or node.name == "ignore"
++end
++
+ local has_digilines = core.get_modpath("digilines") and true
+ 
+ 
+@@ -100,6 +110,11 @@
+ 	_resolve_interval = 0.1,
+ 	--~ _area = {vector.new(),vector.new()},
+ 	on_step = function (self,dt,moveresult)
++		if self._mode == "cannon" then
++			self:_cannon_step(dt, moveresult)
++			return
++		end
++
+ 		if moveresult and moveresult.collides then
+ 			self.object:remove()
+ 			return
+@@ -130,17 +145,65 @@
+ 					return
+ 				end
+ 			end
+-		elseif self._mode == "cannon" then
+-			local o = self.object
+-			o:set_acceleration(gravity)
+ 		end
+ 	end,
++	-- The engine treats map that isn't loaded (or generated) yet as solid, so
++	-- a fast flight would "hit" the edge of the loaded world in mid-air.
++	-- Instead of dropping the passenger there, hover until the map ahead has
++	-- arrived, then carry on with the velocity we had.
++	_cannon_step = function (self, dt, moveresult)
++		local o = self.object
++		local pos = o:get_pos()
++		local pos_unloaded = is_unloaded(pos)
++		local unloaded_hit = false
++		if moveresult and moveresult.collides then
++			for _, c in ipairs(moveresult.collisions) do
++				if c.type == "node" and is_unloaded(c.node_pos) then
++					unloaded_hit = true
++				else
++					o:remove()
++					return
++				end
++			end
++		end
++
++		if not (self._frozen or unloaded_hit or pos_unloaded) or not self._vel then
++			self._vel = o:get_velocity()
++		end
++		local vel = self._vel
++
++		self._emerge_time = (self._emerge_time or 0) - dt
++		if self._emerge_time <= 0 then
++			self._emerge_time = 0.5
++			for t = 0.5, 3, 0.5 do
++				local p = pos + vel * t + gravity * (0.5 * t * t)
++				core.emerge_area(vector.subtract(p, 16), vector.add(p, 16))
++			end
++		end
++
++		if unloaded_hit or pos_unloaded or is_unloaded(pos + vel * cannon_lookahead) then
++			self._frozen = (self._frozen or 0) + dt
++			if self._frozen > cannon_max_wait then
++				o:remove()
++				return
++			end
++			o:set_velocity(vector.zero())
++			o:set_acceleration(vector.zero())
++			return
++		end
++
++		if self._frozen then
++			self._frozen = nil
++			o:set_velocity(vel)
++		end
++		o:set_acceleration(gravity)
++	end,
+ 	get_staticdata = function (self)
+ 		return core.write_json({
+ 			child_guid = self.child_guid,
+ 			mode = self._mode,
+ 			origin = self._origin,
+-			vel = self.object:get_velocity(),
++			vel = self._frozen and self._vel or self.object:get_velocity(),
+ 			area = self._area, --needed for beams
+ 		})
+ 	end,
