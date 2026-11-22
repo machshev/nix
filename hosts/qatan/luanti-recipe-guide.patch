@@ -36,7 +36,7 @@
 +		)
 +	end},
 +}
-+local FILTER_HEIGHT = 1.25
++local FILTER_HEIGHT = 1.5
  
  local DEFAULT_SIZE = 10
  local MIN_LIMIT, MAX_LIMIT = 10, 12
@@ -81,7 +81,7 @@
 +			0.92, category_width - 0.10, 0.65, field, F(category.label))
 +	end
 +
-+	fs[#fs + 1] = string.format("checkbox[0.15,1.88;have_ingredients;%s;%s]",
++	fs[#fs + 1] = string.format("checkbox[0.15,1.6;have_ingredients;%s;%s]",
 +		F(S("Have ingredients")), tostring(data.have_ingredients))
 +
  	if #data.items == 0 then
