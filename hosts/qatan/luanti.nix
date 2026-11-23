@@ -21,6 +21,14 @@
       # striders, hoglins, ...; see mcl_mobs.removed_mobs).
       ./luanti-mobs.patch
     ];
+    # Biomes from other mods (Everness) have no _mcl_palette_index, so this
+    # returned nil. Sugar cane's on_construct then re-set itself with
+    # param2 = nil (stored as 0), which re-ran on_construct forever and
+    # OOM-killed the server whenever cane in such a biome was loaded.
+    postPatch = ''
+      substituteInPlace mods/ITEMS/mcl_core/functions.lua \
+        --replace-fail 'index = reg_biome._mcl_palette_index' 'index = reg_biome._mcl_palette_index or 0'
+    '';
   };
 
   # Draconis (dragons) and its mob API, Creatura. Pinned to the ContentDB
@@ -86,6 +94,14 @@
   # by modpack name for modpacks.
   mods = {
     inherit creatura draconis;
+
+    # Stops (and logs) node callbacks that set_node each other forever; see
+    # the Lua file.
+    recursion_guard = pkgs.runCommand "recursion_guard" {} ''
+      mkdir $out
+      echo "name = recursion_guard" > $out/mod.conf
+      cp ${./luanti-recursion-guard.lua} $out/init.lua
+    '';
 
     # New biomes, blocks and items. Only affects newly generated chunks.
     everness = contentdb {
@@ -374,6 +390,16 @@ in {
   };
 
   systemd.services.minetest-server.environment.LUANTI_GAME_PATH = "${games}";
+
+  # Something occasionally makes the server balloon to ~12G within a couple
+  # of minutes. Uncapped, it first pushes ~5G into swap, freezing the game
+  # for everyone before the kernel OOM-kills it. Normal use peaks around
+  # 1-1.5G, so cap it well above that and forbid swap so a runaway dies
+  # quickly and systemd restarts it.
+  systemd.services.minetest-server.serviceConfig = {
+    MemoryMax = "4G";
+    MemorySwapMax = 0;
+  };
 
   # Luanti uses a single UDP port; the module doesn't open it itself.
   networking.firewall.allowedUDPPorts = [port];
